@@ -278,8 +278,7 @@ function getKeyFromValue(obj, value) {
  *                    - 0 indicates pitchA is *equal* to pitchB;
  *                    - -1 indicates pitchA is *smaller* than pitchB. 
  */
-
-function comparePCDiff (pitchA, pitchB) { //, notesA, notesB) {       // NOTE TO SELF: change return value to 1/-1/0 or true/false for recursion capabilities?
+function comparePCDiff (pitchA, pitchB) {     // NOTE TO SELF: change return value to 1/-1/0 or true/false for recursion capabilities?
     // Check special conditions preventing proper pitch class set comparisons.
     switch (true) {
         // If one pitch class set has no numbers or sets are of different note lengths, then it cannot be compared; throw an error
