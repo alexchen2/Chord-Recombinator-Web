@@ -80,7 +80,8 @@ class Chord {
     addNotes(note) {
         this.notes = this.notes.concat(note);
         this.findPitchClass();
-        this.sortNormal();
+        this.sortAscending();
+        this.isNormal = false;
     }
 
     removeNotes(note) {
@@ -145,8 +146,13 @@ class Chord {
     }
 
     sortNormal() {
-        // Sorts by ascending in case if not sorted like so previously
-        this.sortAscending()
+        // If no notes in chord yet, then throw an error
+        if (this.notes === [] || this.pitchClass === []) {
+            throw new Error("No notes in chord yet!");
+        }
+
+        // Sorts by ascending in case if not sorted like so previously; might be redundant
+        // this.sortAscending()
 
         // 2D Array of all possible inversions of the chord in pitch class numbers
         let inversions = this.pitchClass.map((arg) => {
