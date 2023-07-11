@@ -20,44 +20,44 @@
  */ 
 const NOTE_MAP = {
     0: ['B#', 'C', 'Dbb'],
-    1: ['C#', 'Db'],
+    1: ['Bx', 'C#', 'Db'],
     2: ['Cx', 'D', 'Ebb'],
-    3: ['D#', 'Eb'],
+    3: ['D#', 'Eb', 'Fbb'],
     4: ['Dx', 'E', 'Fb'],
     5: ['E#', 'F', 'Gbb'],
-    6: ['F#', 'Gb'],
+    6: ['Ex', 'F#', 'Gb'],
     7: ['Fx', 'G', 'Abb'],
     8: ['G#', 'Ab'],
     9: ['Gx', 'A', 'Bbb'],
-    10: ['A#', 'Bb'],
+    10: ['A#', 'Bb', 'Cbb'],
     11: ['Ax', 'B', 'Cb']
 };
 
 // List of chord types and their pitch class number normal forms; Array.values(Array.values(CHORD_LIST)) -> index of root note
 const CHORD_LIST = {
-    'Major Chord': { '[0, 4, 7]': 0 },
-    'Major Seventh Chord': { '[0, 1, 5, 8]': 1 },
-    'Minor Major Seventh Chord': { '[0, 1, 4, 8]': 1 },
-    'Minor Chord': { '[0, 3, 7]': 0 },
-    'Minor Seventh Chord': { '[0, 3, 5, 8]': 2 },
-    'Half Diminished Seventh': { '[0, 2, 5, 8]': 1 },
-    'Augmented Chord': { '[0, 4, 8]': 0 },
-    'Diminished Chord': { '[0, 3, 6]': 0 },
-    'Dominant Seventh Chord': { '[0, 3, 6, 8]': 3 },
-    'Dominant Ninth Chord': { '[0, 2, 4, 6, 9]': 1 },
+    'Major Chord': { '[0,4,7]': 0 },
+    'Major Seventh Chord': { '[0,1,5,8]': 1 },
+    'Minor Major Seventh Chord': { '[0,1,4,8]': 1 },
+    'Minor Chord': { '[0,3,7]': 0 },
+    'Minor Seventh Chord': { '[0,3,5,8]': 2 },
+    'Half Diminished Seventh': { '[0,2,5,8]': 1 },
+    'Augmented Chord': { '[0,4,8]': 0 },
+    'Diminished Chord': { '[0,3,6]': 0 },
+    'Dominant Seventh Chord': { '[0,3,6,8]': 3 },
+    'Dominant Ninth Chord': { '[0,2,4,6,9]': 1 },
     'Dominant Thirteenth Chord': {
-        '[0, 1, 3, 5, 7, 8, 10]': 2,
-        '[0, 1, 3, 5, 6, 8, 10]': -2,
-        '[0, 2, 3, 5, 7, 8, 10]': -1
+        '[0,1,3,5,7,8,10]': 2,
+        '[0,1,3,5,6,8,10]': -2,
+        '[0,2,3,5,7,8,10]': -1
     },
     'Lydian Dominant/Acoustic Scale': {
-        '[0, 2, 3, 5, 6, 8, 10]': -2,
-        '[0, 2, 4, 5, 7, 8, 10]': -1,
-        '[0, 1, 3, 4, 6, 8, 10]': 4
+        '[0,2,3,5,6,8,10]': -2,
+        '[0,2,4,5,7,8,10]': -1,
+        '[0,1,3,4,6,8,10]': 4
     },
-    'Diminished Seventh Chord': { '[0, 3, 6, 9]': 0 },
-    'Quartal Chord': { '[0, 2, 5, 7]': 1 },
-    'Sus or Quartal Chord': { '[0, 2, 7]': 0 }
+    'Diminished Seventh Chord': { '[0,3,6,9]': 0 },
+    'Quartal Chord': { '[0,2,5,7]': 1 },
+    'Sus or Quartal Chord': { '[0,2,7]': 0 }
 };
 
 //// CLASSES ////
@@ -108,7 +108,7 @@ class Chord {
             for (let mapping of noteMapNotes) {
                 if (mapping.includes(note)) {
                     pitchNum = getKeyFromValue(NOTE_MAP, mapping);
-                    this.pitchClass.push(pitchNum);
+                    this.pitchClass.push(Number(pitchNum));
                     break;
                 }
             }
@@ -131,7 +131,7 @@ class Chord {
                 for (let mapping of noteMapNotes) {
                     if (mapping.includes(note)) {
                         let pitchNum = getKeyFromValue(NOTE_MAP, mapping);
-                        pitchNums.push(pitchNum);     // A's PitchNum first; B's PitchNum last
+                        pitchNums.push(Number(pitchNum));     // A's PitchNum first; B's PitchNum last
                     }
                 }
             }
@@ -165,11 +165,11 @@ class Chord {
 
         // Sort inversions by smallest pitch class # difference between lowest & highest notes of inversion (smallest first)
         inversions.sort((a, b) => comparePCDiff(a, b));
-        console.log(inversions);        
+        // console.log(inversions);        
 
         // As a result of sorting, inv. in front of array is the most compact; therefore is normal form of chord
         this.pitchClass = inversions[0];  // Overwrite previous P.C. config. with normal form config.
-        
+
         this.notes.sort((a, b) => {
             const noteMapNotes = Object.values(NOTE_MAP);
             let pitchNums = [];
@@ -179,7 +179,7 @@ class Chord {
                 for (let mapping of noteMapNotes) {
                     if (mapping.includes(note)) {
                         let pitchNum = getKeyFromValue(NOTE_MAP, mapping);
-                        pitchNums.push(pitchNum);     // A's PitchNum first; B's PitchNum last
+                        pitchNums.push(Number(pitchNum));     // A's PitchNum first; B's PitchNum last
                     }
                 }
             }
@@ -209,8 +209,10 @@ class Chord {
         let transPitchClass = []
         const distFromC = 12 - this.pitchClass[0];  // Distance of bottom normal form note from middle C (12 notes = 0 notes)
 
-        transPitchClass = this.pitchClass.map((arg) => (arg + distFromC) % 12);
-        
+        transPitchClass = this.pitchClass.map((arg) => {
+            return ((arg + distFromC) % 12);
+        });
+
         // Step 2: Check against CHORD_LIST and get root and chord name accordingly
         let chordFound = false;
 
@@ -221,7 +223,7 @@ class Chord {
                     this.name = getKeyFromValue(CHORD_LIST, grouping);
                     chordFound = true;
                     break;
-                }
+                }                
             }
 
             if (chordFound) {
@@ -233,10 +235,7 @@ class Chord {
             this.root = null;
             this.name = "Unnamed chord";
         }
-
-
     }
-
 }
 
 //// MISC. FUNCTIONS ////
@@ -250,14 +249,17 @@ class Chord {
  *                           is returned when all possible n-element combinations are stored.
  * @return {Array} Returns a 2-dimensional array containing every possible n-element combination.
  */
-function combination(numElem, startArray, endArray = []) {
+function combination(numElem, startArray, endArray = [], output = []) {
     if (numElem <= 0) {
-        console.log(endArray);
+        output.push(endArray);
     } else {
         // startArray.forEach(elem => {
-        for (let index = 0; index < startArray.length - (numElem - 1); index++)
-            combination(numElem - 1, startArray.slice(index + 1), endArray.concat(startArray[index]));
-    }
+        for (let index = 0; index < startArray.length - (numElem - 1); index++) {
+            combination(numElem - 1, startArray.slice(index + 1), endArray.concat(startArray[index]), output);
+        }
+        
+        return output;
+    } 
 }
 
 function getKeyFromValue(obj, value) {
@@ -332,17 +334,25 @@ function xOR (statement1, statement2) {
 }
 
 //// DEBUGGING ////
-const chord = new Chord(['C', 'E', 'B', 'G']);
-chord.sortAscending();
+function main() {
+    const chord = new Chord(['C', 'D', 'G']);
+    chord.sortAscending();
 
-console.log(`Notes: ${chord.notes}`);
-console.log(`Pitch Class #s: ${chord.pitchClass}`);
+    console.log(`Notes: ${chord.notes}`);
+    console.log(`Pitch Class #s: ${chord.pitchClass}`);
 
-chord.sortNormal();
+    chord.sortNormal();
 
-console.log(`Normal Form Notes: ${chord.notes}`);
-console.log(`Normal Form Pitch Class #s: ${chord.pitchClass}`);
+    console.log(`Normal Form Notes: ${chord.notes}`);
+    console.log(`Normal Form Pitch Class #s: ${chord.pitchClass}`);
 
+    chord.identify();
+    console.log(chord)
+    // let test = combination(3, ['Bb', 'D', 'F', 'A', 'C']);
+    // console.log(test);
+}
+
+// main();
 
 //// EXPORT STATEMENT ////
 export {NOTE_MAP, Chord, combination, getKeyFromValue};
