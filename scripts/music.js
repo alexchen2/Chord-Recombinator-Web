@@ -2,12 +2,12 @@
 
 /** 
  * Steps:
- * 1). IO for getting chord notes
- * 2). Finding combinations of all chords  
- * 3). Determining "normal" form for each chord   X
+ * 1). IO for getting chord notes                                                     X
+ * 2). Finding combinations of all chords                                             X
+ * 3). Determining "normal" form for each chord                                       X
  * 4). Transpose normal form into C Major (pitch value of 0) while keeping the root   X
- * 5). Matching up transposed normal form with chord dictionary   X
- * 6). Output of chord info
+ * 5). Matching up transposed normal form with chord dictionary                       X
+ * 6). Output of chord info                                                           X
  */
 
 //// GLOBAL CONSTANTS + VARIABLES ////
