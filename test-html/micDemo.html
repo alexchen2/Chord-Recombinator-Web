@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        :root {
+            --margin-wave: 5%;
+        }
+
+        body {
+            margin: 1% 5%;
+        }
+
+        .mic {
+            width: calc(90% - (var(--margin-wave) * 2));
+            margin: 2rem var(--margin-wave);
+        }
+
+        .btn-row-wave {
+            display: flex;
+            justify-content: left;
+            margin: .625rem 0;
+        }
+
+        .btn-row-wave button {
+            margin-right: .875rem;
+        }
+
+        #btn-record {
+
+        }
+
+        #btn-play {
+
+        }
+
+        #btn-mute {
+
+        }
+
+        #waveform {
+            display: block;
+            width: 100%;
+            height: 10rem;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+
+        #recorded-wave ::part(hover-label):before {
+            content: '⏱️ ';
+        }
+
+        #mic-wave, #recorded-wave {
+            display: none; /* Change to display when recording button is pressed */
+            position: relative;
+            width: 100%;
+            height: 0%;
+            overflow: hidden;
+            transition: all 1s ease 1s;
+        }
+
+        hr {
+            margin: 1.875rem 0;
+            width: 100%;
+        }
+
+        .upload-row {
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Microphone Input Demo</h1>
+    <p>Press the button below to start recording using your device's microphone.</p>
+
+    <div class="mic">
+        <div class="btn-row-wave">
+            <button id="btn-record">Record</button>          <!-- Replace with hyperlinked images later or insert images inside -->
+            <button id="btn-play" disabled>Play</button>
+            <button id="btn-mute" disabled>Mute</button>
+        </div>
+
+        <div id="waveform">
+            <canvas id="mic-wave"></canvas>            
+            <div id="recorded-wave"></div>
+        </div>
+
+        <div class="btn-row-wave">
+            <button id="btn-analyze-mic" disabled>Identify</button>
+            <label for="btn-analyze-mic" id="show-notes-mic">Notes: </label> 
+        </div>
+    </div>
+
+    <hr>
+
+    <p>Or upload an audio file here (.wav only) and press the button below to analyze it:</p>
+
+    <div class="upload-row">
+        <button id="btn-upload">Upload a file...</button>
+        <label for="btn-upload" id="filename"></label> <!-- Will display file name -->
+    </div>
+
+    <div class="btn-row-upload">
+        <button id="btn-analyze-file" disabled>Identify</button>
+        <label for="btn-analyze-file" id="show-notes-file">Notes: </label> 
+    </div>
+
+    <!-- <script src="node_modules/@ffmpeg/ffmpeg/src/browser/index.js" type="module"></script> -->
+    <script src="scripts/recorder.js" type="module"></script>
+    <script src="scripts/fix-webm-duration.js"></script>
+    <script src="test-html/micDemoFixed.js" type="module"></script>
+</body>
+
+</html>

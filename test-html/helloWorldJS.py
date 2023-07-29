@@ -1,0 +1,1 @@
+print("Hello World! This is a string from helloWorldJS.py!")

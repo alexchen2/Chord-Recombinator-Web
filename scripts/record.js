@@ -101,7 +101,7 @@ class i extends r {
   onInit () {
     this.preventInteraction()
   }
-  loadBlob (e, t) {
+  loadBlob (e, t) {  
     var r
     const s = new Blob(e, { type: t })
     ;(this.recordedUrl = URL.createObjectURL(s)),
