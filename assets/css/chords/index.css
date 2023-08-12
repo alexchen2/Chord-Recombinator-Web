@@ -1,0 +1,603 @@
+/* 
+ * ========
+ * Variables
+ * ========
+*/
+
+:root {
+    /* Colours */
+    --blue-1: #3E8DE3;
+    --blue-2: #0C2D87;
+    --blue-h: #3F6ADE;
+    --blue-btn: #4FA3FF;
+    --blue-link: #3366CC;
+    --bg-colour-1: #FFFFFF;
+    --bg-colour-2: #F3F3F3;
+    --bg-colour-3: #B3B3B3;
+    --bg-colour-4: #55A6FF;
+    --body-colour: #04060D;
+
+    /* Borders & Shadows */
+    --section-border: 1px solid #C8C8C8;
+    --section-border-2: 5px solid #C8C8C8;
+    --more-input-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.40);
+    --more-input-border: 1px solid #04060D;
+    --btn-shadow: 0rem 0.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
+    --btn-border: .0625rem solid #000;
+    --box-img-border: 1.5px solid #B2B2B2;
+
+    /* Fonts & Font Families */
+    --body-font-family: Inter, "Inria Sans", sans-serif;
+    --nav-font-family: "Inria Sans", sans-serif;
+    --heading-font-family: "Space Grotesk", sans-serif;
+
+    --body-font: normal 300 1rem/157.5% var(--body-font-family);
+    --box-body-font: normal 400 .9375rem/150% var(--body-font-family);
+    --box-a-font: normal 400 15px/22.5px var(--body-font-family);
+    --submenu-font: normal 300 1rem/normal var(--nav-font-family);
+    --submenu-mobile-font: normal 400 1rem/normal var(--nav-font-family);
+    --header-font: normal 300 1.125rem/normal var(--nav-font-family);
+    --footer-font: normal 700 1.25rem/normal var(--nav-font-family);
+    --footer-logo-font: normal 300 1.0625rem/normal var(--heading-font-family);
+    --h1-font: normal 700 2.25rem/normal var(--heading-font-family);
+    --h2-font-1: normal 500 1.5625rem/125% var(--heading-font-family);
+    --h2-font-2: normal 700 1.875rem/75% var(--heading-font-family);
+    --btn-font: normal 700 1.4063rem/102.273% var(--heading-font-family);
+
+    /* Transitions */
+    /* --box-a-transition: all 0.5s ease; */
+}
+
+/**
+ * ========
+ * General Page Contents
+ * ========
+**/
+
+body {
+    background-color: var(--bg-colour-2);
+}
+
+h1 {
+    font: var(--h1-font);
+    color: var(--blue-h);
+    letter-spacing: -0.0112rem;
+}
+
+p {
+    font: var(--body-font);
+    color: var(--body-colour);
+}
+
+/* Lower entire page contents below header */
+main {
+    max-width: 100%;
+    margin-top: 3.875rem;
+    /* overflow-y: hidden; */
+}
+
+/* Sticky footer fix */
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+footer {
+    position: sticky;
+    top: 100vh;
+}
+
+/* header {
+    max-width: 100vw;
+} */
+
+@media screen and (max-width: 62.5rem) {
+    main {
+        margin-bottom: 0;
+    }
+
+    footer {
+        position: relative;
+        top: auto;
+    }
+}
+
+/**
+ * ========
+ * "Hero" / Title
+ * ========
+**/
+
+/* For mobile phone screens */
+.title-content div {
+    padding-top: 3rem;
+    padding-bottom: 2.1875rem;
+    padding-left: 2.1875rem;
+    padding-right: 2.1875rem;
+
+}
+
+.title {
+    text-align: center;
+    font-size: 1.875rem;
+    margin-bottom: .9375rem;
+}
+
+.subtitle {
+    font-size: .9375rem;
+    text-align: center;
+    max-width: 40rem;
+    /*  35.8125rem  */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* For tablets and desktop screens */
+@media screen and (min-width: 36rem) {
+    .title-content div {
+        padding-top: 3.4375rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .title {
+        font-size: 2.25rem;
+        margin-bottom: .8125rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+}
+
+/**
+ * ========
+ * General Section Elements
+ * ========
+**/
+
+.section-text {
+    margin-top: 30px;
+    margin-left: min(calc((100vw - 57.38vw) / 2), calc((100vw - 312px) / 2));
+    /* margin-left: 12.31vw;  5.75rem; */
+    margin-right: min(calc((100vw - 57.38vw) / 2), calc((100vw - 312px) / 2));
+    width: auto;
+    /* min-width: 312px; */
+}
+
+.section-img img {
+    margin: 0 12.31vw;
+    width: 57.38vw;
+    /* 87.69vw; */
+    min-width: 312px;
+    height: auto;
+    /* margin-right: 5.75rem;
+    margin-left: 5.75rem; */
+}
+
+/* Used for white-ish backgrounds */
+.section-title-1 {
+    position: relative;
+    color: var(--blue-h);
+    font: var(--h2-font-1);
+
+    padding-top: 1.375rem;
+}
+
+/* Line above section title */
+.section-title-1::after {
+    content: '';
+    position: absolute;
+    width: 2.5625rem;
+    /* transform: scaleX(0); */
+    height: 5px;
+    bottom: calc(85%);
+    left: 0;
+
+    /* stroke-width: 5px;
+    stroke: #0F36A0; */
+    background-color: #0F36A0;
+    border-radius: 5px;
+    /* transform-origin: bottom left;
+    transition: transform 0.25s ease-out; */
+}
+
+/* Used for darker backgrounds */
+.section-title-2 {
+    position: relative;
+    text-align: center;
+    color: var(--bg-colour-1);
+    font: var(--h2-font-2);
+    font-size: 27px;
+}
+
+.section-body {
+    color: var(--body-colour);
+    font: var(--body-font);
+
+    margin-top: 1.4375rem;
+}
+
+.section-btn {
+    width: 243px;
+    height: 59px;
+    flex-shrink: 0;
+
+    margin-top: 1.875rem;
+
+    border-radius: 4.125rem;
+    border: var(--btn-border);
+    background: var(--blue-btn);
+    box-shadow: var(--btn-shadow);
+}
+
+.section-btn p {
+    font: var(--btn-font);
+    color: var(--bg-colour-1);
+    text-align: center;
+}
+
+.section-text a:hover {
+    text-decoration: none;
+}
+
+.section-btn:hover {
+    cursor: pointer;
+}
+
+/* main .row:nth-child(2) {
+    order: 1;
+}
+
+main .row:first-child {
+    order: 2;
+} */
+
+/* Responsive sizing for sections in a larger-end tablet view */
+@media screen and (min-width: 863px) {
+    .section-text {
+        /* margin-top: 0;
+        margin-left: 92px;
+        margin-right: 0; */
+        min-width: auto;
+    }
+
+    .section-img {
+        display: flex;
+        /* margin-right: 92px;
+        margin-left: 0; */
+        max-width: auto;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+    }
+
+    .section-img img {
+        width: auto;
+        min-width: auto;
+        height: auto;
+        margin: 0;
+    }
+
+    /* Used for white-ish backgrounds */
+    .section-title-1 {
+        position: relative;
+        padding-top: 1.375rem;
+    }
+
+    /* Used for darker backgrounds */
+    .section-title-2 {
+        font-size: 30px;
+        /* position: relative;
+        text-align: center;  */
+        /* padding-top: 3.0625rem; */
+    }
+
+    .section-body {
+        max-width: 328px;
+        margin-top: 1.4375rem;
+    }
+
+}
+
+/* For absurdly wide computer screens */
+@media screen and (min-width: 64rem) {
+    .section-text {
+        margin-left: calc(((100% - 64rem + 5.75rem) / 2));
+        margin-right: 1.5rem;
+    }
+
+    .section-img {
+        margin-left: 1.5rem;
+        margin-right: calc(((100% - 64rem + 5.75rem) / 2));
+    }
+
+}
+
+/**
+ * ========
+ * Keyboard Section
+ * ========
+**/
+
+#keyboard {
+    width: 100vw;
+    /*1024px;*/
+    min-height: 361px;
+    height: auto;
+
+    padding-top: 3.875rem;
+    padding-bottom: 3.875rem;
+
+    border-top: var(--section-border);
+    border-bottom: var(--section-border);
+    background: var(--bg-colour-1);
+}
+
+@media screen and (min-width: 863px) {
+    #keyboard-text {
+        margin-top: 0;
+        margin-left: 92px;
+        margin-right: 0;
+        /* min-width: auto; */
+    }
+
+    #keyboard-img {
+        /* display: flex; */
+        margin-right: 92px;
+        margin-left: 0;
+        /* max-width: auto;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle; */
+    }
+}
+
+/* For absurdly wide computer screens */
+@media screen and (min-width: 64rem) {
+    #keyboard-text {
+        margin-left: calc(((100% - 64rem + 5.75rem) / 2) + 1.5rem);
+        margin-right: 1.5rem;
+    }
+
+    #keyboard-img {
+        margin-left: 1.5rem;
+        margin-right: calc(((100% - 64rem + 5.75rem) / 2) + .5rem);
+    }
+
+}
+
+/**
+ * ========
+ * Microphone Section
+ * ========
+**/
+
+#mic {
+    width: 100vw;
+    /*1024px;*/
+    min-height: 361px;
+    height: auto;
+
+    align-items: end;
+    padding-top: 3.875rem;
+    padding-bottom: 3.875rem;
+
+    border-top: var(--section-border);
+    border-bottom: var(--section-border);
+    background: var(--bg-colour-2);
+}
+
+#mic-body {
+    margin-bottom: 2.125rem;
+}
+
+#mic h2,
+#mic div {
+    text-align: left;
+}
+
+@media screen and (min-width: 863px) {
+    #mic-title::after {
+        content: '';
+        position: absolute;
+        width: 2.5625rem;
+        /* transform: scaleX(0); */
+        height: 5px;
+        bottom: calc(85%);
+        right: 0;
+        left: auto;
+
+        /* stroke-width: 5px;
+        stroke: #0F36A0; */
+        background-color: #0F36A0;
+        border-radius: 5px;
+        /* transform-origin: bottom left;
+        transition: transform 0.25s ease-out; */
+    }
+
+    #mic-body {
+        margin-bottom: 0;
+    }
+
+    #mic-text {
+        margin-top: 0;
+        margin-right: 92px;
+        margin-left: 0;
+        /* min-width: auto; */
+    }
+
+    #mic-img {
+        /* display: flex; */
+        margin-left: 92px;
+        margin-right: 0;
+        /* max-width: auto;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle; */
+    }
+
+    #mic h2,
+    #mic div {
+        text-align: right;
+    }
+}
+
+/* For absurdly wide computer screens */
+@media screen and (min-width: 64rem) {
+    #mic-text {
+        margin-right: calc(((100% - 64rem + 5.75rem) / 2) + 1.5rem);
+        margin-left: 1.5rem;
+    }
+
+    #mic-img {
+        margin-right: 1.5rem;
+        margin-left: calc(((100% - 64rem + 5.75rem) / 2) + .5rem);
+    }
+}
+
+/**
+ * ========
+ * "More Methods" Section
+ * ========
+**/
+
+#more-input {
+    width: 100vw;
+    /*1024px;*/
+    min-height: 527px;
+    height: auto;
+
+    /* align-items: end; */
+    padding-top: 3.4375rem;
+    padding-bottom: 5rem;
+
+    border-top: var(--section-border-2);
+    background: var(--bg-colour-4);
+}
+
+#more-input-row {
+    margin-top: 3.125rem;
+}
+
+.more-input-box {
+    max-width: 450px;
+    min-width: 260px;
+    width: auto;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 20.25rem;
+    padding: 0;
+
+    border-radius: 5px;
+    border: var(--more-input-border);
+    background: var(--bg-colour-2);
+    box-shadow: var(--more-input-shadow);
+}
+
+#box-staff {
+    margin-bottom: 37px;
+    /* margin: auto; */
+}
+
+#box-more {
+    margin-top: 37px;
+}
+
+.box-img {
+    background: lightgray 50% / cover no-repeat;
+    border-bottom: var(--box-img-border);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /* width: 100%; */
+    height: 157px;
+
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#more-img {
+    background: var(--bg-colour-1) 50% / cover no-repeat;
+}
+
+.box-img img {
+    overflow: hidden;
+    /* flex-shrink: 0; */
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.box-text {
+    display: flex;
+    height: 167px;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-text p {
+    margin-left: 10%;
+    margin-right: 10%;
+    color: #000000;
+    text-align: center;
+    font: var(--box-body-font);
+}
+
+.box-text p a {
+    color: var(--blue-link);
+    font: var(--box-a-font);
+    text-decoration-line: underline;
+    /* transition: var(--box-a-transition); */
+}
+
+.box-text p a:hover {
+    font-weight: bold;
+}
+
+@media screen and (min-width: 550px) {
+    .more-input-box {
+        width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .more-input-box {
+        margin: 0;
+        width: 16.25rem;
+        height: 20.25rem;
+    }
+
+    #more-input-row {
+        margin-top: 50px;
+    }
+
+    #box-staff {
+        margin-right: 47px;
+        margin-bottom: 0;
+        /* margin: auto; */
+    }
+
+    #box-more {
+        margin-left: 47px;
+        margin-top: 0;
+    }
+
+    .box-text p a {
+        text-decoration-line: none;
+    }
+
+    .box-text p a:hover {
+        text-decoration-line: underline;
+    }
+}

@@ -12,7 +12,7 @@ import { render } from "./micWaveform.js"
 
 //////// VARIABLES ////////
 let micFileName = ""; // filename for mic recorded files
-let recFileName = ""; // filename for pre-recorded files
+let prerecFileName = ""; // filename for pre-recorded files
 
 // When pressing record button, keeps track of the audio file duration to be used in fix-webm-duration.js;
 // this is part of an 6-year old issue with chrome not generating metadata from MediaRecorder audio and video files 
@@ -25,11 +25,12 @@ const recBtn = document.getElementById("btn-record");
 const playBtn = document.getElementById("btn-play");
 const muteBtn = document.getElementById("btn-mute");        // Note to self: use ws.setMuted(true or false)
 const micFinishBtn = document.getElementById("btn-analyze-mic");
+const uploadInput = document.getElementById("prerecordFile");
 const fileFinishBtn = document.getElementById("btn-analyze-file");
 
 // HTML elements for showing waveforms
 const micWave = document.getElementById("mic-wave");         // use display: inline or block to show when needed
-const fileWave = document.getElementById("recorded-wave");   
+const fileWave = document.getElementById("recorded-wave");
 
 // Labels
 const micNoteLbl = document.getElementById("show-notes-mic");
@@ -66,7 +67,7 @@ function record(stream) {
         if (rec.state == "recording") {   // Stop recording
             hasRecorded = true;
 
-            micWave.style.height = "0%";  
+            micWave.style.height = "0%";
             micWave.style.display = "none";
             fileWave.style.height = "100%";
             fileWave.style.display = "block";
@@ -74,7 +75,7 @@ function record(stream) {
             // Enable buttons for audio playback
             playBtn.disabled = false;
             muteBtn.disabled = false;
-            micFinishBtn.disabled = false; 
+            micFinishBtn.disabled = false;
             // fileFinishBtn.disabled = false;
 
             // Stop recording and revert record btn colours back to nrmal
@@ -88,7 +89,7 @@ function record(stream) {
             if (hasRecorded) {
 
                 playBtn.removeEventListener("click", playRecording);
-                recBtn.removeEventListener("click", muteRecording); 
+                recBtn.removeEventListener("click", muteRecording);
                 micFinishBtn.removeEventListener("click", getMicNotes);
                 // fileFinishBtn.removeEventListener("click", getFileNotes);
 
@@ -138,15 +139,15 @@ function record(stream) {
         duration = Date.now() - startTime;
         console.log(duration)
         console.log("recorder stopped");
-      
+
         // const blob = getWaveBlob(chunks);
         // uploadRecording(blob);
 
         // create new (buggy) audio blob and formdata
-        const buggyBlob = new Blob(chunks, { type: "audio/webm"}); //; codecs=mp3" });
+        const buggyBlob = new Blob(chunks, { type: "audio/webm" }); //; codecs=mp3" });
         chunks = [];
 
-        ysFixWebmDuration(buggyBlob, duration, uploadRecording);    
+        ysFixWebmDuration(buggyBlob, duration, uploadRecording);
 
         // const audioURL = window.URL.createObjectURL(blob);
         // audio.src = audioURL;
@@ -157,7 +158,6 @@ function record(stream) {
 }
 
 async function uploadRecording(fixedBlob) {
-
     // Convert .webm blob to .wav using ffmpeg.wasm
     // let newBlob = convertWebmToMp3(fixedBlob);
 
@@ -165,18 +165,19 @@ async function uploadRecording(fixedBlob) {
     const data = new FormData();
 
     // Creates file from audio blob
-    const file = new File( [ fixedBlob ], micFileName, { type: "audio/webm" } );
+    const file = new File([fixedBlob], micFileName, { type: "audio/webm" });
     // const file = new File( [ blob ], micFileName, { type: "audio/mpeg"} );
     data.append("file", file, micFileName);   // param: name of field entry in formData, actual data, and actual name of file/data
 
     clearFiles();
     let status = await uploadAudio(data);
+    console.log("Awaited upload file status: " + status);
     // testGet();
 
     wsSettings["url"] = "../audio/" + micFileName;
     ws = WaveSurfer.create(wsSettings);
     alert(`${duration}, ${ws.getDuration()} => ${duration - ws.getDuration()}`);
-    
+
     playBtn.addEventListener("click", playRecording);
     muteBtn.addEventListener("click", muteRecording);
     // fileFinishBtn.addEventListener("click", getFileNotes);
@@ -188,9 +189,9 @@ async function uploadRecording(fixedBlob) {
 function getfileDate() {
     const date = new Date();
     const output = ("-" + date.getDate().toString().padStart(2, 0) + "-" +
-                    date.getHours().toString().padStart(2, 0) + "-" +
-                    date.getMinutes().toString().padStart(2, 0) + "-" +
-                    date.getSeconds().toString().padStart(2, 0));
+        date.getHours().toString().padStart(2, 0) + "-" +
+        date.getMinutes().toString().padStart(2, 0) + "-" +
+        date.getSeconds().toString().padStart(2, 0));
 
     return output;
 }
@@ -201,17 +202,17 @@ function getfileDate() {
 // async function convertWebmToMp3(webmBlob) {
 //     const ffmpeg = createFFmpeg({ log: false });
 //     await ffmpeg.load();
-  
+
 //     const inputName = 'input.webm';
 //     const outputName = 'output.mp3';
-  
+
 //     ffmpeg.FS('writeFile', inputName, await fetch(webmBlob).then((res) => res.arrayBuffer()));
-  
+
 //     await ffmpeg.run('-i', inputName, outputName);
-  
+
 //     const outputData = ffmpeg.FS('readFile', outputName);
 //     const outputBlob = new Blob([outputData.buffer], { type: 'audio/mp3' });
-  
+
 //     return outputBlob;
 // }
 
@@ -240,74 +241,131 @@ function muteRecording() {
     }
 }
 
-// async function getFileNotes() {
-//     let notes = await requestNotes(recFileName);
-//     return notes;
-// }
+async function uploadFile() {
+    // First check if file is of the correct format
+    if (!["wav", "ogg", "webm", ".mp3"].includes(uploadInput.value.split(".")[-1])) {
+        alert("Please enter a file of one of these extension types: '.wav', '.ogg', '.mp3', or '.webm'.");
+        uploadInput.value = null;
+    } else {
+        // Create new form data obj and add file
+        prerecFileName = uploadInput.value.split("/")[-1];
+        alert(prerecFileName);
+        const data = new FormData();
+        data.append("file", uploadInput.files[0]);   // param: name of field entry in formData, actual data, and actual name of file/data
+
+        // Clear excess files in server
+        clearFiles();
+
+        let status = await uploadAudio(data);
+        console.log("Awaited upload file status: " + status);
+    }
+
+}
+
+async function getFileNotes() {
+    let notes = await requestNotes(prerecFileName);
+    return notes;
+}
 
 // Unused WIP, implement later
-function getMicNotes() {
-    requestNotes(micFileName)
-    .then((notes) => {
-        return notes.toString();
-    })
-    .then((notesStr) => {
-        micNoteLbl.textContent = "Notes: " + notesStr;
-    })
-    .catch((err) => {
-        console.error(err);
-        alert("Error reading file for notes: " + err);
-    })
+async function getMicNotes() {
+    let notes = await requestNotes(micFileName);
+    console.log("Received notes!");
+
+    let notesStr = notes.toString();
+    micNoteLbl.textContent = "Notes: " + notesStr;
+
+    // requestNotes(micFileName)
+    // .then((notes) => {
+    //     return notes.toString();
+    // })
+    // .then((notesStr) => {
+    //     micNoteLbl.textContent = "Notes: " + notesStr;
+    // })
+    // .catch((err) => {
+    //     console.error(err);
+    //     alert("Error reading file for notes: " + err);
+    // })
 
 }
 
-//////// BACK-END REQUESTS ////////
+//////// REQUESTS TO BACK-END ////////
+function uploadAudio(formData) {
+    return new Promise((resolve, reject) => {
+        console.log("Uploading audio...");
+        fetch("http://localhost:5000/saveAudio", {
+            method: "POST",
+            body: formData
+        })
+            .then((response) => {
+                console.log("Finished uploading audio!");
+                resolve(response.status)
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Upload files error: " + err);
+                console.log("Upload failed...");
 
-async function uploadAudio(formData) {
-    fetch("http://localhost:5000/saveAudio", {
-        method: "POST",
-        body: formData
+                reject(err);
+            });
     })
-    .then((response) => {
-        return(response.status)
-    })
-    .catch((err) => {
-        console.error(err);
-        alert("Upload files error: " + err);
-
-        return("Upload failed...");
-    });
-
 }
 
-async function clearFiles() {
+// function uploadFile(formData) {
+//     return new Promise((resolve, reject) => {
+//         console.log("Uploading prerecorded file...");
+//         fetch("http://localhost:5000/saveAudio", {
+//             method: "POST",
+//             body: formData
+//         })
+//         .then((response) => {
+//             console.log("Finished uploading prerecorded audio!")
+//             resolve(response.status)
+//         })
+//         .catch((err) => {
+//             console.error(err);
+//             alert("Sorry, there was an error uploading your file. Please try again later.");
+//             console.log("Upload failed...");
+
+//             reject(err);
+//         })
+//     })
+// }
+
+function clearFiles() {
     fetch("http://localhost:5000/clearFiles", {
         method: "POST"
     })
-    // .then((response) => {
-    //     return(response.status)
-    // })
-    .catch((err) => {
-        console.error(err);
-        alert("File deletion error: " + err);
+        // .then((response) => {
+        //     return(response.status)
+        // })
+        .catch((err) => {
+            console.error(err);
+            // alert("File deletion error: " + err);
 
-        return("File clearing failed...");
-    });
+            return ("File clearing failed...");
+        });
 }
 
-async function requestNotes(fileName) {
+function requestNotes(fileName) {
     let notes = "{}";
 
-    fetch(`http://localhost:5000/prerecordNotes?file=${fileName}`) // add query of filename to url
-    .then((response) => {
-        // let output = JSON.parse(response);
-        notes = response.text();
-        return notes;
-        // return response.json()
+    return new Promise((resolve, reject) => {
+        fetch(`http://localhost:5000/prerecordNotes?file=${fileName}`) // add query of filename to url
+            .then((response) => {
+                // let output = JSON.parse(response);
+                notes = response.text();
+                console.log("Processing notes...");
+
+                resolve(notes);
+                // return response.json()
+            })
+            .catch((err) => {
+                console.log("Error in fetching notes: " + err);
+                reject(err);
+            })
     })
-    .catch((err) => {
-        console.log("Error in fetching notes: " + err);
-    })
+
     // .then((info) => {
     //     console.log(info);
     // })
@@ -315,6 +373,11 @@ async function requestNotes(fileName) {
 }
 
 function main() {
+    // When file is manually dragged/dropped or saved via button, immediately upload file to server
+    uploadInput.addEventListener("change", () => {
+        uploadFile();
+    })
+
     // Check if mediaRecorder is supported in the current browser
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         console.log("getUserMedia supported.");
@@ -322,15 +385,15 @@ function main() {
             // constraints - only audio needed for this app
             audio: true
         })
-        // Success callback
-        .then((stream) => {
-            record(stream); 
-        })
+            // Success callback
+            .then((stream) => {
+                record(stream);
+            })
 
-        // Error callback
-        .catch(err => {
-            console.error(`The following getUserMedia error occurred: ${err}`);
-        })
+            // Error callback
+            .catch(err => {
+                console.error(`The following getUserMedia error occurred: ${err}`);
+            })
     } else {
         console.log("getUserMedia not supported on your browser!");
     }

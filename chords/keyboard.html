@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>ChordWizard | Chords</title>
+    <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/chords/keyboard.css">
+
+    <!-- JQuery (required for bootstrap) -->
+    <script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <!-- <div id="load-header" include-html="header.html"></div> -->
+    <header id="header" class="page fixed-top">
+        <nav class="navbar navbar-expand-sm">
+            <div class="navbar-header row">
+                <div class="col float-left">
+                    <a class="" href="">
+                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo"
+                            alt="ChordWizard logo">
+                    </a>
+                </div>
+
+
+                <button class="float-right navbar-toggle">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu"
+                        alt="hamburger-menu">
+                </button>
+
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="">Home</a></li>
+                <li><a href="">About</a></li>
+                <li class="navbar-dropdown">
+                    <button class="navbar-subbtn"><a href="index.html">Chords</a>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow"
+                            alt="dropdown-arrow">
+                    </button>
+
+                    <ul class="navbar-submenu">
+                        <li><a href="keyboard.html">Keyboard Input</a></li>
+                        <li><a href="">Microphone Input</a></li>
+                        <li><a href="">Text / Staff Line Input</a></li>
+                    </ul>
+                </li>
+                <li><a href="">Scales</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="title-content hero-content display-table">
+                <div class="container">
+                    <h1 class="title hero-title">Chord Recombinator</h1>
+                    <p class="subtitle hero-subtitle">Select a group of notes through various input methods and generate
+                        various chords containing them using our chord recombinator tool.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="section" class="container">
+            <h2 id="heading" class="container">Keyboard Input</h2>
+
+            <div class="container" id="content">
+                <div id="row-btn">
+                    <div class="switch-wrapper">
+                        <img id="switch-flat" src="../assets/vendor/img/chords/flat.png" alt="">
+
+                        <div class="switch">
+                            <!-- <div class="switch"> -->
+                            <div class="switch-body">
+                                <div class="toggle"></div>
+                            </div>
+
+                            <input type="checkbox" name="switch">
+                            <!-- </div> -->
+                        </div>
+
+                        <img id="switch-sharp" src="../assets/vendor/img/chords/sharp.png" alt="">
+                    </div>
+
+                    <div id="media-btn">
+                        <button id="btn-play">
+                            <img class="mx-auto d-block" src="../assets/vendor/img/btn/play.png" alt="">
+                        </button>
+                        <button id="btn-fast-play">
+                            <img class="mx-auto d-block" src="../assets/vendor/img/btn/fast-play.png" alt="">
+                        </button>
+                        <button id="btn-mute">
+                            <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png" alt="">
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="piano-wrapper">
+                    <div class="piano">
+                        <ul class="piano-keys">
+                            <li class="key white" data-note="C3">
+                                <div>
+                                    <span>C</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Db3">
+                                <div>
+                                    <span>D♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="D3">
+                                <div>
+                                    <span>D</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Eb3">
+                                <div>
+                                    <span>E♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="E3">
+                                <div>
+                                    <span>E</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="F3">
+                                <div>
+                                    <span>F</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Gb3">
+                                <div>
+                                    <span>G♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="G3">
+                                <div>
+                                    <span>G</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Ab3">
+                                <div>
+                                    <span>A♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="A3">
+                                <div>
+                                    <span>A</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Bb3">
+                                <div>
+                                    <span>B♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="B3">
+                                <div>
+                                    <span>B</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="C4">
+                                <div>
+                                    <span>C</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Db4">
+                                <div>
+                                    <span>D♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="D4">
+                                <div>
+                                    <span>D</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Eb4">
+                                <div>
+                                    <span>E♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="E4">
+                                <div>
+                                    <span>E</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="F4">
+                                <div>
+                                    <span>F</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Gb4">
+                                <div>
+                                    <span>G♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="G4">
+                                <div>
+                                    <span>G</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Ab4">
+                                <div>
+                                    <span>A♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="A4">
+                                <div>
+                                    <span>A</span>
+                                </div>
+                            </li>
+                            <li class="key black" data-note="Bb4">
+                                <div>
+                                    <span>B♭</span>
+                                </div>
+                            </li>
+                            <li class="key white" data-note="B4">
+                                <div>
+                                    <span>B</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="text" class="text-center">
+                    <p class="text-body">
+                        Select three or more keys, then click the button below
+                        when you're ready to look up the related chords.
+                    </p>
+
+                    <button id="btn-identify" class="text-btn" onclick="">
+                        <p>IDENTIFY CHORDS</p>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer"> <!--style="visibility: hidden;"-->
+        <div class="footer-socials">
+            <div class="footer-icons">
+                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img
+                        src="../assets/vendor/img/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
+                <a href="https://github.com/alexchen2"><img src="../assets/vendor/img/btn/github.png"
+                        alt="Alex Chen's Github"></a>
+            </div>
+            <p id="footer-logo">
+                © Chord<b>Wizard</b> - 2023
+            </p>
+        </div>
+
+        <ul class="footer-menu">
+            <li><a href="">About</a></li>
+            <li><a href="">Privacy</a></li>
+            <li><a href="">Help</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
+
+    </footer>
+
+    <!-- Vendor scripts -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local scripts -->
+    <!-- <script src="../assets/js/base.js"></script> -->
+    <script src="../assets/js/includeHTML.js"></script>
+
+    <script src="../assets/js/base.js"></script>
+    <script src="../assets/js/chords/keyboard.js"></script>
+
+</body>
+
+</html>

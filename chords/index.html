@@ -4,55 +4,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>Chord Recombinator | ChordWizard</title>
+    <title>ChordWizard | Chords</title>
     <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">         
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/base.css"> 
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css"> 
+    <link rel="stylesheet" href="../assets/css/chords/index.css">
+
+    <!-- JQuery (required for bootstrap) -->
+    <script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="navbar-header">
-            <a href=""><img src="../images/logo/logoB.png" class = "navbar-logo" alt="ChordWizard logo"></a>
+    <!-- <div id="load-header" include-html="header.html"></div> -->
+    <header id="header" class="page fixed-top">
+        <nav class="navbar navbar-expand-sm">
+            <div class="navbar-header row">
+                <div class="col float-left">
+                    <a class="" href="">
+                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
+                    </a>
+                </div>
+                
 
-            <button class="navbar-toggle">
-                <img src="../images/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
-            </button>
-            
+                <button class="float-right navbar-toggle">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
+                </button>
+                
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="">Home</a></li>
+                <li><a href="">About</a></li>
+                <li class="navbar-dropdown">
+                    <button class="navbar-subbtn"><a href="index.html">Chords</a>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu">
+                        <li><a href="keyboard.html">Keyboard Input</a></li>
+                        <li><a href="">Microphone Input</a></li>
+                        <li><a href="">Text / Staff Line Input</a></li>
+                    </ul>
+                </li>
+                <li><a href="">Scales</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="title-content hero-content display-table">
+                <div class="container">
+                    <h1 class="title hero-title">Chord Recombinator</h1>
+                    <p class="subtitle hero-subtitle">Select a group of notes through various input methods and generate
+                        various chords containing them using our chord recombinator tool.</p>
+                </div>
+            </div>
         </div>
 
-        <ul class="navbar-menu">
-            <li><a href="">Home</a></li>
-            <li><a href="">About</a></li>
-            <li class="navbar-dropdown">
-                <button class="navbar-subbtn"><a href="">Chords</a>
-                    <img src="../images/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
-                </button>    
+        <div id="keyboard" class="container-fluid">
+            <div class="section row">
+                <div id="keyboard-img" class="section-right section-img col-sm">
+                    <img src="../assets/vendor/img/chords/piano-realistic-2.png" class="img float-left" alt="">
+                </div>
 
-                <ul class="navbar-submenu">
-                    <li><a href="">Keyboard Input</a></li>
-                    <li><a href="">Microphone Input</a></li>
-                    <li><a href="">Text / Staff Line Input</a></li>
-                </ul>
-            </li>
-            <li><a href="">Scales</a></li>
+                <div id="keyboard-text" class="section-left section-text col-sm">
+                    <h2 id="keyboard-title" class="section-title-1">
+                        Use a Virtual Piano Keyboard
+                    </h2>
 
-        </ul>
-    </nav>
+                    <div class="section-body" id="keyboard-body">
+                        Select the keys on an interactive piano keyboard and discover 
+                        chords using a combination of notes.
+                    </div>
 
-    <div class="content">
+                    <a href="keyboard.html">
+                        <button id="keyboard-btn" class="section-btn" onclick="">
+                            <p>GO TO KEYBOARD</p>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-    </div>
+        <div id="mic" class="container-fluid">
+            <div class="section row">
+                <div id="mic-img" class="section-left section-img col-sm">
+                    <img src="../assets/vendor/img/chords/woman-singing.png" class="img float-left" alt="">
+                </div>
 
-    <footer class="footer">
+                <div id="mic-text" class="section-right section-text col-sm">
+                    <h2 id="mic-title" class="section-title-1">
+                        Use your Device's Microphone
+                    </h2>
+
+                    <div class="section-body float-right" id="mic-body">
+                        Simply record yourself playing the notes using your instrument 
+                        of choice—we’ll detect the notes for you and take it from there.
+                    </div>
+
+                    <a href="">
+                        <button id="mic-btn" class="section-btn">
+                            <p>TRY IT OUT HERE</p>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="more-input" class="container-fluid">
+            <h2 class="section-title-2">Other Methods of Input</h2>
+
+            <div class="container d-flex justify-content-center">
+                <div id="more-input-row" class="row">
+                    <div id="box-staff" class="more-input-box col">
+                        <div id="staff-img" class="box-img">
+                            <img src="../assets/vendor/img/chords/Score-Chord-2.png" alt="" class="img">
+                        </div>
+
+                        <div id="staff-text" class="box-text">
+                            <p>
+                                Use your mouse to place notes on a music staff 
+                                and build a chord, then use our tool to 
+                                identify it. <a href="">Staff Builder</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="box-text" class="more-input-box col">
+                        <div id="text-img" class="box-img">
+                            <img src="../assets/vendor/img/chords/text-fields-3.png" alt="" class="img">
+                        </div>
+
+                        <div id="text-text" class="box-text">
+                            <p>
+                                If you know the note names, you can manually 
+                                enter them in text fields. <a href="">Text Input</a>
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div id="box-more" class="more-input-box col">
+                        <div id="more-img" class="box-img">
+                            <img src="../assets/vendor/img/chords/logoA-chord-1.png" alt="" class="img">
+                        </div>
+
+                        <div id="more-text" class="box-text">
+                            <p>
+                                More input options will be added in the future, such as visual input for instruments besides the piano.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer"> <!--style="visibility: hidden;"-->
         <div class="footer-socials">
             <div class="footer-icons">
-                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img src="../images/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
-                <a href="https://github.com/alexchen2"><img src="../images/btn/github.png" alt="Alex Chen's Github"></a>
+                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img src="../assets/vendor/img/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
+                <a href="https://github.com/alexchen2"><img src="../assets/vendor/img/btn/github.png" alt="Alex Chen's Github"></a>
             </div>
             <p id="footer-logo">
                 © Chord<b>Wizard</b> - 2023
@@ -68,7 +192,16 @@
 
     </footer>
 
-    <script src="../scripts/base.js"></script>
+    <!-- Vendor scripts -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local scripts -->
+    <!-- <script src="../assets/js/base.js"></script> -->
+    <script src="../assets/js/includeHTML.js"></script>
+    
+    <script src="../assets/js/base.js"></script>
+    <script src="../assets/js/chords/index.js"></script>
 
 </body>
 

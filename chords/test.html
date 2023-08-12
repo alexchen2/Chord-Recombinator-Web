@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        :root {
+            --piano-width: 658px;
+            --white-key-width: calc(var(--piano-width) / 14);
+            --black-key-width: calc(var(--white-key-width) * (44 / 70));
+        }
+
+        /* Underline animation styling */
+        .hover-underline-animation {
+            display: inline-block;
+            position: relative;
+            color: #0087ca;
+        }
+
+        .hover-underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #0087ca;
+            transform-origin: bottom left;
+            transition: transform 0.25s ease-out;
+        }
+
+        .hover-underline-animation:hover::after {
+            transform: scaleX(0.925);
+            transform-origin: bottom left;
+        }
+
+        /* iOS-like switch styling */
+        .ios-switch {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            /* Unnecessary below */
+            padding-bottom: 50px;
+        }
+
+        /* Default "Off" state */
+        .ios-switch .switch-body {
+            background-color: #ddd;
+            border: solid 1px gray;
+            width: 48px;
+            /* 48px if smaller */
+            border-radius: 999px;
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.10);
+        }
+
+        .ios-switch .switch-body .toggle {
+            background-color: white;
+            width: 24px;
+            height: 24px;
+
+            border-radius: 50%;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+            border: solid 1px gray;
+            box-sizing: border-box;
+            transition: all 0.4s ease;
+        }
+
+        .ios-switch.active .switch-body {
+            background-color: #51D88A;
+        }
+
+        .ios-switch.active .switch-body .toggle {
+            transform: translateX(100%);
+        }
+
+        .ios-switch label {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10px;
+            font-family: sans-serif;
+        }
+
+        .ios-switch input[type=checkbox] {
+            display: none;
+        }
+
+        /** 
+         * Piano Styling 
+        */
+        span {
+            font-family: sans-serif;
+        }
+
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: auto;
+        }
+
+        .piano {
+            /*full piano width: 658px; white key width: 47px; */
+            background: lightblue;/* #141414; */
+            border-radius: 20px;
+            width: 780px;
+            padding: 35px 61px;
+        }
+
+        .piano-keys {
+            /* border: 1px solid #000000; */
+            display: flex;
+            /* max-width: var(--piano-width); */
+            margin-top: 40px;
+        }
+
+        .piano-keys .key {
+            cursor: pointer;
+            user-select: none;
+            list-style: none;
+            color: #a2a2a2;
+        }
+
+        .piano-keys div {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .piano-keys div>span {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .piano-keys .black {
+            width: var(--black-key-width);
+            height: 129px;
+            margin: 0 calc(var(--black-key-width) / -2);
+            border-radius: 0 0 5px 5px;
+            border-top: 1.5px solid #000000;
+            box-sizing: content-box;
+            background: linear-gradient(#333333, #000000);
+
+            z-index: 2;
+        }
+
+        .black-down {
+            /* .piano-keys .black:hover { */
+            background: linear-gradient(to bottom, #000000, #434343);
+            box-shadow: inset -5px 5px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .piano-keys .white {
+            width: var(--white-key-width);
+            height: 219px;
+            border: 1px solid #000000;
+            border-radius: 8px;
+            box-shadow: 3px 3px 2px 0px rgba(0, 0, 0, 0.50);
+            background: #DDDDDD;
+            /*linear-gradient(#FFFFFF 96%, #EEEEEE 4%);*/
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .piano-keys .white div {
+            width: 100%;
+            height: 97%;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            border: 0.25px solid #000000;
+            box-sizing: content-box;
+        }
+
+        /* Note: this class is applied to DIV, not li */
+        .white-down div {
+            background: linear-gradient(to bottom, #FFFFFF 0%, #EEEEEE 100%);
+            box-shadow: inset -5px 5px 20px rgba(0, 0, 0, 0.2);
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <p class="hover-underline-animation">Hover this text to see the effect!</p> -->
+
+    <!-- iOS switch code structure -->
+    <div class="ios-switch">
+        <div class="switch-body">
+            <div class="toggle"></div>
+        </div>
+
+        <label>Test Switch</label>
+        <input type="checkbox" name="switch">
+
+    </div>
+
+    <div class="wrapper">
+        <div class="piano">
+            <ul class="piano-keys">
+                <li class="key white" data-note="C3">
+                    <div>
+                        <span>C</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Db3">
+                    <div>
+                        <span>Db</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="D3">
+                    <div>
+                        <span>D</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Eb3">
+                    <div>
+                        <span>Eb</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="E3">
+                    <div>
+                        <span>E</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="F3">
+                    <div>
+                        <span>F</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Gb3">
+                    <div>
+                        <span>Gb</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="G3">
+                    <div>
+                        <span>G</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Ab3">
+                    <div>
+                        <span>Ab</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="A3">
+                    <div>
+                        <span>A</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Bb3">
+                    <div>
+                        <span>Bb</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="B3">
+                    <div>
+                        <span>B</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="C4">
+                    <div>
+                        <span>C</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Db4">
+                    <div>
+                        <span>Db</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="D4">
+                    <div>
+                        <span>D</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Eb4">
+                    <div>
+                        <span>Eb</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="E4">
+                    <div>
+                        <span>E</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="F4">
+                    <div>
+                        <span>F</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Gb4">
+                    <div>
+                        <span>Gb</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="G4">
+                    <div>
+                        <span>G</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Ab4">
+                    <div>
+                        <span>Ab</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="A4">
+                    <div>
+                        <span>A</span>
+                    </div>
+                </li>
+                <li class="key black" data-note="Bb4">
+                    <div>
+                        <span>Bb</span>
+                    </div>
+                </li>
+                <li class="key white" data-note="B4">
+                    <div>
+                        <span>B</span> 
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- iOS Switch JS Code -->
+    <script>
+        // iOS Switch Code
+        let switches = [...document.querySelectorAll(".ios-switch")]
+
+        switches.forEach((elem) => {
+            elem.addEventListener("click", function (event) {
+                // this.classList.toggle("active");
+
+                if (this.classList.contains("active")) {
+                    this.classList.remove("active");
+                    this.querySelector("input[type=checkbox]").checked = false;
+                } else {
+                    this.classList.add("active");
+                    this.querySelector("input[type=checkbox]").checked = true;
+                }
+            })
+        })
+
+        // Piano Code
+        const pianoKeys = [...document.querySelectorAll(".piano-keys .key")];
+        let keyAudio = [];  // Array of objects containing audio files
+        let keyClass;
+
+        // Fill up keyAudio with objects for each note, containing HTMLAudioElements for every one
+        for (key of pianoKeys) {
+            let filename = `../assets/vendor/audio/piano/Piano.${key.dataset.note}.mp3`
+
+            console.log(filename);
+            keyAudio.push({
+                note: key.dataset.note,
+                audio: new Audio(`../assets/vendor/audio/piano/Piano.${key.dataset.note}.mp3`),
+                keyDown: false
+            }); 
+        }
+
+        for (key of pianoKeys) {
+            key.addEventListener("click", keyClick);
+            // Strangely, touchcancel is the only event that actually functions as I intended the mobile interface to...
+            key.addEventListener("touchcancel", keyClick);
+
+            // These don't work; they act as a short down-and-up press than a toggle
+            // key.addEventListener("touchstart", keyClick);
+            // key.addEventListener("touchend", keyClick);
+        }
+
+        // Function in charge of visually changing keys when pressed
+        function keyClick(event) {
+            let keyClass = this.classList;
+            let keyDivClass = this.querySelector("div").classList;
+
+            // Add pressed-down classes to respective keys upon clicking/touching
+            if (keyClass.contains("black")) {
+                keyClass.toggle("black-down");
+
+                // Visually change black key to be lowered & give impression of being pressed down
+                if (this.style.height != "135px") {
+                    // Set to key down height
+                    this.style.height = "135px";
+                } else {
+                    // Set to key up height
+                    this.style.height = "129px";
+                }
+
+            } else if (keyClass.contains("white")) {
+                keyClass.toggle("white-down");
+
+                // Visually change white key to cover bottom "edge" & give impression of being pressed down
+                if (this.querySelector("div").style.height != "100%") {
+                    // Set to key down height
+                    this.querySelector("div").style.height = "100%";
+                } else {
+                    // Set to key up height
+                    this.querySelector("div").style.height = "97%";
+                }
+            }
+
+            // Play / stop audio based on click
+            let index = keyAudio.findIndex((obj) => obj.note === this.dataset.note)
+            // console.log(`${this.dataset.note}, ${index}`)
+
+            // If audio is playing, or if audio is paused during middle of clip, then pause if necessary and reset back to beg. of clip
+            if (!keyAudio[index].audio.paused || keyAudio[index].audio.currentTime) { 
+                keyAudio[index].audio.pause();
+                keyAudio[index].audio.currentTime = 0;
+                keyAudio[index].audio.keyDown = false;
+            } else {   // Otherwise, audio must be paused at beg. of clip; therefore, just plays clip
+                keyAudio[index].audio.play();
+                keyAudio[index].audio.keyDown = true;
+            }
+
+            console.log(keyAudio[index].audio.keyDown);
+        }
+
+    </script>
+
+</body>
+
+</html>

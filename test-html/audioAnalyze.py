@@ -22,7 +22,7 @@ import numpy as np
 from aubio import source, pitch, notes, midi2note
 import moviepy.editor as moviepy  # Library just to convert webm to wav
 
-from ogg_to_wav import convert_ogg_to_wav, convert_webm_to_wav
+from convertToWav import convertToWav
 
 # Detects pitches over entire audio recording INCLUDING silence (value of 0)
 
@@ -59,7 +59,7 @@ def getPitches(file):
             # print("%f %f %f" % (total_frames / float(sampleRate), pitch, confidence))
             
             pitchName = midi2note(pitchValue)
-            allPitches.add(pitchName)
+            allPitches.add(pitchName[:-1])    # Remove tessaturra/MIDI number from end
             # confidences += [confidence]
         
         # totalFrames += read
@@ -101,7 +101,7 @@ def getNotes(file):
 
             # Convert midi value into note name and add to set of detected notes
             noteName = midi2note(round(noteValue))
-            allNotes.add(noteName)
+            allNotes.add(noteName[:-1])    # Remove tessaturra/MIDI number from end
 
         # totalFrames += read
         # Guessing that if no more samples can be taken (end of file), then break loop
@@ -121,9 +121,9 @@ def main():
     else:
         # If .ogg file extension, convert it to .wav
         if (".ogg" in sys.argv[1]):
-            filename = convert_ogg_to_wav(sys.argv[1])
+            filename = convertToWav(sys.argv[1])
         elif (".webm" in sys.argv[1]):
-            filename = convert_webm_to_wav(sys.argv[1])
+            filename = convertToWav(sys.argv[1])
             # filename = os.path.splitext(sys.argv[1])[0]+'.wav'
             
             # clip = moviepy.VideoFileClip(sys.argv[1])
@@ -135,14 +135,14 @@ def main():
     dataNotes = getNotes(filename)
     dataPitches = getPitches(filename)
 
-    dataFinal = dataNotes.intersection(dataPitches)
+    dataFinal = list(dataNotes.intersection(dataPitches))
 
     # print(dataNotes)
     # print(dataPitches, "\n")
     # print("Final set of notes data: ", dataFinal)
     print(str(dataFinal))
 
-    sys.stdout.flush()
+    # sys.stdout.flush()
 
 
 main()

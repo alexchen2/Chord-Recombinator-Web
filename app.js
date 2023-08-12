@@ -2,9 +2,11 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const spawn = require('child_process').spawn;
+// const execSync = require('child_process').execSync();
 const path = require("path");      // used for path.join
 const fs = require('fs');
+const { spawnSync } = require("child_process");
+// const { spawnSync } = require("child_process");
 
 // Multer middleware config for naming and storing during file creation using its disk storage engine
 const storage = multer.diskStorage({
@@ -15,7 +17,7 @@ const storage = multer.diskStorage({
         cb(null, __dirname + '/audio/')
     },
 }) 
-
+ 
 const upload = multer({ "storage": storage })
 
 // Start up express app and set port
@@ -24,7 +26,7 @@ const port = 5000;
 
 //////// APP-RELATED VARIABLES ////////
 let filename = "";
-const AUDIO_FILEPATH = path.join(__dirname, "audio");
+const AUDIO_DIR = path.join(__dirname, "audio");
 
 //////// FUNCTIONS ////////
 
@@ -63,24 +65,31 @@ function main() {
         res.send(test.text + " someufjdsjanklsfrgahhhh ");
     });
 
-    app.get("/prerecordNotes", (req, res) => {
-        const fileName = req.query.file
+    app.get("/prerecordNotes", async (req, res) => {
+        // Get filename from query in request
+        const fileName = path.join(AUDIO_DIR, req.query.file)
         console.log(fileName);
-        const pyProgram = spawn("python", ["test-html/audioAnalyze.py", fileName]);
+
+        const pyProgram = spawnSync("python", ["test-html/audioAnalyze.py", fileName]);
+        // const output = execSync("python test-html/audioAnalyze.py audio/audioClip-11-18-39-34.webm").toString());
     
-        pyProgram.stdout.on("data", function(data) {
-            let output = data.toString();
-            alert("test");
-            console.log("audioAnalyze.py request content: " + output);
-            console.log(typeof data);
-            res.send(output);
-            // res.write(data);
-            // res.end('end');
-        });
+        let output = pyProgram.stdout.toString();
+        console.log("audioAnalyze.py request content: " + output)
+        res.send(output);
+
+        // pyProgram.stdout.on("data", function(data) {
+        //     let output = data.toString();
+        //     alert("test");
+        //     console.log("audioAnalyze.py request content: " + output);
+        //     console.log(typeof data);
+        //     res.send(output);
+        //     // res.write(data);
+        //     // res.end('end');
+        // });
     });
 
     app.post("/clearFiles", (req, res) => {
-        fs.readdir(AUDIO_FILEPATH, (err, files) => {
+        fs.readdir(AUDIO_DIR, (err, files) => {
             let audioFiles = [];
 
             if (err) {
@@ -90,9 +99,9 @@ function main() {
                     audioFiles.push(file);
                 })
 
-                if (audioFiles.length > 3) {
+                if (audioFiles.length > 10) {
                     audioFiles.forEach((file) => {
-                        fs.unlink(path.join(AUDIO_FILEPATH, file), (err) => {
+                        fs.unlink(path.join(AUDIO_DIR, file), (err) => {
                             if (err) {
                                 console.error("Error deleting files: " + err);
                             } else {
@@ -110,6 +119,7 @@ function main() {
     app.post("/saveAudio", upload.single("file"), (req, res) => {
         console.log("'saveAudio' called. Testing POST request: ");
         console.log(req.file, req.body);
+        res.send(true);
     });
 
     // App listening at port 5000
