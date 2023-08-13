@@ -7,13 +7,23 @@ origSongMain = sys.argv[1]
 def convertToWav(origSong):
     destSong = os.path.splitext(origSong)[0]+'.wav'
 
-    match os.path.splitext(origSong)[-1]:
-        case "ogg":
-            song = AudioSegment.from_ogg(origSong)
-        case "webm":
-            song = AudioSegment.from_file(origSong)
-        case "mp3":
-            song = AudioSegment.from_mp3(origSong)
+    
+    
+    if (os.path.splitext(origSong)[-1] == ".ogg"):
+      song = AudioSegment.from_ogg(origSong)
+    elif (os.path.splitext(origSong)[-1] == ".webm"):
+      song = AudioSegment.from_file(origSong)
+    else: # (os.path.splitext(origSong)[-1] == ".mp3"):
+      song = AudioSegment.from_mp3(origSong)
+    
+    # Not using pattern matching, as glitch.com doesn't support Python 3.10...
+    # match (os.path.splitext(origSong)[-1]):
+    #     case "ogg":
+    #         song = AudioSegment.from_ogg(origSong)
+    #     case "webm":
+    #         song = AudioSegment.from_file(origSong)
+    #     case "mp3":
+    #         song = AudioSegment.from_mp3(origSong)
 
     song.export(destSong, format="wav")
     return destSong

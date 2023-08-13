@@ -2,3 +2,5 @@ scripts/node_modules/*
 .git/
 node_modules/*
 audio/*
+original/*
+temp/*
