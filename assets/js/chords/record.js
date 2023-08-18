@@ -155,10 +155,10 @@ async function uploadRecording(fixedBlob) {
     console.log("Awaited upload file status: " + statusUpload);
     // testGet();
   
-    let statusConvert = await convertAudio(micFileName);
-    alert("Awaited conversion new file name: " + statusConvert + " " + (typeof statusConvert));
-    micFileName = statusConvert.replaceAll("\\", "/").split("/").slice(-1).toString();
-    alert(micFileName + " " + typeof micFileName)
+    let outputConvert = await convertAudio(micFileName);
+    // alert("Awaited conversion new file name: " + outputConvert + " " + (typeof outputConvert));
+    micFileName = outputConvert.replaceAll("\\", "/").split("/").slice(-1).toString();
+    // alert(micFileName + " " + typeof micFileName)
 
     wsSettings["url"] = "../assets/vendor/audio/user/" + micFileName;
     ws = WaveSurfer.create(wsSettings);
@@ -169,9 +169,9 @@ async function uploadRecording(fixedBlob) {
     })
     // alert(`${duration}, ${ws.getDuration()} => ${duration - ws.getDuration()}`);
 
-    ws.on("ready", () => {
-        alert("Test ready")
-    })
+    // ws.on("ready", () => {
+    //     alert("Test ready")
+    // })
   
     // Add play btn listeners
     playBtn.addEventListener("click", clickPlay);
