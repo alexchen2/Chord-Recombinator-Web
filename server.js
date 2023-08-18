@@ -117,6 +117,17 @@ function main() {
         });
     })
 
+    app.get("/convertMicAudio", async (req, res) => {
+        console.log("Attempting to convert microphone audio...");
+        const fileName = path.join(AUDIO_DIR, req.query.file)
+        console.log(fileName);
+
+        const pyProgram = spawnSync("python", ["test-html/convertToWav.py", fileName]);
+        let output = pyProgram.stdout.toString();
+        console.log("convertToWav.py request content: " + output)
+        res.send(output);
+    })
+  
     // For post requests to server (upload.single() = one file, upload.array() = many, upload.any() = zero to many files)
     app.post("/saveAudio", upload.single("file"), (req, res) => {
         console.log("'saveAudio' called. Testing POST request: ");

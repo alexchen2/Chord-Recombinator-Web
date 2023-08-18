@@ -151,9 +151,13 @@ async function uploadRecording(fixedBlob) {
     data.append("file", file, micFileName);   // param: name of field entry in formData, actual data, and actual name of file/data
 
     clearFiles();
-    let status = await uploadAudio(data);
-    console.log("Awaited upload file status: " + status);
+    let statusUpload = await uploadAudio(data);
+    console.log("Awaited upload file status: " + statusUpload);
     // testGet();
+  
+    let statusConvert = await convertAudio(micFileName);
+    alert("Awaited conversion new file name: " + statusConvert);
+    micFileName = statusConvert;
 
     wsSettings["url"] = "../assets/vendor/audio/user/" + micFileName;
     ws = WaveSurfer.create(wsSettings);
@@ -164,6 +168,10 @@ async function uploadRecording(fixedBlob) {
     })
     // alert(`${duration}, ${ws.getDuration()} => ${duration - ws.getDuration()}`);
 
+    ws.on("ready", () => {
+        alert("Test ready")
+    })
+  
     // Add play btn listeners
     playBtn.addEventListener("click", clickPlay);
 
@@ -574,6 +582,25 @@ function uploadAudio(formData) {
     })
 }
 
+function convertAudio(fileName) {
+    return new Promise((resolve, reject) => {
+        fetch(`https://chordwizard.glitch.me/convertMicAudio?file=${fileName}`) // add query of filename to url
+            .then((response) => {
+                // let output = JSON.parse(response);
+                let wavFileName = response.text();
+                console.log("Converting .webm file to .wav...");
+
+                resolve(wavFileName);
+                // return response.json()
+            })
+            .catch((err) => {
+                console.log("Error in converting audio: " + err);
+                alert("Error in converting audio: " + err);
+                reject(err);
+            })
+    })
+}
+
 function clearFiles() {
     fetch("https://chordwizard.glitch.me/clearFiles", {
         method: "POST"
@@ -728,11 +755,11 @@ function main() {
                     const rec = getRec[0];
                     const stream = getRec[1];
     
+                    clickRecord(rec, stream);
                     record(rec);
 
                     // After about 0.75 seconds of recording, allows access to record button
                     setTimeout(() => {
-                        clickRecord(rec, stream);
                         recBtn.disabled = false;
                     }, 700);
 
