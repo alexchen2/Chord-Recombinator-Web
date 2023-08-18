@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --piano-width: 658px;
@@ -108,7 +114,8 @@
 
         .piano {
             /*full piano width: 658px; white key width: 47px; */
-            background: lightblue;/* #141414; */
+            background: lightblue;
+            /* #141414; */
             border-radius: 20px;
             width: 780px;
             padding: 35px 61px;
@@ -187,6 +194,290 @@
             box-shadow: inset -5px 5px 20px rgba(0, 0, 0, 0.2);
             height: 100%;
         }
+
+        /*
+        Drag and Drop Field Testing
+        */
+
+        .box-dragdrop,
+        .box-icon,
+        .box-uploading,
+        .box-success,
+        .box-error {
+            display: none;
+        }
+
+        .drop-in-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            vertical-align: middle;
+
+            width: 663px;
+            height: 323px;
+
+            border-radius: 5px;
+            border: 2px solid #C8C8C8;
+            background: #FCFCFC;
+        }
+
+        .drop-box {
+            width: calc(100% - 55px);
+
+            height: calc(100% - 55px - (64px * 2));
+
+            background: #EBF3FB;
+            position: relative;
+            padding-top: 64px;
+            padding-bottom: 64px;
+            text-align: center;
+            vertical-align: middle;
+            font: normal 300 18px/140% Inter;
+            color: #0C2D87;
+        }
+
+        .box-input {
+            padding-top: calc(10% - (18px / 2));
+        }
+
+        .drop-box.support-dragdrop .box-input {
+            padding-top: 0;
+        }
+
+        /* If drag and drop is supported, then this class is added */
+        .drop-box.support-dragdrop {
+            /* outline: 2.5px dashed #7A90DE;
+            outline-offset: -12px; */
+            -webkit-transition: background-color .15s linear;
+            transition: background-color .15s linear;
+        }
+
+        .drop-box.support-dragdrop .box-outline {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: calc(100% - 24px);
+            /* width: auto; */
+            height: calc(100% - 24px);
+            opacity: 1;
+
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%237A90DEFF' stroke-width='3' stroke-dasharray='10%2c 16' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            transition: width .15s ease-in-out, height .15s ease-in-out, top .15s ease-in-out, left .15s ease-in-out, opacity .2s linear;
+            -webkit-transition: width .15s ease-in-out, height .15s ease-in-out, top .15s ease-in-out, left .15s ease-in-out, opacity .2s linear;
+        }
+
+        .drop-box.support-dragdrop .box-dragdrop {
+            display: inline;
+        }
+
+        .drop-box.support-dragdrop .box-icon {
+            width: 162px;
+            height: 112px;
+            display: block;
+            margin-bottom: 2px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .drop-box.support-dragdrop .box-icon img {
+            width: auto;
+            /* 162px */
+            height: 100%;
+        }
+
+        /* During/after the upload process, hide main input icon + text of drop box */
+        .drop-box.is-uploading .box-input *,
+        .drop-box.is-success .box-input *,
+        .drop-box.is-error .box-input * {
+            visibility: hidden;
+        }
+
+        .drop-box.is-success .box-input .box-outline,
+        .drop-box.is-error .box-input .box-outline {
+            visibility: visible;
+        }
+
+        .drop-box.is-uploading .box-uploading,
+        .drop-box.is-success .box-success,
+        .drop-box.is-error .box-error {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        /* Uploading prompt */
+        .drop-box.is-uploading .box-uploading {
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .drop-box.is-uploading .box-input .box-outline {
+            visibility: visible;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .box-success {
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+
+        /* Success prompt */
+        .box-success #success-msg {
+            -webkit-animation: pop-up .25s ease;
+            animation: pop-up .25s ease;
+
+            margin-bottom: 7px;
+        }
+
+        .box-success #success-msg #success-filename {
+            font-style: italic;
+        }
+
+        .box-success #success-reupload {
+            margin-top: 7px;
+            transform: scale(0);
+            animation: pop-up-gradual .35s ease .65s;
+            animation-fill-mode: forwards; 
+        }
+
+        .box-success #success-reupload strong {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .box-success #success-reupload strong:hover,
+        .box-success #success-reupload strong:focus,
+        .box-success #success-reupload strong.has-focus {
+            color: #3E8DE3;
+        }
+
+        @-webkit-keyframes pop-up {
+            from {
+                -webkit-transform: scale(0);
+            }
+
+            75% {
+                -webkit-transform: scale(1.1);
+            }
+
+            to {
+                -webkit-transform: scale(1);
+            }
+        }
+
+        @keyframes pop-up {
+            from {
+                transform: scale(0);
+            }
+
+            75% {
+                transform: scale(1.1);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @-webkit-keyframes pop-up-gradual {
+            from {
+                -webkit-transform: scale(0);
+            }
+
+            to {
+                -webkit-transform: scale(1);
+            }
+        }
+
+        @keyframes pop-up-gradual {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* Error prompt */
+        .box-error #error-msg {
+            margin-bottom: 7px;
+        }
+
+        .box-error #error-reupload {
+            margin-top: 7px;
+        }
+
+        .box-error #error-reupload strong {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .box-error #error-reupload strong:hover,
+        .box-error #error-reupload strong:focus,
+        .box-error #error-reupload strong.has-focus {
+            color: #3E8DE3;
+        }
+
+        /* When mouse with file drags over drop-box, change appearance slightly to be more intuitive */
+        .drop-box.is-dragover {
+            /* outline-color: #5E7ADF; */
+            background-color: #FCFCFC;
+        }
+
+        .drop-box.is-dragover .box-outline {
+            width: calc(100% - 44px);
+            height: calc(100% - 44px);
+            top: 22px;
+            left: 22px;
+        }
+
+        #prerecordFile {
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #prerecordFile+label {
+            position: relative;
+            text-align: center;
+
+            max-width: 80%;
+            white-space: nowrap;
+            display: inline-block;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        #prerecordFile+label strong {
+            font-weight: 700;
+            transition: color .25s ease;
+            text-decoration: underline;
+        }
+
+        #prerecordFile+label:hover strong,
+        #prerecordFile:focus+label strong,
+        #prerecordFile.has-focus+label strong {
+            color: #3E8DE3;
+        }
+
+        #prerecordFile:focus+label,
+        #prerecordFile.has-focus+label {
+            outline: 1px dotted #000;
+            outline: -webkit-focus-ring-color auto 5px;
+        }
     </style>
 </head>
 
@@ -204,7 +495,39 @@
 
     </div>
 
-    <div class="wrapper">
+    <div class="drop-in-area">
+        <form class="drop-box">
+            <!-- <form class="drop-box" method="post" action="" enctype="multipart/form-data"> -->
+            <div class="box-input">
+
+                <div class="box-outline"></div>
+
+                <div class="box-icon">
+                    <img src="../assets/vendor/img/chords/download-icon-1.png" alt="">
+                </div>
+
+                <input id="prerecordFile" type="file" id="file" />
+                <label for="prerecordFile">
+                    <strong>Click to choose a file</strong><span class="box-dragdrop"> or drag it here</span>.
+                </label>
+                <!-- <button class="box-button" type="submit">Upload</button> -->
+            </div>
+
+            <div class="box-uploading">Uploading…</div>
+            <div class="box-success">
+                <div id="success-msg">Done uploading <span id="success-filename"></span>!</div>
+                <div id="success-reupload"><strong>Click here</strong><span> to upload a different file.</span></div>
+            </div>
+
+            <div class="box-error">
+                <div id="error-msg">There was a problem uploading your file...</div>
+                <div id="error-reupload"><span>Maybe try a </span><strong>different one?</strong></div>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- <div class="wrapper">
         <div class="piano">
             <ul class="piano-keys">
                 <li class="key white" data-note="C3">
@@ -329,7 +652,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
 
     <!-- iOS Switch JS Code -->
     <script>
@@ -350,80 +673,267 @@
             })
         })
 
-        // Piano Code
-        const pianoKeys = [...document.querySelectorAll(".piano-keys .key")];
-        let keyAudio = [];  // Array of objects containing audio files
-        let keyClass;
+        // // Piano Code
+        // const pianoKeys = [...document.querySelectorAll(".piano-keys .key")];
+        // let keyAudio = [];  // Array of objects containing audio files
+        // let keyClass;
 
-        // Fill up keyAudio with objects for each note, containing HTMLAudioElements for every one
-        for (key of pianoKeys) {
-            let filename = `../assets/vendor/audio/piano/Piano.${key.dataset.note}.mp3`
+        // // Fill up keyAudio with objects for each note, containing HTMLAudioElements for every one
+        // for (key of pianoKeys) {
+        //     let filename = `../assets/vendor/audio/piano/Piano.${key.dataset.note}.mp3`
 
-            console.log(filename);
-            keyAudio.push({
-                note: key.dataset.note,
-                audio: new Audio(`../assets/vendor/audio/piano/Piano.${key.dataset.note}.mp3`),
-                keyDown: false
-            }); 
+        //     console.log(filename);
+        //     keyAudio.push({
+        //         note: key.dataset.note,
+        //         audio: new Audio(`../assets/vendor/audio/piano/Piano.${key.dataset.note}.mp3`),
+        //         keyDown: false
+        //     });
+        // }
+
+        // for (key of pianoKeys) {
+        //     key.addEventListener("click", keyClick);
+        //     // Strangely, touchcancel is the only event that actually functions as I intended the mobile interface to...
+        //     key.addEventListener("touchcancel", keyClick);
+
+        //     // These don't work; they act as a short down-and-up press than a toggle
+        //     // key.addEventListener("touchstart", keyClick);
+        //     // key.addEventListener("touchend", keyClick);
+        // }
+
+        // // Function in charge of visually changing keys when pressed
+        // function keyClick(event) {
+        //     let keyClass = this.classList;
+        //     let keyDivClass = this.querySelector("div").classList;
+
+        //     // Add pressed-down classes to respective keys upon clicking/touching
+        //     if (keyClass.contains("black")) {
+        //         keyClass.toggle("black-down");
+
+        //         // Visually change black key to be lowered & give impression of being pressed down
+        //         if (this.style.height != "135px") {
+        //             // Set to key down height
+        //             this.style.height = "135px";
+        //         } else {
+        //             // Set to key up height
+        //             this.style.height = "129px";
+        //         }
+
+        //     } else if (keyClass.contains("white")) {
+        //         keyClass.toggle("white-down");
+
+        //         // Visually change white key to cover bottom "edge" & give impression of being pressed down
+        //         if (this.querySelector("div").style.height != "100%") {
+        //             // Set to key down height
+        //             this.querySelector("div").style.height = "100%";
+        //         } else {
+        //             // Set to key up height
+        //             this.querySelector("div").style.height = "97%";
+        //         }
+        //     }
+
+        //     // Play / stop audio based on click
+        //     let index = keyAudio.findIndex((obj) => obj.note === this.dataset.note)
+        //     // console.log(`${this.dataset.note}, ${index}`)
+
+        //     // If audio is playing, or if audio is paused during middle of clip, then pause if necessary and reset back to beg. of clip
+        //     if (!keyAudio[index].audio.paused || keyAudio[index].audio.currentTime) {
+        //         keyAudio[index].audio.pause();
+        //         keyAudio[index].audio.currentTime = 0;
+        //         keyAudio[index].audio.keyDown = false;
+        //     } else {   // Otherwise, audio must be paused at beg. of clip; therefore, just plays clip
+        //         keyAudio[index].audio.play();
+        //         keyAudio[index].audio.keyDown = true;
+        //     }
+
+        //     console.log(keyAudio[index].audio.keyDown);
+        // }
+
+        // ======= Drag and Drop Scripting Code =======
+        // Referenced Oscaldas Valutis' code here (but I'm using Fetch API and Vanilla JS instead of Ajax and JQuery): 
+        // https://css-tricks.com/drag-and-drop-file-uploading/
+
+        const dropArea = document.querySelector(".drop-box");
+        const uploadInput = document.getElementById("prerecordFile");
+        const errorInput = document.querySelector("#error-reupload strong");
+        const successInput = document.querySelector("#success-reupload strong");
+        const successFilename = document.getElementById("success-filename");
+        let droppedFile = null;
+
+        // Checks whether if drag and drop is supported through creating a random div container
+        function isAdvancedUpload() {
+            const div = document.createElement('div');
+            return ((('draggable' in div) || ('ondragstart' in div && 'ondrop' in div))
+                && 'FormData' in window
+                && 'FileReader' in window);
         }
 
-        for (key of pianoKeys) {
-            key.addEventListener("click", keyClick);
-            // Strangely, touchcancel is the only event that actually functions as I intended the mobile interface to...
-            key.addEventListener("touchcancel", keyClick);
+        let detectDrop = isAdvancedUpload();
 
-            // These don't work; they act as a short down-and-up press than a toggle
-            // key.addEventListener("touchstart", keyClick);
-            // key.addEventListener("touchend", keyClick);
+        // Prevents default action from taking place when dragging & dropping file over browser (open file in new tab)
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
 
-        // Function in charge of visually changing keys when pressed
-        function keyClick(event) {
-            let keyClass = this.classList;
-            let keyDivClass = this.querySelector("div").classList;
+        // No matter w/ or w/out drag and drop, any change to input field via clicking text uploads file to server
+        uploadInput.addEventListener("change", () => {
+            uploadFile();
+        })
 
-            // Add pressed-down classes to respective keys upon clicking/touching
-            if (keyClass.contains("black")) {
-                keyClass.toggle("black-down");
+        successInput.addEventListener("click", () => {
+            uploadInput.click();
+        })
 
-                // Visually change black key to be lowered & give impression of being pressed down
-                if (this.style.height != "135px") {
-                    // Set to key down height
-                    this.style.height = "135px";
-                } else {
-                    // Set to key up height
-                    this.style.height = "129px";
+        errorInput.addEventListener("click", () => {
+            uploadInput.click();
+        })
+
+        // If
+        if (detectDrop) {
+            dropArea.classList.add("support-dragdrop");
+
+            // Prevents default browser behaviour upon firing a drag-related event
+            "dragenter dragover dragleave drop dragend".split(" ").forEach((event) => {
+                dropArea.addEventListener(event, preventDefaults, false)
+            })
+
+            // When entering dragging area, visually change area appearance IF NOT IN UPLOADING STATE
+            "dragenter dragover".split(" ").forEach(event => {
+                dropArea.addEventListener(event, () => {
+                    if (!dropArea.classList.contains("is-uploading")) {
+                        dropArea.classList.add("is-dragover");
+                    }
+                }, false)
+            })
+
+            // Revert to original drag-drop-supported area appearance upon leaving dragged area or stopping the dragging
+            "dragleave dragend drop".split(" ").forEach(event => {
+                dropArea.addEventListener(event, () => {
+                    dropArea.classList.remove("is-dragover");
+                }, false)
+            })
+
+            // When file is finally dropped, get the file from associated fileList obj. and upload it
+            dropArea.addEventListener("drop", (event) => {
+                if (!dropArea.classList.contains("is-uploading")) {
+                    droppedFile = event.dataTransfer.files[0];
+                    uploadFile();
                 }
+            })
+        }
 
-            } else if (keyClass.contains("white")) {
-                keyClass.toggle("white-down");
+        async function uploadFile() {
+            // Information about file to be uploaded
+            let fileExtension;
+            let fileName;
+            let file;
 
-                // Visually change white key to cover bottom "edge" & give impression of being pressed down
-                if (this.querySelector("div").style.height != "100%") {
-                    // Set to key down height
-                    this.querySelector("div").style.height = "100%";
-                } else {
-                    // Set to key up height
-                    this.querySelector("div").style.height = "97%";
-                }
+            // Related to HTTP request status codes
+            let status;
+
+            dropArea.classList.remove("is-success", "is-error")
+            dropArea.classList.add("is-uploading");
+
+            if (droppedFile === null) {
+                fileExtension = uploadInput.value.split(".").slice(-1).toString();
+                fileName = uploadInput.value.split("\\").slice(-1).toString();
+                file = uploadInput.files[0];
+            } else {
+                fileExtension = droppedFile.name.split(".").slice(-1).toString();
+                fileName = droppedFile.name;
+                file = droppedFile;
             }
 
-            // Play / stop audio based on click
-            let index = keyAudio.findIndex((obj) => obj.note === this.dataset.note)
-            // console.log(`${this.dataset.note}, ${index}`)
+            // First check if file is of the correct format
+            if (!["wav", "ogg", "webm", "mp3"].includes(fileExtension)) {
+                alert("Please enter a file of one of these extension types: '.wav', '.ogg', '.mp3', or '.webm'.");
+                uploadInput.value = null;
+                droppedFile = null;
+                successFilename.innerText = "";
 
-            // If audio is playing, or if audio is paused during middle of clip, then pause if necessary and reset back to beg. of clip
-            if (!keyAudio[index].audio.paused || keyAudio[index].audio.currentTime) { 
-                keyAudio[index].audio.pause();
-                keyAudio[index].audio.currentTime = 0;
-                keyAudio[index].audio.keyDown = false;
-            } else {   // Otherwise, audio must be paused at beg. of clip; therefore, just plays clip
-                keyAudio[index].audio.play();
-                keyAudio[index].audio.keyDown = true;
+                // Let error msg appear in drop-box area
+                dropArea.classList.remove("is-uploading");
+                dropArea.classList.add("is-error");
+            } else {
+                // Create new form data obj and add file
+                let prerecFileName = fileName;
+                // alert(prerecFileName);
+                const data = new FormData();
+                data.append("file", file);   // param: name of field entry in formData, actual data, and actual name of file/data
+
+                // Clear excess files in server
+                clearFiles();
+
+                try {
+                    status = await uploadAudio(data);
+                    console.log("Awaited upload file status: " + status);
+                } catch (err) {
+                    console.error(err);
+                    status = -1;    // Set status to anything but 200 to purposely show error msg
+                }
+
+                // If upload was successful with HTTP response status 200 (OK), then show success msg
+                if (status === 200) {
+                    dropArea.classList.remove("is-uploading");
+                    dropArea.classList.add("is-success");
+                    successFilename.innerText = fileName;
+                } else {
+                    alert(status);
+                    // No matter the reason/error, show error msg if not successful
+                    dropArea.classList.remove("is-uploading");
+                    dropArea.classList.add("is-error");
+                    successFilename.innerText = "";
+                }
+
+                // Clear all file-related variables
+                uploadInput.value = null;
+                droppedFile = null;
+
+                // Enable button for identifying buttons, if disabled, and clear btn label from past results
+                // fileFinishBtn.disabled = false;
+                // fileNoteLbl.textContent = "Notes: ";
             }
-
-            console.log(keyAudio[index].audio.keyDown);
         }
+
+        //////// REQUESTS TO BACK-END ////////
+        function uploadAudio(formData) {
+            return new Promise((resolve, reject) => {
+                console.log("Uploading audio...");
+                fetch("http://localhost:5000/saveAudio", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then((response) => {
+                        console.log("Finished uploading audio!");
+                        resolve(response.status)
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        alert("Upload files error: " + err);
+                        console.log("Upload failed...");
+
+                        reject(err);
+                    });
+            })
+        }
+
+        function clearFiles() {
+            fetch("http://localhost:5000/clearFiles", {
+                method: "POST"
+            })
+                // .then((response) => {
+                //     return(response.status)
+                // })
+                .catch((err) => {
+                    console.error(err);
+                    // alert("File deletion error: " + err);
+
+                    return ("File clearing failed...");
+                });
+        }
+
+
+
 
     </script>
 

@@ -26,7 +26,7 @@
     --btn-border: .0625rem solid #000000;
     --media-btn-border: 1px solid #04060D;
     --media-btn-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    --switch-wrapper-border: 1px solid #04060D;
+    --record-wrapper-border: 1px solid #04060D;
     --box-img-border: 1.5px solid #B2B2B2;
     /* --menu-border: .125rem solid #B2B2B2;
     --submenu-mobile-border: .0625rem solid #B2B2B2;
@@ -37,10 +37,12 @@
     --body-font-family: Inter, "Inria Sans", sans-serif;
     --nav-font-family: "Inria Sans", sans-serif;
     --heading-font-family: "Space Grotesk", sans-serif;
+    --record-font-family: "Spline Sans", sans-serif;
 
     --body-font: normal 300 18px/140% var(--body-font-family);
     --box-body-font: normal 400 .9375rem/150% var(--body-font-family);
     --box-a-font: normal 400 15px/22.5px var(--body-font-family);
+    --record-font: normal 600 20px/24px var(--record-font-family);
     --submenu-font: normal 300 1rem/normal var(--nav-font-family);
     --submenu-mobile-font: normal 400 1rem/normal var(--nav-font-family);
     --header-font: normal 300 1.125rem/normal var(--nav-font-family);
@@ -52,10 +54,13 @@
     --btn-font: normal 700 1.4063rem/102.273% var(--heading-font-family);
 
     /* Transitions */
+    --container-shrink: all 1.5s ease;
+    --section-remove: height 1.5s ease, padding 1.5s ease, margin 1.5s ease;
     /* --box-a-transition: all 0.5s ease; */
 
     /* Switch-related variables */
-    --switch-width: 50px;
+    --record-width: 100px;
+    --record-height: 36px;
 
     /* Piano-related variables */
     --piano-width: 658px;
@@ -108,9 +113,12 @@ body {
 footer {
     position: sticky;
     top: 100vh;
+    z-index: 10;
 }
 
-button:focus, button:active, button:active:focus {
+button:focus,
+button:active,
+button:active:focus {
     outline: none;
 }
 
@@ -179,199 +187,138 @@ button:focus, button:active, button:active:focus {
 
 /**
  * ========
- * iOS Switch Styling
+ * Record Timer Styling
  * ========
 **/
 
-/* iOS-like switch styling */
-.switch {
-    min-width: var(--switch-width);
-    width: var(--switch-width);
+.record-wrapper {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    /* Spacing of sharp image */
-    margin-right: 2px;
-}
-
-/* Default "Off" state */
-.switch .switch-body {
-    background-color: #DDDDDD;
-    border: solid 1px #808080;
-    min-width: var(--switch-width);
-    width: var(--switch-width);
-    /* 48px if smaller */
-    border-radius: 999px;
-    cursor: pointer;
-
-    transition: all 0.25s ease;
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.10);
-}
-
-.switch .switch-body .toggle {
-    background-color: white;
-    width: calc(var(--switch-width) / 2);
-    height: calc(var(--switch-width) / 2);
-
-    border-radius: 50%;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-    border: solid 1px gray;
-    box-sizing: border-box;
-    transition: all 0.4s ease;
-}
-
-.switch.active .switch-body {
-    background-color: #4FA3FF; /* #51D88A; */
-}
-
-.switch.active .switch-body .toggle {
-    transform: translateX(100%);
-}
-
-.switch input[type=checkbox] {
-    display: none;
-}
-
-.switch-wrapper {
-    display: flex;
-    border: var(--switch-wrapper-border);
+    border: var(--record-wrapper-border);
     border-radius: 5px;
     padding: 4px 3px 4px 0;
+    /* justify-content: flex-start; */
+    vertical-align: middle;
+    /* max-height: calc(var(--record-width) / 2); */
+    width: var(--record-width);
+    height: var(--record-height);
 
     /* padding-left: 12px;   Equal to general width of #switch-flat img */
 }
 
-#switch-flat, #switch-sharp {
-    height: calc(var(--switch-width) / 2);
+.record-wrapper svg {
+    width: 37px;
+    height: var(--record-height);
 }
 
-@media screen and (min-width: 576px) {
+.record-wrapper p {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    font: var(--record-font);
+    color: var(--body-colour);
+    letter-spacing: -0.2px;
+}
+
+#record-circle circle {
+    transform-origin: center center;
+    /* For scaling circle via css */
+    fill: rgb(184, 184, 184);
+    stroke: #646464;
+    stroke-width: .5px;
+    transition: fill 0.7s ease;
+}
+
+/* Toggled class applied on #record-circle svg element */
+#record-circle.recording {
+    animation: 1.5s recordBlink ease infinite;
+    -webkit-animation: 1.5s recordBlink ease infinite;
+    -moz-animation: 1.5s recordBlink ease infinite;
+    animation-delay: 0.35s;
+}
+
+#record-circle.recording circle {
+    fill: red;
+}
+
+@keyframes recordBlink {
+
+    from,
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 575px) {
     :root {
-        --switch-width: 60px;
+        --record-width: 90px;
     }
 
-    .switch {
-        margin-left: 2px;
-        margin-right: 4px;
+    .record-wrapper p {
+        font-size: 17px;
     }
 
-    .switch-wrapper {
-        padding: 4px 3px 4px 0;
+    .record-wrapper svg {
+        width: 35px;
+    }
+
+    #record-circle circle {
+        transform: scale(0.85, 0.85);
     }
 }
 
 /**
  * ========
- * Piano Keyboard Styling
+ * Wavesurfer.js 
  * ========
 **/
 
-span {
-    font-family: sans-serif;
-}
-
-.piano-wrapper {
+.wave-wrapper {
     /* margin-top: 40px; */
     display: flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
     /* height: 222px; */
+    margin-top: 13px;
+    margin-bottom: 35px;
 }
 
-.piano {
-    /*full piano width: 658px; white key width: 47px; */
-    /* #141414; */
-    border-radius: 20px;
-    width: 780px;
-    padding: 13px 61px 35px 61px;
+#waveform {
+    width: 658px;
+    height: 10rem;
+    border: 2px solid black;
+    border-radius: 5px;
+    /* box-shadow: 4px 4px 2px 0px rgba(0, 0, 0, 0.50); */
+    /* padding: 13px 61px 35px 61px; */
 }
 
-.piano-keys {
-    /* border: 1px solid #000000; */
-    display: flex;
-    /* max-width: var(--piano-width); */
+#recorded-wave ::part(hover-label):before {
+    content: '⏱️ ';
 }
 
-.piano-keys .key {
-    cursor: pointer;
-    user-select: none;
-    list-style: none;
-    color: #a2a2a2;
-    transition: var(--keydown-transition);
-}
-
-.piano-keys div {
+#mic-wave,
+#recorded-wave {
+    display: none;
+    /* Change to display when recording button is pressed */
     position: relative;
     width: 100%;
-    height: 100%;
-    transition: var(--keydown-transition);
-}
-
-.piano-keys div>span {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    font-size: 18px;
-    text-align: center;
-}
-
-.piano-keys .black {
-    width: var(--black-key-width);
-    height: 129px;
-    margin: 0 calc(var(--black-key-width) / -2);
-    border-radius: 0 0 5px 5px;
-    border-top: 1.5px solid #000000;
-    box-sizing: content-box;
-    background: linear-gradient(#333333, #000000);
-
-    z-index: 2;
-}
-
-.black-down {
-    /* .piano-keys .black:hover { */
-    background: linear-gradient(to bottom, #000000, #434343);
-    box-shadow: inset -5px 5px 40px rgba(255, 255, 255, 0.3);
-}
-
-.piano-keys .white {
-    width: var(--white-key-width);
-    height: 219px;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    box-shadow: 3px 3px 2px 0px rgba(0, 0, 0, 0.50);
-    background: #DDDDDD;
-    /*linear-gradient(#FFFFFF 96%, #EEEEEE 4%);*/
+    height: 0%;
     overflow: hidden;
-    z-index: 1;
-}
-
-.piano-keys .white div {
-    width: 100%;
-    height: 97%;
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    border: 0.25px solid #000000;
-    box-sizing: content-box;
-}
-
-/* Note: .white-down is applied to li; this affects inner div of li */
-.white-down div {
-    background: linear-gradient(to bottom, #FFFFFF 0%, #EEEEEE 100%);
-    box-shadow: inset -5px 5px 20px rgba(0, 0, 0, 0.2);
-    height: 100%;
+    transition: all 1s ease 1s;
 }
 
 @media screen and (max-width: 768px) {
-    .piano-wrapper {
+    .wave-wrapper {
         overflow-x: scroll;
         align-items: start;
         justify-content: left;
 
-        border: 1px solid #000;
-        border-radius: 8px;
-        height: 222px;
+        /* border: 1px solid #000; */
+        /* border-radius: 8px; */
         margin: 35px 0;
     }
 
@@ -379,15 +326,368 @@ span {
         margin-top: 0;
     }
 
-    .piano {
+    #waveform {
         padding: 0;
+        margin: 0;
     }
 
 }
 
 /**
  * ========
- * General "Keyboard Section" Code
+ * Drag and Drop File Input
+ * ========
+**/
+
+.box-dragdrop,
+.box-icon,
+.box-uploading,
+.box-success,
+.box-error {
+    display: none;
+}
+
+.drop-in-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+
+    max-width: 663px;
+    width: auto;
+    min-height: 323px;
+    height: auto;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 32px;
+
+    border-radius: 5px;
+    border: 2px solid #C8C8C8;
+    background: #FCFCFC;
+}
+
+.drop-box {
+    width: calc(100% - 55px);
+
+    height: calc(100% - 55px);
+    /* height: auto; */
+
+    background: #EBF3FB;
+    position: relative;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    text-align: center;
+    vertical-align: middle;
+    font: var(--body-font);
+    color: #0C2D87;
+}
+
+.box-input {
+    padding-top: calc(10% - (18px / 2));
+}
+
+.drop-box.support-dragdrop .box-input {
+    padding-top: 0;
+}
+
+/* If drag and drop is supported, then this class is added */
+.drop-box.support-dragdrop {
+    /* outline: 2.5px dashed #7A90DE;
+            outline-offset: -12px; */
+    -webkit-transition: background-color .15s linear;
+    transition: background-color .15s linear;
+}
+
+.drop-box.support-dragdrop .box-outline {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: calc(100% - 24px);
+    /* width: auto; */
+    height: calc(100% - 24px);
+    opacity: 1;
+
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%237A90DEFF' stroke-width='3' stroke-dasharray='10%2c 16' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    transition: width .15s ease-in-out, height .15s ease-in-out, top .15s ease-in-out, left .15s ease-in-out, opacity .2s linear;
+    -webkit-transition: width .15s ease-in-out, height .15s ease-in-out, top .15s ease-in-out, left .15s ease-in-out, opacity .2s linear;
+}
+
+.drop-box.support-dragdrop .box-dragdrop {
+    display: inline;
+}
+
+.drop-box.support-dragdrop .box-icon {
+    width: 162px;
+    height: 112px;
+    display: block;
+    margin-bottom: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.drop-box.support-dragdrop .box-icon img {
+    width: auto;
+    /* 162px */
+    height: 100%;
+}
+
+/* During/after the upload process, hide main input icon + text of drop box */
+.drop-box.is-uploading .box-input *,
+.drop-box.is-success .box-input *,
+.drop-box.is-error .box-input * {
+    visibility: hidden;
+}
+
+.drop-box.is-success .box-input .box-outline,
+.drop-box.is-error .box-input .box-outline {
+    visibility: visible;
+}
+
+.drop-box.is-uploading .box-uploading,
+.drop-box.is-success .box-success,
+.drop-box.is-error .box-error {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+/* Uploading prompt */
+.drop-box.is-uploading .box-uploading {
+    font-weight: 400;
+    font-style: italic;
+}
+
+.drop-box.is-uploading .box-input .box-outline {
+    visibility: visible;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.box-success {
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+
+/* Success prompt */
+.box-success #success-msg {
+    -webkit-animation: pop-up .25s ease;
+    animation: pop-up .25s ease;
+
+    margin-bottom: 7px;
+}
+
+.box-success #success-msg #success-filename {
+    font-style: italic;
+}
+
+.box-success #success-reupload {
+    margin-top: 7px;
+    transform: scale(0);
+    animation: pop-up-gradual .35s ease .65s;
+    animation-fill-mode: forwards;
+}
+
+.box-success #success-reupload strong {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.box-success #success-reupload strong:hover,
+.box-success #success-reupload strong:focus,
+.box-success #success-reupload strong.has-focus {
+    color: #3E8DE3;
+}
+
+@-webkit-keyframes pop-up {
+    from {
+        -webkit-transform: scale(0);
+    }
+
+    75% {
+        -webkit-transform: scale(1.1);
+    }
+
+    to {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes pop-up {
+    from {
+        transform: scale(0);
+    }
+
+    75% {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes pop-up-gradual {
+    from {
+        -webkit-transform: scale(0);
+    }
+
+    to {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes pop-up-gradual {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Error prompt */
+.box-error #error-msg {
+    margin-bottom: 7px;
+}
+
+.box-error #error-reupload {
+    margin-top: 7px;
+}
+
+.box-error #error-reupload strong {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.box-error #error-reupload strong:hover,
+.box-error #error-reupload strong:focus,
+.box-error #error-reupload strong.has-focus {
+    color: #3E8DE3;
+}
+
+/* When mouse with file drags over drop-box, change appearance slightly to be more intuitive */
+.drop-box.is-dragover {
+    /* outline-color: #5E7ADF; */
+    background-color: #FCFCFC;
+}
+
+.drop-box.is-dragover .box-outline {
+    width: calc(100% - 44px);
+    height: calc(100% - 44px);
+    top: 22px;
+    left: 22px;
+}
+
+#prerecordFile {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#prerecordFile+label {
+    position: relative;
+    text-align: center;
+
+    max-width: 60%;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#prerecordFile+label strong {
+    font-weight: 700;
+    transition: color .25s ease;
+    text-decoration: underline;
+}
+
+#prerecordFile+label:hover strong,
+#prerecordFile:focus+label strong,
+#prerecordFile.has-focus+label strong {
+    color: #3E8DE3;
+}
+
+#prerecordFile:focus+label,
+#prerecordFile.has-focus+label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+@media screen and (max-width: 768px) {
+    #prerecordFile+label {
+        font-size: 16px;
+    }
+
+    .box-uploading {
+        font-size: 16px;
+    }
+
+    .box-error {
+        font-size: 16px;
+    }
+
+    .box-success {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .drop-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0;
+        min-height: calc(323px - 55px);
+        height: auto;
+        font-size: 14px;
+    }
+
+    .box-input {
+        width: 100%;
+        /* padding-top: calc(((323px - 55px) / 2) - (18px / 2)); */
+    }
+
+    #prerecordFile+label {
+        font-size: 14px;
+    }
+
+    .box-uploading {
+        font-size: 14px;
+    }
+
+    .box-error {
+        font-size: 14px;
+    }
+
+    .box-success {
+        font-size: 14px;
+    }
+
+    .drop-box.is-uploading .box-uploading,
+    .drop-box.is-success .box-success,
+    .drop-box.is-error .box-error {
+        left: 12.5%;
+        max-width: 75%;
+        width: auto;
+    }
+}
+
+/**
+ * ========
+ * General "Record Section" Code
  * ========
 **/
 
@@ -397,6 +697,7 @@ span {
     margin-bottom: 78px;
     width: auto;
     overflow: hidden;
+    transition: var(--section-remove);
 }
 
 #heading {
@@ -431,9 +732,60 @@ span {
     border: var(--content-border);
     /* filter: blur(1.5px); */
     background: var(--bg-colour-1);
+    transition: var(--section-remove);
 }
 
-#text {
+.mic-wrapper {
+    position: relative;
+    height: auto;
+    border-bottom: 1px solid #C8C8C8;
+    padding-bottom: 45px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 44px;
+
+    transition: var(--section-remove);
+}
+
+.wrapper-divider {
+    display: flex;
+    position: absolute;
+    bottom: -20px;
+    left: calc(50% - (85px / 2));
+    right: calc(50% - (85px / 2));
+    width: 85px;
+    height: 42px;
+
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    background: var(--bg-colour-1);
+
+    transition: var(--section-remove);
+}
+
+.wrapper-divider h2 {
+    color: var(--body-colour);
+    text-align: center;
+    font: var(--h2-font-2);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 1.3px;
+}
+
+.file-wrapper {
+    position: relative;
+    height: auto;
+    /* padding-bottom: 33px; */
+    margin-left: 30px;
+    margin-right: 30px;
+
+    transition: var(--section-remove);
+}
+
+#mic-text,
+#file-text {
     justify-content: center;
     align-items: center;
 }
@@ -469,17 +821,33 @@ span {
     text-align: center;
 }
 
-#btn-identify {
+#mic-btn-identify,
+#file-btn-identify {
     cursor: pointer;
 }
 
+#mic-btn-identify:disabled,
+#file-btn-identify:disabled {
+    background: #9acafd;
+    box-shadow: none;
+    cursor: default;
+}
+
+#mic-btn-identify.active,
+#file-btn-identify.active {
+    transform: translateY(4px);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    /* Basically just shades background color w/out changing it */
+}
+
+
 /* Top row of buttons and switch */
 #row-btn {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-between;
 
-    max-width: 658px; 
+    max-width: 658px;
     padding: auto;
     margin: auto;
     /* margin-top: 39px; */
@@ -500,9 +868,17 @@ span {
     border: 1px solid #04060D;
     background: var(--blue-btn);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
 }
 
-#btn-record, #btn-play {
+#media-btn button:disabled {
+    background: #9acafd;
+    box-shadow: none;
+    cursor: default;
+}
+
+#btn-record,
+#btn-play {
     margin-right: 19px;
 }
 
@@ -526,11 +902,22 @@ span {
         padding-right: 40px;
     }
 
+    .mic-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .file-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     #row-btn {
         margin-top: 35px;
     }
 
-    #btn-record, #btn-play {
+    #btn-record,
+    #btn-play {
         margin-right: 1vw;
     }
 
@@ -541,5 +928,316 @@ span {
 
 #media-btn button.active {
     transform: translateY(4px);
-    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4); /* Basically just shades background color w/out changing it */
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    /* Basically just shades background color w/out changing it */
 }
+
+#btn-record:disabled {
+    transform: translateY(4px);
+}
+
+/**
+ * ========
+ * Loading Screen Code
+ * ========
+**/
+
+.loading-screen {
+    --colour-1: #55A6FF;
+    --colour-2: #FFFFFF;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+
+    position: fixed;
+    height: 0;
+    width: 100%;
+    background: var(--colour-1);
+    z-index: -1;
+    opacity: 0;
+
+    transition: opacity 0.5s ease;
+}
+
+.show-loading {
+    z-index: 9;
+    opacity: 0.95;
+    height: 100%;
+    animation: change-clr-1-bg 3.5s linear infinite;
+    animation-delay: 0.75s;
+}
+
+.load-wrapper {
+    height: fit-content;
+    margin-bottom: 7.5%;
+}
+
+#load-text {
+    text-align: center;
+    height: fit-content;
+    width: fit-content;
+}
+
+#load-text p {
+    position: relative;
+    font-size: 32px;
+    
+    color: var(--colour-2);
+    font-family: var(--body-font-family);
+    font-weight: 300;
+    font-style: italic;
+}
+
+.show-loading #load-text p {
+    animation: change-clr-2 3.5s linear infinite;
+    animation-delay: 0.75s;
+}
+
+#load-text p::after {
+    position: absolute;
+    left: 100%;
+    text-align: left;
+
+    content: "";
+    font-size: 32px;
+    color: var(--colour-2);
+    font-family: var(--body-font-family);
+    font-weight: 300;
+    font-style: italic;
+}
+
+.show-loading #load-text p::after {
+    animation: dot-animation 3s linear infinite, change-clr-2 3.5s linear infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes dot-animation {
+    from {
+        content: "";
+    }   
+    25% {
+        content: ".";
+    } 
+    50% {
+        content: "..";
+    }
+    75% {
+        content: "...";
+    }
+}
+
+#load-animation {
+    width: 300px;
+    height: 125px;
+}
+
+.note {
+    position: relative;
+    width: 50px;
+    height: 30px;
+    /* background-color: white; */
+    border-radius: 50px / 30px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.note-inner {
+    position: absolute;
+    content: "";
+    width: 28px;
+    height: 15px;
+    box-shadow: 0 0 0 300vh var(--colour-2);
+    border-radius: 28px / 15px;
+    left: 11px;
+    top: 7.5px;
+    transform: rotate(50deg);
+}
+
+.show-loading .note-inner {
+    animation: change-clr-2-inner 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    animation-delay: 0.75s;
+}
+
+#note-1 {
+    transform: scale(0);
+}
+
+.show-loading #note-1 {
+    animation: note-1-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    animation-delay: 0.75s;
+}
+
+#note-2 {
+    transform: scale(0);
+}
+
+.show-loading #note-2 {
+    animation: note-2-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    animation-delay: 0.75s;
+}
+
+#note-3 {
+    transform: scale(0);
+}
+
+.show-loading #note-3 {
+    animation: note-3-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes note-1-drop {
+    from {
+        transform: translateY(-100px) translateX(0px) scale(0);
+    }
+    20% {
+        transform: translateY(-100px) translateX(0px) scale(0);
+    }
+    21.25% {
+        transform: translateY(-75px) translateX(0px) scale(0.5);
+    }
+    31.25% {
+        transform: translateY(0px) translateX(0px) scale(1);
+    }
+    31.25025% {
+        transform: translateY(10px) translateX(0px) scale(1.05);
+    }
+    31.5% {
+        transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)))
+    }
+    32.5%, 60% {
+        transform: translateY(0px) translateX(0px) scale(1);
+    }
+    80%, to {
+        transform: translateY(0) translateX(150px) scale(0);
+    }
+}
+
+@keyframes note-2-drop {
+    from {
+        transform: translateY(-100px) scale(0);
+    }
+    10% {
+        transform: translateY(-100px) scale(0);
+    }
+    11.25% {
+        transform: translateY(-75px) scale(0.5);
+    }
+    21.25% {
+        transform: translateY(0px) scale(1);
+    }
+    21.25025% {
+        transform: translateY(10px) scale(1.05);
+    }
+    21.5% {
+        transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
+    }
+    22.5%, 60% {
+        transform: translateY(0px) translateX(0px) scale(1);
+    }
+    80%, 100% {
+        transform: translateY(0) translateX(-150px) scale(0);
+    }
+}
+
+@keyframes note-3-drop {
+    from, 0.5% {
+        transform: translateY(-100px) scale(0);
+    }
+    1.25% {
+        transform: translateY(-75px) scale(0.5);
+    }
+    11.25% {
+        transform: translateY(0px) scale(1);
+    }
+    11.25025% {
+        transform: translateY(10px) scale(1.05);
+    }
+    11.5% {
+        transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
+    }
+    12.5%, 60% {
+        transform: translateY(0px) translateX(0px) scale(1);
+    }
+    80%, 100% {
+        transform: translateY(0) translateX(150px) scale(0);
+    }
+}
+
+@keyframes change-clr-1-bg {
+    /* from {
+        background-color: var(--colour-1);
+    } */
+    31.24999% {
+        background-color: var(--colour-1);
+    }
+    31.25% {
+        background-color: var(--colour-2);
+    }
+    100% {
+        background-color: var(--colour-2);
+    }
+}
+
+@keyframes change-clr-2 {
+    /* 0% {
+        color: var(--colour-2);
+    } */
+    31.24999% {
+        color: var(--colour-2);
+    }
+    31.25% {
+        color: var(--colour-1);
+    }
+    100% {
+        color: var(--colour-1);
+    }
+}
+
+@keyframes change-clr-2-inner {
+    0% {
+        border-radius: 28px / 15px;
+        width: 28px;
+        height: 15px;
+        left: 11px;
+        top: 7.5px;
+        animation-timing-function: steps(1, end);
+        box-shadow: 0 0 0 300vh var(--colour-2);
+    }
+    /* 31.24% {
+        box-shadow: 0 0 0 300vh var(--colour-2);
+    } */
+    31.25% {
+        border-radius: 28px / 15px;
+        width: 28px;
+        height: 15px;
+        left: 11px;
+        top: 7.5px;
+        box-shadow: 0 0 0 300vh var(--colour-1);
+    }
+    100% {
+        border-radius: 28px / 15px;
+        width: 28px;
+        height: 15px;
+        left: 11px;
+        top: 7.5px;
+        box-shadow: 0 0 0 300vh var(--colour-1);
+    }
+}
+
+@media screen and (max-width: 575px) {
+    #load-animation, #load-text {
+        transform: scale(0.7);
+        /* transform: scale(0.7); */
+    }
+}
+
+@media screen and (max-height: 500px) {
+    #load-animation, #load-text {
+        transform: scale(0.7);
+        /* transform: scale(0.7); */
+    }
+}
+

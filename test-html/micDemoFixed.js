@@ -176,7 +176,7 @@ async function uploadRecording(fixedBlob) {
 
     wsSettings["url"] = "../audio/" + micFileName;
     ws = WaveSurfer.create(wsSettings);
-    alert(`${duration}, ${ws.getDuration()} => ${duration - ws.getDuration()}`);
+    // alert(`${duration}, ${ws.getDuration()} => ${duration - ws.getDuration()}`);
 
     playBtn.addEventListener("click", playRecording);
     muteBtn.addEventListener("click", muteRecording);
@@ -243,13 +243,14 @@ function muteRecording() {
 
 async function uploadFile() {
     // First check if file is of the correct format
-    if (!["wav", "ogg", "webm", ".mp3"].includes(uploadInput.value.split(".")[-1])) {
+    // alert(`${uploadInput.value.split(".").slice(-1).toString() === "webm"} ${typeof uploadInput.value.split(".").slice(-1)}, ${"webm"}`)
+    if (!["wav", "ogg", "webm", "mp3"].includes(uploadInput.value.split(".").slice(-1).toString())) {
         alert("Please enter a file of one of these extension types: '.wav', '.ogg', '.mp3', or '.webm'.");
         uploadInput.value = null;
     } else {
         // Create new form data obj and add file
-        prerecFileName = uploadInput.value.split("/")[-1];
-        alert(prerecFileName);
+        prerecFileName = uploadInput.value.split("\\").slice(-1).toString();
+        // alert(prerecFileName);
         const data = new FormData();
         data.append("file", uploadInput.files[0]);   // param: name of field entry in formData, actual data, and actual name of file/data
 
@@ -258,13 +259,20 @@ async function uploadFile() {
 
         let status = await uploadAudio(data);
         console.log("Awaited upload file status: " + status);
+
+        // Enable button for identifying buttons, if disabled, and clear btn label from past results
+        fileFinishBtn.disabled = false;
+        fileNoteLbl.textContent = "Notes: ";
     }
 
 }
 
 async function getFileNotes() {
     let notes = await requestNotes(prerecFileName);
-    return notes;
+    console.log("Received notes!");
+
+    let notesStr = notes.toString();
+    fileNoteLbl.textContent = "Notes: " + notesStr;
 }
 
 // Unused WIP, implement later
@@ -311,27 +319,6 @@ function uploadAudio(formData) {
     })
 }
 
-// function uploadFile(formData) {
-//     return new Promise((resolve, reject) => {
-//         console.log("Uploading prerecorded file...");
-//         fetch("http://localhost:5000/saveAudio", {
-//             method: "POST",
-//             body: formData
-//         })
-//         .then((response) => {
-//             console.log("Finished uploading prerecorded audio!")
-//             resolve(response.status)
-//         })
-//         .catch((err) => {
-//             console.error(err);
-//             alert("Sorry, there was an error uploading your file. Please try again later.");
-//             console.log("Upload failed...");
-
-//             reject(err);
-//         })
-//     })
-// }
-
 function clearFiles() {
     fetch("http://localhost:5000/clearFiles", {
         method: "POST"
@@ -377,6 +364,16 @@ function main() {
     uploadInput.addEventListener("change", () => {
         uploadFile();
     })
+
+    fileFinishBtn.addEventListener("click", () => {
+        if (prerecFileName != "") {
+            // console.log("test");
+            getFileNotes();
+        } else {
+            // console.log("fail test");
+        }
+    })
+
 
     // Check if mediaRecorder is supported in the current browser
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {

@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     },
     destination: function (req, file, cb) {
-        cb(null, __dirname + '/audio/')
+        cb(null, __dirname + '/assets/vendor/audio/user/')
     },
 }) 
  
@@ -26,7 +26,7 @@ const port = 5000;
 
 //////// APP-RELATED VARIABLES ////////
 let filename = "";
-const AUDIO_DIR = path.join(__dirname, "audio");
+const AUDIO_DIR = path.join(__dirname, "assets/vendor/audio/user");
 
 //////// FUNCTIONS ////////
 
@@ -58,6 +58,8 @@ function main() {
     app.get("/mic-demo", (req, res) => {    // Redirect to complete mic demo
         res.sendFile("test-html/micDemo.html", { root: __dirname });
     });
+
+    app.get("/")
 
     // For get requests of data (test)
     let test = {title: "Hello Post", text: "Hello World! GET request successful!"}
@@ -126,6 +128,12 @@ function main() {
     app.listen(port, () => {
         // Prints out this message to console every time someone accesses server
         console.log(`Server listening at "http://localhost:${port}".`);
+    });
+
+    // Redirect to 404 page if unknown URL
+    app.use((req, res, next) => {
+        res.status(404);
+        res.redirect("/misc/error404.html");
     });
 }
 

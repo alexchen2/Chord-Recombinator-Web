@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>ChordWizard | 404: Not Found</title>
+    <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400;700&family=Space+Grotesk:wght@500;700&family=Spline+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <style>
+        /* 
+        * ========
+        * Variables
+        * ========
+        */
+
+        :root {
+            /* Colours */
+            --blue-1: #3E8DE3;
+            --blue-2: #0C2D87;
+            --blue-h: #3F6ADE;
+            --blue-btn: #4FA3FF;
+            --blue-link: #3366CC;
+            --bg-colour-1: #FFFFFF;
+            --bg-colour-2: #F3F3F3;
+            --bg-colour-3: #B3B3B3;
+            --bg-colour-4: #55A6FF;
+            --body-colour: #04060D;
+
+            /* Borders & Shadows */
+            --section-border: 1px solid #C8C8C8;
+            --section-border-2: 5px solid #C8C8C8;
+            --more-input-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.40);
+            --content-border: 2px solid #D7D7D8;
+            --btn-shadow: 0rem 0.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
+            --btn-border: .0625rem solid #000000;
+
+            /* Fonts & Font Families */
+            --body-font-family: Inter, "Inria Sans", sans-serif;
+            --nav-font-family: "Inria Sans", sans-serif;
+            --heading-font-family: "Space Grotesk", sans-serif;
+            --record-font-family: "Spline Sans", sans-serif;
+
+            --body-font: normal 300 18px/140% var(--body-font-family);
+            --box-body-font: normal 400 .9375rem/150% var(--body-font-family);
+            --box-a-font: normal 400 15px/22.5px var(--body-font-family);
+            --submenu-font: normal 300 1rem/normal var(--nav-font-family);
+            --submenu-mobile-font: normal 400 1rem/normal var(--nav-font-family);
+            --header-font: normal 300 1.125rem/normal var(--nav-font-family);
+            --footer-font: normal 700 1.25rem/normal var(--nav-font-family);
+            --footer-logo-font: normal 300 1.0625rem/normal var(--heading-font-family);
+            --h1-font: normal 700 2.25rem/normal var(--heading-font-family);
+        }
+
+        /**
+        * ========
+        * General Page Contents
+        * ========
+        **/
+
+        body {
+            background-color: var(--bg-colour-2);
+        }
+
+        h1 {
+            font: var(--h1-font);
+            color: var(--blue-h);
+            letter-spacing: -0.0112rem;
+        }
+
+        p {
+            font: var(--body-font);
+            color: var(--body-colour);
+        }
+
+        /* Lower entire page contents below header */
+        main {
+            max-width: 100%;
+            height: auto;
+            margin-top: 3.875rem;
+            /* overflow-y: hidden; */
+        }
+
+        /* Sticky footer fix */
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            /* min-height: 100vh; */
+        }
+
+        footer {
+            position: sticky;
+            top: 100vh;
+        }
+
+        /* header {
+        max-width: 100vw;
+        } */
+
+        @media screen and (max-width: 62.5rem) {
+            main {
+                margin-bottom: 0;
+            }
+
+            footer {
+                position: relative;
+                top: auto;
+            }
+        }
+
+        /**
+        * ========
+        * "Hero" / Title
+        * ========
+        **/
+
+        /* For mobile phone screens */
+        .title-content div {
+            padding-top: 3rem;
+            padding-bottom: 2.1875rem;
+            padding-left: 2.1875rem;
+            padding-right: 2.1875rem;
+
+        }
+
+        .title {
+            text-align: center;
+            font-size: 1.875rem;
+            margin-bottom: .9375rem;
+        }
+
+        .subtitle {
+            font-size: .9375rem;
+            text-align: center;
+            max-width: 40rem;
+            /*  35.8125rem  */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* For tablets and desktop screens */
+        @media screen and (min-width: 36rem) {
+            .title-content div {
+                padding-top: 3.4375rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .title {
+                font-size: 2.25rem;
+                margin-bottom: .8125rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    <!-- JQuery (required for bootstrap) -->
+    <script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <!-- <div id="load-header" include-html="header.html"></div> -->
+    <header id="header" class="page fixed-top">
+        <nav class="navbar navbar-expand-sm">
+            <div class="navbar-header row">
+                <div class="col float-left">
+                    <a class="" href="">
+                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo"
+                            alt="ChordWizard logo">
+                    </a>
+                </div>
+
+
+                <button class="float-right navbar-toggle">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu"
+                        alt="hamburger-menu">
+                </button>
+
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li class="navbar-dropdown">
+                    <button class="navbar-subbtn"><a href="../chords/index.html">Chords</a>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow"
+                            alt="dropdown-arrow">
+                    </button>
+
+                    <ul class="navbar-submenu">
+                        <li><a href="../chords/keyboard.html">Keyboard Input</a></li>
+                        <li><a href="../chords/record.html">Microphone Input</a></li>
+                        <li><a href="../chords/note-text.html">Text / Staff Line Input</a></li>
+                    </ul>
+                </li>
+                <li><a href="../scales/index.html">Scales</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="title-content hero-content display-table">
+                <div class="container">
+                    <h1 class="title hero-title">Error 404: Page Not Found</h1>
+                    <p class="subtitle hero-subtitle" style="margin-top: 20px">Sorry, we couldn't find the page you were looking for. Either this page doesn't exist at this moment, or you may have mistyped the webpage URL.</p>
+
+                    <p class="subtitle hero-subtitle" style="margin-top: 20px">While you're here, here's a picture of a dog staring into your soul:</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="doge" style="width: 600px; margin: auto; margin-top: 15px;">
+            <img src="../assets/vendor/img/dogev2.png" alt="A dog staring into your soul."
+                style="max-width: 600px; width: auto; height: auto;">
+        </div>
+
+    </main>
+
+    <footer class="footer"> <!--style="visibility: hidden;"-->
+        <div class="footer-socials">
+            <div class="footer-icons">
+                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img
+                        src="../assets/vendor/img/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
+                <a href="https://github.com/alexchen2"><img src="../assets/vendor/img/btn/github.png"
+                        alt="Alex Chen's Github"></a>
+            </div>
+            <p id="footer-logo">
+                © Chord<b>Wizard</b> - 2023
+            </p>
+        </div>
+
+        <ul class="footer-menu">
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../privacy.html">Privacy</a></li>
+            <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+
+    </footer>
+
+    <!-- Vendor scripts -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local scripts -->
+    <!-- <script src="../assets/js/base.js"></script> -->
+    <script src="../assets/js/includeHTML.js"></script>
+
+    <script src="../assets/js/base.js"></script>
+    <script>
+        const bodyElem = document.querySelector("body");
+        const mainElem = document.querySelector("main");
+        const header = document.querySelector("header");
+        const footer = document.querySelector("footer");
+
+        "DOMContentLoaded resize".split(" ").forEach((event) => {
+            window.addEventListener(event, () => {
+                if (window.innerWidth > 1000 && mainElem.offsetHeight < (window.innerHeight - header.offsetHeight)) {
+                    footer.style.position = "fixed";
+                    footer.style.top = "auto";
+                    footer.style.bottom = "0";
+                } else {
+                    footer.style.position = "sticky";
+                    footer.style.top = "100vh";
+                }
+            })
+        })
+
+
+    </script>
+
+</body>
+
+</html>

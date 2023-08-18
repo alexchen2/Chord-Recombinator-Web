@@ -1,12 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>ChordWizard</title>
+    <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css"> 
+
+    <!-- JQuery (required for bootstrap) -->
+    <script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
 </head>
+
 <body>
-    <script src="scripts/console.js" type="module"></script>
-    <script src="scripts/music.js" type="module"></script>
+    <!-- <div id="load-header" include-html="header.html"></div> -->
+    <header id="header" class="page fixed-top">
+        <nav class="navbar navbar-expand-sm">
+            <div class="navbar-header row">
+                <div class="col float-left">
+                    <a class="" href="">
+                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
+                    </a>
+                </div>
+                
+
+                <button class="float-right navbar-toggle">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
+                </button>
+                
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="navbar-dropdown">
+                    <button class="navbar-subbtn"><a href="chords/index.html">Chords</a>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu">
+                        <li><a href="chords/keyboard.html">Keyboard Input</a></li>
+                        <li><a href="chords/record.html">Microphone Input</a></li>
+                        <li><a href="chords/note-text.html">Text / Staff Line Input</a></li>
+                    </ul>
+                </li>
+                <li><a href="scales/index.html">Scales</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+    </main>
+
+    <footer class="footer" style="overflow: hidden"> <!--style="visibility: hidden;"-->
+        <div class="footer-socials">
+            <div class="footer-icons">
+                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img
+                        src="../assets/vendor/img/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
+                <a href="https://github.com/alexchen2"><img src="../assets/vendor/img/btn/github.png"
+                        alt="Alex Chen's Github"></a>
+            </div>
+            <p id="footer-logo">
+                © Chord<b>Wizard</b> - 2023
+            </p>
+        </div>
+
+        <ul class="footer-menu">
+            <li><a href="about.html">About</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+
+    </footer>
+
+    <!-- Vendor scripts -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local scripts -->
+    <!-- <script src="../assets/js/base.js"></script> -->
+    <script src="../assets/js/includeHTML.js"></script>
+    
+    <script src="../assets/js/base.js"></script>
+
 </body>
+
 </html>

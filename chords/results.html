@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>ChordWizard | Chords</title>
+    <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400;700&family=Space+Grotesk:wght@500;700&family=Spline+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/chords/results.css">
+
+    <!-- JQuery (required for bootstrap) -->
+    <script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <!-- <div id="load-header" include-html="header.html"></div> -->
+    <header id="header" class="page fixed-top">
+        <nav class="navbar navbar-expand-sm">
+            <div class="navbar-header row">
+                <div class="col float-left">
+                    <a class="" href="">
+                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
+                    </a>
+                </div>
+                
+
+                <button class="float-right navbar-toggle">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
+                </button>
+                
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li class="navbar-dropdown">
+                    <button class="navbar-subbtn"><a href="index.html">Chords</a>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu">
+                        <li><a href="keyboard.html">Keyboard Input</a></li>
+                        <li><a href="record.html">Microphone Input</a></li>
+                        <li><a href="note-text.html">Text / Staff Line Input</a></li>
+                    </ul>
+                </li>
+                <li><a href="../scales/index.html">Scales</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="title-content hero-content display-table">
+                <div class="container">
+                    <h1 class="title hero-title">Chord Recombinator</h1>
+                    <p class="subtitle hero-subtitle">Select a group of notes through various input methods and generate
+                        various chords containing them using our chord recombinator tool.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="section" class="container">
+            <h2 id="heading" class="container">Microphone Input</h2>
+
+            <div class="container" id="content">
+                <div class="mic-wrapper">
+                    <div id="row-btn">
+                        <div class="record-wrapper">
+                            <svg id="record-circle">
+                                <circle cx="18" cy="13" r="10" />
+                            </svg>
+
+                            <p id="record-timer">
+                                00:00
+                            </p>
+                            <!-- <img id="switch-flat" src="../assets/vendor/img/chords/flat.png" alt="">
+
+                            <img id="switch-sharp" src="../assets/vendor/img/chords/sharp.png" alt=""> -->
+                        </div>
+
+                        <div id="media-btn">
+                            <button id="btn-record">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/microphone-1.png" alt="">
+                            </button>
+                            <button id="btn-play" disabled>
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/play.png" alt="">
+                            </button>
+                            <button id="btn-mute" disabled>
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png" alt="">
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="wave-wrapper">
+                        <div id="waveform">
+                            <canvas id="mic-wave"></canvas>
+                            <div id="recorded-wave"></div>
+                        </div>
+                    </div>
+
+                    <div id="mic-text" class="text-center">
+                        <p class="text-body">
+                            Press the microphone button to start and stop recording.
+                            After reviewing your recording, press the button below to
+                            look up the related chords.
+                        </p>
+
+                        <button id="mic-btn-identify" class="text-btn" onclick="">
+                            <p>IDENTIFY CHORDS</p>
+                        </button>
+
+                    </div>
+
+                    <div class="wrapper-divider">
+                        <h2>OR</h2>
+                    </div>
+                </div>
+
+                <div class="file-wrapper">
+                    <div class="drop-in-area">
+                        <form class="drop-box">
+                            <!-- <form class="drop-box" method="post" action="" enctype="multipart/form-data"> -->
+                            <div class="box-input">
+
+                                <div class="box-outline"></div>
+
+                                <div class="box-icon">
+                                    <img src="../assets/vendor/img/chords/download-icon-1.png" alt="">
+                                </div>
+
+                                <input id="prerecordFile" type="file" id="file" />
+                                <label for="prerecordFile">
+                                    <strong>Click to choose a file</strong><span class="box-dragdrop"> or drag it
+                                        here</span>.
+                                </label>
+                                <!-- <button class="box-button" type="submit">Upload</button> -->
+                            </div>
+
+                            <div class="box-uploading">Uploading…</div>
+                            <div class="box-success">
+                                <div id="success-msg">Done uploading<span id="success-filename"></span>!</div>
+                                <div id="success-reupload"><strong>Click here</strong><span> to upload a different
+                                        file.</span></div>
+                            </div>
+
+                            <div class="box-error">
+                                <div id="error-msg">There was a problem uploading your file...</div>
+                                <div id="error-reupload"><span>Maybe try a </span><strong>different one?</strong></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="file-text" class="text-center">
+                        <p class="text-body">
+                            Drag and drop an audio file (.ogg, .wav, .webm, .mp3) or manually 
+                            choose one from your videos / file manager. Ensure that the audio 
+                            file only consists of separated single notes, or the chord recombinator 
+                            will fail. 
+                        </p>
+
+                        <button id="file-btn-identify" class="text-btn" onclick="">
+                            <p>IDENTIFY CHORDS</p>
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer"> <!--style="visibility: hidden;"-->
+        <div class="footer-socials">
+            <div class="footer-icons">
+                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img
+                        src="../assets/vendor/img/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
+                <a href="https://github.com/alexchen2"><img src="../assets/vendor/img/btn/github.png"
+                        alt="Alex Chen's Github"></a>
+            </div>
+            <p id="footer-logo">
+                © Chord<b>Wizard</b> - 2023
+            </p>
+        </div>
+
+        <ul class="footer-menu">
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../privacy.html">Privacy</a></li>
+            <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+
+    </footer>
+
+    <!-- Vendor scripts -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local scripts -->
+    <!-- <script src="../assets/js/base.js"></script> -->
+    <!-- <script src="../assets/js/includeHTML.js"></script> -->
+
+    <script src="../assets/js/base.js"></script>
+    <script src="../assets/js/chords/results.js" type="module"></script>
+
+</body>
+
+</html>

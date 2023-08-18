@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400&family=Space+Grotesk:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400;700&family=Space+Grotesk:wght@500;700&family=Spline+Sans:wght@400;600&display=swap"
         rel="stylesheet">
 
     <!-- Vendor Stylesheets -->
@@ -32,41 +32,58 @@
             <div class="navbar-header row">
                 <div class="col float-left">
                     <a class="" href="">
-                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo"
-                            alt="ChordWizard logo">
+                        <img src="../assets/vendor/img/logo/logoB.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
                     </a>
                 </div>
-
+                
 
                 <button class="float-right navbar-toggle">
-                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu"
-                        alt="hamburger-menu">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
                 </button>
-
+                
             </div>
 
             <ul class="navbar-menu">
-                <li><a href="">Home</a></li>
-                <li><a href="">About</a></li>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
                 <li class="navbar-dropdown">
                     <button class="navbar-subbtn"><a href="index.html">Chords</a>
-                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow"
-                            alt="dropdown-arrow">
-                    </button>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
 
                     <ul class="navbar-submenu">
                         <li><a href="keyboard.html">Keyboard Input</a></li>
-                        <li><a href="">Microphone Input</a></li>
-                        <li><a href="">Text / Staff Line Input</a></li>
+                        <li><a href="record.html">Microphone Input</a></li>
+                        <li><a href="note-text.html">Text / Staff Line Input</a></li>
                     </ul>
                 </li>
-                <li><a href="">Scales</a></li>
+                <li><a href="../scales/index.html">Scales</a></li>
 
             </ul>
         </nav>
     </header>
 
     <main>
+        <div class="loading-screen">
+            <div class="load-wrapper">
+                <div id="load-animation">
+                    <div class="note" id="note-1">
+                        <div class="note-inner" id="note-1-inner"></div>
+                    </div>
+                    <div class="note" id="note-2">
+                        <div class="note-inner" id="note-2-inner"></div>
+                    </div>
+                    <div class="note" id="note-3">
+                        <div class="note-inner" id="note-3-inner"></div>
+                    </div>
+                </div>
+
+                <div id="load-text">
+                    <p>Processing Notes</p>
+                </div>
+            </div>
+        </div>
+
         <div class="hero">
             <div class="title-content hero-content display-table">
                 <div class="container">
@@ -81,165 +98,115 @@
             <h2 id="heading" class="container">Microphone Input</h2>
 
             <div class="container" id="content">
-                <div id="row-btn">
-                    <div class="switch-wrapper">
-                        <!-- <img id="switch-flat" src="../assets/vendor/img/chords/flat.png" alt="">
+                <div class="mic-wrapper">
+                    <div id="row-btn">
+                        <div class="record-wrapper">
+                            <svg id="record-circle">
+                                <circle cx="18" cy="13" r="10" />
+                            </svg>
 
-                        <img id="switch-sharp" src="../assets/vendor/img/chords/sharp.png" alt=""> -->
+                            <p id="record-timer">
+                                00:00
+                            </p>
+                            <!-- <img id="switch-flat" src="../assets/vendor/img/chords/flat.png" alt="">
+
+                            <img id="switch-sharp" src="../assets/vendor/img/chords/sharp.png" alt=""> -->
+                        </div>
+
+                        <div id="media-btn">
+                            <button id="btn-record" title="Start recording">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/microphone-1.png" alt="">
+                            </button>
+                            <button id="btn-play" title="Record using your microphone first." disabled>
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/play.png" alt="">
+                            </button>
+                            <button id="btn-mute" title="Record using your microphone first." disabled>
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png" alt="">
+                            </button>
+                        </div>
+
                     </div>
 
-                    <div id="media-btn">
-                        <button id="btn-record">
-                            <img class="mx-auto d-block" src="../assets/vendor/img/btn/microphone-1.png" alt="">
-                        </button>
-                        <button id="btn-play">
-                            <img class="mx-auto d-block" src="../assets/vendor/img/btn/play.png" alt="">
-                        </button>
-                        <button id="btn-mute">
-                            <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png" alt="">
-                        </button>
+                    <div class="wave-wrapper">
+                        <div id="waveform">
+                            <canvas id="mic-wave"></canvas>
+                            <div id="recorded-wave"></div>
+                        </div>
                     </div>
 
-                </div>
+                    <div id="mic-text" class="text-center">
+                        <p class="text-body">
+                            Press the microphone button to start, then play a couple of notes using your instrument of choice. Once finished, press the button again to stop recording.
+                        </p>   
+                        <p class="text-body" style="margin-top: 20px">
+                            After reviewing your recording, press the button below to
+                            look up the related chords.
+                        </p>
 
-                <div class="piano-wrapper">
-                    <div class="piano">
-                        <ul class="piano-keys">
-                            <li class="key white" data-note="C3">
-                                <div>
-                                    <span>C</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Db3">
-                                <div>
-                                    <span>D♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="D3">
-                                <div>
-                                    <span>D</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Eb3">
-                                <div>
-                                    <span>E♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="E3">
-                                <div>
-                                    <span>E</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="F3">
-                                <div>
-                                    <span>F</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Gb3">
-                                <div>
-                                    <span>G♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="G3">
-                                <div>
-                                    <span>G</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Ab3">
-                                <div>
-                                    <span>A♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="A3">
-                                <div>
-                                    <span>A</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Bb3">
-                                <div>
-                                    <span>B♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="B3">
-                                <div>
-                                    <span>B</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="C4">
-                                <div>
-                                    <span>C</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Db4">
-                                <div>
-                                    <span>D♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="D4">
-                                <div>
-                                    <span>D</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Eb4">
-                                <div>
-                                    <span>E♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="E4">
-                                <div>
-                                    <span>E</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="F4">
-                                <div>
-                                    <span>F</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Gb4">
-                                <div>
-                                    <span>G♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="G4">
-                                <div>
-                                    <span>G</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Ab4">
-                                <div>
-                                    <span>A♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="A4">
-                                <div>
-                                    <span>A</span>
-                                </div>
-                            </li>
-                            <li class="key black" data-note="Bb4">
-                                <div>
-                                    <span>B♭</span>
-                                </div>
-                            </li>
-                            <li class="key white" data-note="B4">
-                                <div>
-                                    <span>B</span>
-                                </div>
-                            </li>
-                        </ul>
+                        <button id="mic-btn-identify" class="text-btn" title="Record using your microphone first." disabled>
+                            <p>IDENTIFY CHORDS</p>
+                        </button>
+
+                    </div>
+
+                    <div class="wrapper-divider">
+                        <h2>OR</h2>
                     </div>
                 </div>
 
-                <div id="text" class="text-center">
-                    <p class="text-body">
-                        Select three or more keys, then click the button below
-                        when you're ready to look up the related chords.
-                    </p>
+                <div class="file-wrapper">
+                    <div class="drop-in-area">
+                        <form class="drop-box">
+                            <!-- <form class="drop-box" method="post" action="" enctype="multipart/form-data"> -->
+                            <div class="box-input">
 
-                    <button id="btn-identify" class="text-btn" onclick="">
-                        <p>IDENTIFY CHORDS</p>
-                    </button>
+                                <div class="box-outline"></div>
 
+                                <div class="box-icon">
+                                    <img src="../assets/vendor/img/chords/download-icon-1.png" alt="">
+                                </div>
+
+                                <input id="prerecordFile" type="file" id="file" />
+                                <label for="prerecordFile">
+                                    <strong>Click to choose a file</strong><span class="box-dragdrop"> or drag it
+                                        here</span>.
+                                </label>
+                                <!-- <button class="box-button" type="submit">Upload</button> -->
+                            </div>
+
+                            <div class="box-uploading">Uploading…</div>
+                            <div class="box-success">
+                                <div id="success-msg">Done uploading<span id="success-filename"></span>!</div>
+                                <div id="success-reupload"><strong>Click here</strong><span> to upload a different
+                                        file.</span></div>
+                            </div>
+
+                            <div class="box-error">
+                                <div id="error-msg">There was a problem uploading your file...</div>
+                                <div id="error-reupload"><span>Maybe try a </span><strong>different one?</strong></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="file-text" class="text-center">
+                        <p class="text-body">
+                            Drag and drop an audio file (.ogg, .wav, .webm, .mp3) or manually 
+                            choose one from your videos / file manager. Afterwards, press the button below to 
+                            analyze the notes in the file and find the related chords.
+                        </p>
+                        
+                        <p class="text-body" style="margin-top: 20px">
+                            Ensure that the audio file only consists of separated single notes, 
+                            or the chord recombinator will fail. 
+                        </p>
+
+                        <button id="file-btn-identify" class="text-btn" title="Upload an audio file first." disabled>
+                            <p>IDENTIFY CHORDS</p>
+                        </button>
+
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -259,10 +226,9 @@
         </div>
 
         <ul class="footer-menu">
-            <li><a href="">About</a></li>
-            <li><a href="">Privacy</a></li>
-            <li><a href="">Help</a></li>
-            <li><a href="">Contact Us</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../privacy.html">Privacy</a></li>
+            <li><a href="../contact.html">Contact Us</a></li>
         </ul>
 
     </footer>
@@ -276,7 +242,8 @@
     <script src="../assets/js/includeHTML.js"></script>
 
     <script src="../assets/js/base.js"></script>
-    <script src="../assets/js/chords/record.js"></script>
+    <script src="../assets/vendor/fix-webm-duration/fix-webm-duration.js"></script>
+    <script src="../assets/js/chords/record.js" type="module"></script>
 
 </body>
 

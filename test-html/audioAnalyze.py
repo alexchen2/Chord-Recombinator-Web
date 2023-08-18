@@ -113,23 +113,27 @@ def getNotes(file):
 
 def main():
     # Take first cmd line argument as audio filename
-    if all([i not in sys.argv[1] for i in [".wav", ".ogg", ".webm"]]):    # (".wav" not in sys.argv[1]):
-        # If detected filename is not a .wav/.ogg file, then returns -1 to the server to interpret as
+    if all([i not in sys.argv[1] for i in [".wav", ".ogg", ".webm", ".mp3"]]):    # (".wav" not in sys.argv[1]):
+        # If detected filename is not a .wav/.ogg/.webm/.mp3 file, then returns -1 to the server to interpret as
         # a wrong file extension error
         print("-1")
         sys.exit()
     else:
-        # If .ogg file extension, convert it to .wav
-        if (".ogg" in sys.argv[1]):
+        # If .wav file extension, set filename to given command line argument
+        if (".wav" in sys.argv[1]):
+            filename = sys.argv[1]
+        # If other extensions, first convert to .wav file and then get new filename
+        else: 
             filename = convertToWav(sys.argv[1])
-        elif (".webm" in sys.argv[1]):
-            filename = convertToWav(sys.argv[1])
+
+        # if (".ogg" in sys.argv[1]):
+        #     filename = convertToWav(sys.argv[1])
+        # elif (".webm" in sys.argv[1]):
+        #     filename = convertToWav(sys.argv[1])
             # filename = os.path.splitext(sys.argv[1])[0]+'.wav'
             
             # clip = moviepy.VideoFileClip(sys.argv[1])
             # clip.audio.write_audiofile(filename)
-        else:
-            filename = sys.argv[1]
         # print("Success reading .wav audio file!")
 
     dataNotes = getNotes(filename)
