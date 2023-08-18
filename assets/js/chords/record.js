@@ -16,7 +16,7 @@ let prerecFileName = ""; // filename for pre-recorded files
 // When pressing record button, keeps track of the audio file duration to be used in fix-webm-duration.js;
 // this is part of an 6-year old issue with chrome not generating metadata from MediaRecorder audio and video files 
 // Refer to: https://bugs.chromium.org/p/chromium/issues/detail?id=642012
-let startTime;
+let startTime; 
 let duration;
 
 // General area/wrappers
@@ -156,8 +156,9 @@ async function uploadRecording(fixedBlob) {
     // testGet();
   
     let statusConvert = await convertAudio(micFileName);
-    alert("Awaited conversion new file name: " + statusConvert);
-    micFileName = statusConvert;
+    alert("Awaited conversion new file name: " + statusConvert + " " + (typeof statusConvert));
+    micFileName = statusConvert.replaceAll("\\", "/").split("/").slice(-1).toString();
+    alert(micFileName + " " + typeof micFileName)
 
     wsSettings["url"] = "../assets/vendor/audio/user/" + micFileName;
     ws = WaveSurfer.create(wsSettings);
@@ -564,7 +565,7 @@ async function getMicNotes() {
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("https://chordwizard.glitch.me/saveAudio", {
+        fetch("https://chordwizard.glitch.me/saveAudio", { 
             method: "POST",
             body: formData
         })
