@@ -301,7 +301,7 @@ async function getMicNotes() {
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("http://localhost:5000/saveAudio", {
+        fetch("https://chordwizard.glitch.me/saveAudio", {
             method: "POST",
             body: formData
         })
@@ -320,7 +320,7 @@ function uploadAudio(formData) {
 }
 
 function clearFiles() {
-    fetch("http://localhost:5000/clearFiles", {
+    fetch("https://chordwizard.glitch.me/clearFiles", {
         method: "POST"
     })
         // .then((response) => {
@@ -338,7 +338,7 @@ function requestNotes(fileName) {
     let notes = "{}";
 
     return new Promise((resolve, reject) => {
-        fetch(`http://localhost:5000/prerecordNotes?file=${fileName}`) // add query of filename to url
+        fetch(`https://chordwizard.glitch.me/prerecordNotes?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 notes = response.text();
@@ -397,7 +397,7 @@ function main() {
 }
 
 // async function retrieveAudio(fileName) {
-//     fetch("http://localhost:5000/receive/" + fileName)
+//     fetch("https://chordwizard.glitch.me/receive/" + fileName)
 // }
 
 main();

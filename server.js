@@ -72,7 +72,7 @@ function main() {
         const fileName = path.join(AUDIO_DIR, req.query.file)
         console.log(fileName);
 
-        const pyProgram = spawnSync("python", ["test-html/audioAnalyze.py", fileName]);
+        const pyProgram = spawnSync("python3", ["./test-html/audioAnalyze.py", fileName]);
         // const output = execSync("python test-html/audioAnalyze.py audio/audioClip-11-18-39-34.webm").toString());
     
         let output = pyProgram.stdout.toString();
@@ -117,6 +117,17 @@ function main() {
         });
     })
 
+    app.get("/convertMicAudio", (req, res) => {
+        console.log("Attempting to convert microphone audio...");
+        const fileName = path.join(AUDIO_DIR, req.query.file)
+        console.log(fileName);
+
+        const pyProgram = spawnSync("python3", ["./test-html/convertToWav.py", fileName]);
+        let output = pyProgram.stdout.toString();
+        console.log("convertToWav.py request content: " + output)
+        res.send(output);
+    })
+  
     // For post requests to server (upload.single() = one file, upload.array() = many, upload.any() = zero to many files)
     app.post("/saveAudio", upload.single("file"), (req, res) => {
         console.log("'saveAudio' called. Testing POST request: ");

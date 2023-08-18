@@ -44,4 +44,5 @@ def convertToWav(origSong):
 #     return destSong
 
 if __name__ == '__main__':
-    convertToWav(origSongMain)
+    output = convertToWav(origSongMain)
+    print(output)

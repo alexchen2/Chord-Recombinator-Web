@@ -16,7 +16,7 @@ let prerecFileName = ""; // filename for pre-recorded files
 // When pressing record button, keeps track of the audio file duration to be used in fix-webm-duration.js;
 // this is part of an 6-year old issue with chrome not generating metadata from MediaRecorder audio and video files 
 // Refer to: https://bugs.chromium.org/p/chromium/issues/detail?id=642012
-let startTime;
+let startTime; 
 let duration;
 
 // General area/wrappers
@@ -55,6 +55,10 @@ const note1 = document.querySelector("#note-1-inner");
 // Various booleans
 let loadClrSwitched = false;  // Checks if loading screen colours have been switched at end of previous animation iteration
 let hasRecorded = false;      // Checks if a recording has been made with the mic functionality
+
+// Will be implemented later...
+let micNotes = "";
+let fileNotes = "";
 
 // Recorded file media player waveform settings (using wavesurfer.js library)
 let ws;
@@ -147,9 +151,14 @@ async function uploadRecording(fixedBlob) {
     data.append("file", file, micFileName);   // param: name of field entry in formData, actual data, and actual name of file/data
 
     clearFiles();
-    let status = await uploadAudio(data);
-    console.log("Awaited upload file status: " + status);
+    let statusUpload = await uploadAudio(data);
+    console.log("Awaited upload file status: " + statusUpload);
     // testGet();
+  
+    let outputConvert = await convertAudio(micFileName);
+    // alert("Awaited conversion new file name: " + outputConvert + " " + (typeof outputConvert));
+    micFileName = outputConvert.replaceAll("\\", "/").split("/").slice(-1).toString();
+    // alert(micFileName + " " + typeof micFileName)
 
     wsSettings["url"] = "../assets/vendor/audio/user/" + micFileName;
     ws = WaveSurfer.create(wsSettings);
@@ -160,6 +169,10 @@ async function uploadRecording(fixedBlob) {
     })
     // alert(`${duration}, ${ws.getDuration()} => ${duration - ws.getDuration()}`);
 
+    // ws.on("ready", () => {
+    //     alert("Test ready")
+    // })
+  
     // Add play btn listeners
     playBtn.addEventListener("click", clickPlay);
 
@@ -552,7 +565,7 @@ async function getMicNotes() {
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("http://localhost:5000/saveAudio", {
+        fetch("https://chordwizard.glitch.me/saveAudio", { 
             method: "POST",
             body: formData
         })
@@ -570,8 +583,27 @@ function uploadAudio(formData) {
     })
 }
 
+function convertAudio(fileName) {
+    return new Promise((resolve, reject) => {
+        fetch(`https://chordwizard.glitch.me/convertMicAudio?file=${fileName}`) // add query of filename to url
+            .then((response) => {
+                // let output = JSON.parse(response);
+                let wavFileName = response.text();
+                console.log("Converting .webm file to .wav...");
+
+                resolve(wavFileName);
+                // return response.json()
+            })
+            .catch((err) => {
+                console.log("Error in converting audio: " + err);
+                alert("Error in converting audio: " + err);
+                reject(err);
+            })
+    })
+}
+
 function clearFiles() {
-    fetch("http://localhost:5000/clearFiles", {
+    fetch("https://chordwizard.glitch.me/clearFiles", {
         method: "POST"
     })
         // .then((response) => {
@@ -589,7 +621,7 @@ function requestNotes(fileName) {
     let notes = "[]";
 
     return new Promise((resolve, reject) => {
-        fetch(`http://localhost:5000/prerecordNotes?file=${fileName}`) // add query of filename to url
+        fetch(`https://chordwizard.glitch.me/prerecordNotes?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 notes = response.text();
@@ -709,6 +741,7 @@ function main() {
     //////// MIC-RELATED CODE ////////
     // Check if mediaRecorder is supported in the current browser
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // alert("test1");
         console.log("getUserMedia supported.");
         let getRec = null;
 
@@ -723,11 +756,11 @@ function main() {
                     const rec = getRec[0];
                     const stream = getRec[1];
     
+                    clickRecord(rec, stream);
                     record(rec);
 
                     // After about 0.75 seconds of recording, allows access to record button
                     setTimeout(() => {
-                        clickRecord(rec, stream);
                         recBtn.disabled = false;
                     }, 700);
 
@@ -772,6 +805,13 @@ function main() {
 
         recBtn.addEventListener("click", () => {
             alert("Sorry, your device does not support recording with a microphone. Try inputting a file or using our other input options.")
+            // alert(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+            // alert(true && navigator.mediaDevices.getUserMedia);
+            
+//             let test = navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+//             let test2 = true
+          
+//             alert(test2);
         })
     }
 }
