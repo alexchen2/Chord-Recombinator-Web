@@ -14,7 +14,8 @@
     "Chord",
     "Identifier",
     "recombinator",
-    "music"
+    "music",
+    "chordwizard"
   ],
   "author": "Alex Chen",
   "license": "ISC",

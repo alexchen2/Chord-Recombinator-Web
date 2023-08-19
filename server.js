@@ -33,33 +33,31 @@ const AUDIO_DIR = path.join(__dirname, "assets/vendor/audio/user");
 function main() {
     // Middleware being used in server
     app.use(cors());
-    app.use(express.static(__dirname));
-    // app.use(express.static(path.join(__dirname, "styles")));         // get app to recognize css and js folders
+    app.use(express.static(path.join(__dirname, "public")));            // Set main directory to "public" folder...?
+    // app.use(express.static(path.join(__dirname, "styles")));         
     // app.use(express.static(path.join(__dirname, "scripts")));
     // app.use(express.static(path.join(__dirname, "images")));
 
     // For handling get requests to server: redirect to webpage (remove demo ones later)
     app.get("/", (req, res) => {          // redirect to chords main page
-        res.sendFile("chords/index.html", { root: __dirname });
+        res.sendFile("/chords/index.html", { root: path.join(__dirname, "public") });
     });
 
     app.get("/test-audio", (req, res) => {   // redirect to mediarecorder audio test page
-        res.sendFile("test-html/test-mediarecorder.html", { root: __dirname });
+        res.sendFile("test-html/test-mediarecorder.html", { root: path.join(__dirname, "public") });
     });
 
     app.get("/test-mic", (req, res) => {   // redirect to waveform mic test page
-        res.sendFile("test-html/webAudioTest.html", { root: __dirname });
+        res.sendFile("/test-html/webAudioTest.html", { root: path.join(__dirname, "public") });
     });
 
     app.get("/test-wave", (req, res) => {   // redirect to waveform mic test page
-        res.sendFile("test-html/test-wavesurfer.html", { root: __dirname });
+        res.sendFile("/test-html/test-wavesurfer.html", { root: path.join(__dirname, "public") });
     });
 
     app.get("/mic-demo", (req, res) => {    // Redirect to complete mic demo
-        res.sendFile("test-html/micDemo.html", { root: __dirname });
+        res.sendFile("/test-html/micDemo.html", { root: path.join(__dirname, "public") });
     });
-
-    app.get("/")
 
     // For get requests of data (test)
     let test = {title: "Hello Post", text: "Hello World! GET request successful!"}
@@ -144,7 +142,7 @@ function main() {
     // Redirect to 404 page if unknown URL
     app.use((req, res, next) => {
         res.status(404);
-        res.redirect("/misc/error404.html");
+        res.redirect("/404.html");
     });
 }
 
