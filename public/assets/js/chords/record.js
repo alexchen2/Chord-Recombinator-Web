@@ -565,7 +565,7 @@ async function getMicNotes() {
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("https://chordwizard.glitch.me/saveAudio", { 
+        fetch("https://chordguru.vercel.app/saveAudio", { 
             method: "POST",
             body: formData
         })
@@ -575,8 +575,8 @@ function uploadAudio(formData) {
             })
             .catch((err) => {
                 console.error(err);
-                alert("Upload files error: " + err);
-                console.log("Upload failed...");
+                alert("Sorry, we were not able to successfully create your recording at this time. Please try file input or use another input method.");
+                console.log("Upload failed: " + err);
 
                 reject(err);
             });
@@ -585,7 +585,7 @@ function uploadAudio(formData) {
 
 function convertAudio(fileName) {
     return new Promise((resolve, reject) => {
-        fetch(`https://chordwizard.glitch.me/convertMicAudio?file=${fileName}`) // add query of filename to url
+        fetch(`https://chordguru.vercel.app/convertMicAudio?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 let wavFileName = response.text();
@@ -603,7 +603,7 @@ function convertAudio(fileName) {
 }
 
 function clearFiles() {
-    fetch("https://chordwizard.glitch.me/clearFiles", {
+    fetch("https://chordguru.vercel.app/clearFiles", {
         method: "POST"
     })
         // .then((response) => {
@@ -621,7 +621,7 @@ function requestNotes(fileName) {
     let notes = "[]";
 
     return new Promise((resolve, reject) => {
-        fetch(`https://chordwizard.glitch.me/prerecordNotes?file=${fileName}`) // add query of filename to url
+        fetch(`https://chordguru.vercel.app/prerecordNotes?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 notes = response.text();
