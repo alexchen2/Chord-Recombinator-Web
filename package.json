@@ -2,9 +2,9 @@
   "name": "chord-recombinator",
   "version": "1.0.0",
   "description": "Web app version of kchenforyou's Chord-Recombinator python project.",
-  "main": "index.cjs",
+  "main": "index.js",
   "scripts": { 
-    "start": "./start.sh && node index.cjs" 
+    "start": "./start.sh && node index.js" 
   },
   "repository": {
     "type": "git",
