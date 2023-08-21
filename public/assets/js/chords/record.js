@@ -7,7 +7,7 @@ import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js'
 // import { FFmpeg, fetchFile } from "https://unpkg.com/@ffmpeg/util@0.12.0/dist/esm/index.js";
 
 // Module imports                
-import { render } from "./micWaveform.mjs"
+import { render } from "./micWaveform.js"
 
 //////// CONSTANTS & VARIABLES ////////
 let micFileName = ""; // filename for mic recorded files
