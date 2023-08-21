@@ -565,7 +565,7 @@ async function getMicNotes() {
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("https://chordguru.vercel.app/saveAudio", { 
+        fetch("https://chordguru-alexchen2.vercel.app/saveAudio", { 
             method: "POST",
             body: formData
         })
@@ -585,7 +585,7 @@ function uploadAudio(formData) {
 
 function convertAudio(fileName) {
     return new Promise((resolve, reject) => {
-        fetch(`https://chordguru.vercel.app/convertMicAudio?file=${fileName}`) // add query of filename to url
+        fetch(`https://chordguru-alexchen2.vercel.app/convertMicAudio?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 let wavFileName = response.text();
@@ -603,7 +603,7 @@ function convertAudio(fileName) {
 }
 
 function clearFiles() {
-    fetch("https://chordguru.vercel.app/clearFiles", {
+    fetch("https://chordguru-alexchen2.vercel.app/clearFiles", {
         method: "POST"
     })
         // .then((response) => {
@@ -621,7 +621,7 @@ function requestNotes(fileName) {
     let notes = "[]";
 
     return new Promise((resolve, reject) => {
-        fetch(`https://chordguru.vercel.app/prerecordNotes?file=${fileName}`) // add query of filename to url
+        fetch(`https://chordguru-alexchen2.vercel.app/prerecordNotes?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 notes = response.text();
