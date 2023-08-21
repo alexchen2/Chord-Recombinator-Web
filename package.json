@@ -2,9 +2,9 @@
   "name": "chord-recombinator",
   "version": "1.0.0",
   "description": "Web app version of kchenforyou's Chord-Recombinator python project.",
-  "main": "server.js",
+  "main": "index.cjs",
   "scripts": { 
-    "start": "./start.sh && node server.js" 
+    "start": "./start.sh && node index.cjs" 
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "Identifier",
     "recombinator",
     "music",
-    "chordwizard"
+    "chordguru"
   ],
   "author": "Alex Chen",
   "license": "ISC",
