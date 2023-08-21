@@ -132,7 +132,7 @@ Navbar
 .navbar-menu a {
     color: var(--body-colour);
     font: var(--header-font);
-    text-decoration: none;
+    text-decoration: underline;
     /* letter-spacing: var(--spacing); */
     display: block;
     /* padding: .5rem 1rem; */
@@ -168,7 +168,7 @@ Navbar
     float: none;
     font: var(--submenu-mobile-font);
     color: var(--body-colour);
-    text-decoration: none;
+    text-decoration: underline;
     display: block;
     text-align: left;
     justify-content: center;
@@ -212,6 +212,7 @@ Navbar
     width: auto;
     height: 4.375rem;
     overflow: hidden;
+    margin-top: -0.3215rem;
 }
 
 @media screen and (min-width: 62.5rem) {
@@ -255,6 +256,7 @@ Navbar
 
     .navbar-menu a {
         position: relative;
+        text-decoration: none;
         color: var(--bg-colour-1);
     }
 
@@ -310,7 +312,7 @@ Navbar
         padding-left: 1.3125rem;
         padding-top: calc((3.1875rem - 1.1875rem) / 2);
         padding-bottom: calc((3.1875rem - 1.1875rem) / 2);
-
+        text-decoration: none;
     }
 
     .navbar-subbtn {
