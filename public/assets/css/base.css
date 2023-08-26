@@ -423,6 +423,9 @@ footer {
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 1.4238rem 1.875rem;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .footer-menu li {
@@ -466,6 +469,8 @@ footer {
     }
 
     .footer-menu {
+        max-width: auto;
+        width: auto;
         height: 5.375rem;
         display: flex;
         float: right;

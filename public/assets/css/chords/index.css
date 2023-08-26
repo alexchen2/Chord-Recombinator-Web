@@ -93,6 +93,16 @@ footer {
     max-width: 100vw;
 } */
 
+button {
+    transition: all 0.1s linear, transform 0.04s linear;
+}
+
+button:focus,
+button:active,
+button:active:focus {
+    outline: none;
+}
+
 @media screen and (max-width: 62.5rem) {
     main {
         margin-bottom: 0;

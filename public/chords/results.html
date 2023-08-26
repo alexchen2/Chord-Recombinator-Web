@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>ChordWizard | Chords</title>
+    <title>Results – ChordGuru</title>
+    <!-- Favicon Image -->
+    <link rel="icon" type="image/x-icon" href="../assets/vendor/img/favicon.ico">
+
     <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,15 +35,17 @@
             <div class="navbar-header row">
                 <div class="col float-left">
                     <a class="" href="">
-                        <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
+                        <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo"
+                            alt="ChordWizard logo">
                     </a>
                 </div>
-                
+
 
                 <button class="float-right navbar-toggle">
-                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu"
+                        alt="hamburger-menu">
                 </button>
-                
+
             </div>
 
             <ul class="navbar-menu">
@@ -48,13 +53,14 @@
                 <li><a href="../about.html">About</a></li>
                 <li class="navbar-dropdown">
                     <button class="navbar-subbtn"><a href="index.html">Chords</a>
-                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
-                    </button>    
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow"
+                            alt="dropdown-arrow">
+                    </button>
 
                     <ul class="navbar-submenu">
                         <li><a href="keyboard.html">Keyboard Input</a></li>
                         <li><a href="record.html">Microphone Input</a></li>
-                        <li><a href="note-text.html">Text / Staff Line Input</a></li>
+                        <li><a href="404">Text / Staff Line Input</a></li>
                     </ul>
                 </li>
                 <li><a href="../scales/index.html">Scales</a></li>
@@ -75,109 +81,133 @@
         </div>
 
         <div id="section" class="container">
-            <h2 id="heading" class="container">Microphone Input</h2>
+            <h2 id="note-heading" class="heading container">Results</h2>
 
-            <div class="container" id="content">
-                <div class="mic-wrapper">
-                    <div id="row-btn">
-                        <div class="record-wrapper">
-                            <svg id="record-circle">
-                                <circle cx="18" cy="13" r="10" />
-                            </svg>
+            <div id="note-content" class="content container">
+                <div id="note-text" class="text text-center">
+                    <p class="text-body">
+                        The following table contains a list of chords
+                        that can be constructed from these notes:
+                    </p>
 
-                            <p id="record-timer">
-                                00:00
-                            </p>
-                            <!-- <img id="switch-flat" src="../assets/vendor/img/chords/flat.png" alt="">
-
-                            <img id="switch-sharp" src="../assets/vendor/img/chords/sharp.png" alt=""> -->
-                        </div>
-
-                        <div id="media-btn">
-                            <button id="btn-record">
-                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/microphone-1.png" alt="">
-                            </button>
-                            <button id="btn-play" disabled>
-                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/play.png" alt="">
-                            </button>
-                            <button id="btn-mute" disabled>
-                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png" alt="">
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <div class="wave-wrapper">
-                        <div id="waveform">
-                            <canvas id="mic-wave"></canvas>
-                            <div id="recorded-wave"></div>
-                        </div>
-                    </div>
-
-                    <div id="mic-text" class="text-center">
-                        <p class="text-body">
-                            Press the microphone button to start and stop recording.
-                            After reviewing your recording, press the button below to
-                            look up the related chords.
-                        </p>
-
-                        <button id="mic-btn-identify" class="text-btn" onclick="">
-                            <p>IDENTIFY CHORDS</p>
-                        </button>
-
-                    </div>
-
-                    <div class="wrapper-divider">
-                        <h2>OR</h2>
+                    <div class="note-display row">
+                        <!-- Insert p or span into here dynamically -->
+                        <!-- <span class="col">A</span>
+                        <span class="col">C</span>
+                        <span class="col">Eb</span> -->
                     </div>
                 </div>
 
-                <div class="file-wrapper">
-                    <div class="drop-in-area">
-                        <form class="drop-box">
-                            <!-- <form class="drop-box" method="post" action="" enctype="multipart/form-data"> -->
-                            <div class="box-input">
+                <div id="data-wrapper-known" class="data-wrapper">
+                    <table id="data-table-known" class="data-table table container table-striped">
+                        <!-- table-responsive -->
+                        <thead id="data-header-known" class="data-header">
+                            <tr class="align-top">
+                                <th>Chord Name</th>
+                                <th>Notes</th>
+                                <th>Alt. Notation</th>
+                                <th>Play Chord</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-insert-known" class="data-insert">
+                            <tr id="data-empty-known" class="data-empty">
+                                <td colspan="4">
+                                    There are no chords to display!
+                                </td>
+                            </tr>
+                            <!-- General structure of inserted known chord rows (via JS): -->
+                            <!-- <tr>
+                                <td class="data-chord"><span class="bold">A</span> Half Diminished 7th</td>
+                                <td class="data-notes">a</td>
+                                <td class="data-notation">d</td>
+                                <td class="data-sound">
+                                    <button class="btn-sound" title="">
+                                        <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png"
+                                            alt="">
+                                    </button>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
 
-                                <div class="box-outline"></div>
+                <div id="unknown-text" class="text text-center">
+                    <p class="text-body">
+                        The following chords either have no classification,
+                        or are not yet supported with this tool:
+                    </p>
+                </div>
 
-                                <div class="box-icon">
-                                    <img src="../assets/vendor/img/chords/download-icon-1.png" alt="">
-                                </div>
+                <div id="data-wrapper-unknown" class="data-wrapper">
+                    <table id="data-table-unknown" class="data-table table container table-striped align-middle">
+                        <thead id="data-header-unknown" class="data-header">
+                            <tr class="align-top">
+                                <th>Note Composition</th>
+                                <th>Normal Form</th>
+                                <th>Play Chord</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-insert-unknown" class="data-insert">
+                            <tr id="data-empty-unknown" class="data-empty">
+                                <td colspan="4">
+                                    There are no chords to display!
+                                </td>
+                            </tr>
+                            <!-- General structure of inserted unknown chords rows (via JS): -->
+                            <!-- <tr>
+                                <td class="data-notes">A Half Diminished 7th</td>
+                                <td class="data-normal">a</td>
+                                <td class="data-sound">
+                                    <button class="btn-sound" title="">
+                                        <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png"
+                                            alt="">
+                                    </button>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
 
-                                <input id="prerecordFile" type="file" id="file" />
-                                <label for="prerecordFile">
-                                    <strong>Click to choose a file</strong><span class="box-dragdrop"> or drag it
-                                        here</span>.
-                                </label>
-                                <!-- <button class="box-button" type="submit">Upload</button> -->
-                            </div>
+                <div id="text" class="text-center">
+                    <button id="btn-retry" class="text-btn">
+                        <p>SEARCH AGAIN</p>
+                    </button>
+                </div>
 
-                            <div class="box-uploading">Uploading…</div>
-                            <div class="box-success">
-                                <div id="success-msg">Done uploading<span id="success-filename"></span>!</div>
-                                <div id="success-reupload"><strong>Click here</strong><span> to upload a different
-                                        file.</span></div>
-                            </div>
+            </div>
 
-                            <div class="box-error">
-                                <div id="error-msg">There was a problem uploading your file...</div>
-                                <div id="error-reupload"><span>Maybe try a </span><strong>different one?</strong></div>
-                            </div>
-                        </form>
+            <h2 id="faq-heading" class="heading container">
+                <span class="hide-header">Frequently Asked Questions (</span><span>FAQ</span><span class="hide-header">)</span>
+            </h2> <!-- Shorten to just "FAQ" when small screen through JS -->
+
+            <div id="faq-content" class="content container">
+                <div id="faq-panel-1" class="faq-panel">
+                    <button class="faq-accordion">
+                        Why are my notes not accurate when using microphone or file input?
+                        <img class="faq-arrow" src="../assets/vendor/img/btn/Nav-Arrow-Black.png" alt="">
+                    </button>
+                    <div class="faq-info">
+                        <p>Haha git gud scrub</p>
                     </div>
+                </div>
 
-                    <div id="file-text" class="text-center">
-                        <p class="text-body">
-                            Drag and drop an audio file (.ogg, .wav, .webm, .mp3) or manually 
-                            choose one from your videos / file manager. Ensure that the audio 
-                            file only consists of separated single notes, or the chord recombinator 
-                            will fail. 
-                        </p>
+                <div id="faq-panel-2" class="faq-panel">
+                    <button class="faq-accordion">
+                        What is “Normal Form?”
+                        <img class="faq-arrow" src="../assets/vendor/img/btn/Nav-Arrow-Black.png" alt="">
+                    </button>
+                    <div class="faq-info">
+                        <p>The form you should adhere to for the rest of your life you fucking music 'tard</p>
+                    </div>
+                </div>
 
-                        <button id="file-btn-identify" class="text-btn" onclick="">
-                            <p>IDENTIFY CHORDS</p>
-                        </button>
-
+                <div id="faq-panel-3" class="faq-panel">
+                    <button class="faq-accordion">
+                        Why include chords that have no classification in the first place?
+                        <img class="faq-arrow" src="../assets/vendor/img/btn/Nav-Arrow-Black.png" alt="">
+                    </button>
+                    <div class="faq-info">
+                        <p>Because I want to. Deal with it.</p>
                     </div>
                 </div>
 

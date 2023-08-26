@@ -21,7 +21,8 @@
     --section-border: 1px solid #C8C8C8;
     --section-border-2: 5px solid #C8C8C8;
     --more-input-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.40);
-    --content-border: 2px solid #D7D7D8;
+    --content-border: 1.33px solid #c4c4c5; /* #D7D7D8; */
+    --content-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
     --btn-shadow: 0rem 0.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
     --btn-border: .0625rem solid #000000;
     --media-btn-border: 1px solid #04060D;
@@ -114,6 +115,10 @@ footer {
     position: sticky;
     top: 100vh;
     z-index: 10;
+}
+ 
+button {
+    transition: all 0.1s linear, transform 0.04s linear;
 }
 
 button:focus,
@@ -756,7 +761,7 @@ button:active:focus {
     margin: auto;
     margin-bottom: 78px;
     width: auto;
-    overflow: hidden;
+    /* overflow: hidden; */
     -webkit-transition: var(--section-remove);
     -o-transition: var(--section-remove);
     transition: var(--section-remove);
@@ -792,6 +797,7 @@ button:active:focus {
 
     border-radius: 8px;
     border: var(--content-border);
+    box-shadow: var(--content-shadow);
     /* filter: blur(1.5px); */
     background: var(--bg-colour-1);
     -webkit-transition: var(--section-remove);
@@ -925,10 +931,11 @@ button:active:focus {
     -webkit-box-shadow: none;
             box-shadow: none;
     cursor: default;
+
 }
 
-#mic-btn-identify.active,
-#file-btn-identify.active {
+#mic-btn-identify.btn-down,
+#file-btn-identify.btn-down {
     -webkit-transform: translateY(4px);
         -ms-transform: translateY(4px);
             transform: translateY(4px);
@@ -1017,10 +1024,6 @@ button:active:focus {
         margin-right: 0;
     }
 
-    #row-btn {
-        margin-top: 35px;
-    }
-
     #btn-record,
     #btn-play {
         margin-right: 1vw;
@@ -1031,13 +1034,24 @@ button:active:focus {
     }
 }
 
-#media-btn button.active {
+#media-btn button.btn-down {
     -webkit-transform: translateY(4px);
         -ms-transform: translateY(4px);
             transform: translateY(4px);
     -webkit-box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
             box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
     /* Basically just shades background color w/out changing it */
+}
+
+#media-btn button:active {
+    transform: translateY(4px);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.5);
+    /* box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4); */
+}
+
+#media-btn button.btn-down {
+    transform: translateY(4px);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.5); /* Basically just shades background color w/out changing it */
 }
 
 #btn-record:disabled {

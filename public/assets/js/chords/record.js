@@ -1,10 +1,7 @@
+//////// LIBRARY IMPORTS ////////
 // External library imports
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
 import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js'
-
-// // import { createFFmpeg } from "../node_modules/@ffmpeg/ffmpeg/src/browser/index.js";
-// // import { FFmpeg } from "https://unpkg.com/@ffmpeg/ffmpeg@0.12.1/dist/esm/ffmpeg.js";
-// import { FFmpeg, fetchFile } from "https://unpkg.com/@ffmpeg/util@0.12.0/dist/esm/index.js";
 
 // Module imports                
 import { render } from "./micWaveform.js"
@@ -177,12 +174,12 @@ async function uploadRecording(fixedBlob) {
     playBtn.addEventListener("click", clickPlay);
 
     playBtn.addEventListener("mousedown", () => {
-        playBtn.classList.add("active");
+        playBtn.classList.add("btn-down");
     })
 
     "mouseup mouseleave".split(" ").forEach((event) => {
         playBtn.addEventListener(event, () => {
-            playBtn.classList.remove("active");
+            playBtn.classList.remove("btn-down");
         })
     })
 
@@ -190,12 +187,12 @@ async function uploadRecording(fixedBlob) {
     identifyMicBtn.addEventListener("click", clickIdentifyMic);
 
     identifyMicBtn.addEventListener("mousedown", () => {
-        identifyMicBtn.classList.add("active");
+        identifyMicBtn.classList.add("btn-down");
     })
 
     "mouseup mouseleave".split(" ").forEach((event) => {
         identifyMicBtn.addEventListener(event, () => {
-            identifyMicBtn.classList.remove("active");
+            identifyMicBtn.classList.remove("btn-down");
         })
     })
 
@@ -299,7 +296,7 @@ function clickRecord(rec, stream) {
 
         // Disables blinking red record button
         clearInterval(recInterval);
-        recBtn.classList.remove("active");
+        recBtn.classList.remove("btn-down");
         recIcon.classList.remove("recording");
 
     } else {                             // Start recording
@@ -308,7 +305,7 @@ function clickRecord(rec, stream) {
 
             playBtn.querySelector("img").src = "../assets/vendor/img/btn/play.png"
             muteBtn.querySelector("img").src = "../assets/vendor/img/btn/speaker-1.png";
-            muteBtn.classList.remove("active");
+            muteBtn.classList.remove("btn-down");
 
             playBtn.removeEventListener("click", clickPlay);
             recBtn.removeEventListener("click", clickMute);
@@ -356,7 +353,7 @@ function clickRecord(rec, stream) {
         recInterval = setInterval(updateTimer, 1000, startTime);
 
         recBtn.title = "Stop recording";
-        recBtn.classList.add("active");
+        recBtn.classList.add("btn-down");
         recIcon.classList.add("recording");
     }
 }
@@ -381,13 +378,13 @@ function clickMute(event = null) {
     if (ws instanceof WaveSurfer) { // Unmute wavesurfer if muted
         if (ws.getMuted()) {
             muteBtn.querySelector("img").src = "../assets/vendor/img/btn/speaker-1.png";
-            muteBtn.classList.remove("active");
+            muteBtn.classList.remove("btn-down");
             muteBtn.title = "Mute audio";
 
             ws.setMuted(false);
         } else {                    // Mute wavesurfer otherwise
             muteBtn.querySelector("img").src = "../assets/vendor/img/btn/speaker-muted-1.png";
-            muteBtn.classList.add("active");
+            muteBtn.classList.add("btn-down");
             muteBtn.title = "Unmute audio";
 
             ws.setMuted(true);
@@ -416,15 +413,35 @@ function clickIdentifyFile(event = null) {
     identifyNotes("file");
 }
 
-function identifyNotes(buttonType) {   // buttonType = string
+async function identifyNotes(buttonType) {   // buttonType = string
+    let notes, noteQuery;
     switch (buttonType) {
         case "mic":
+            notes = await requestNotes(micFileName);
+            console.log("Received notes!");
+        
+            micNotes = notes.toString();
+            alert(micNotes);
             break;
         case "file":
+            notes = await requestNotes(prerecFileName);
+            console.log("Received notes!");
+        
+            fileNotes = notes.toString();
+            noteQuery = fileNotes.replaceAll(", ", "_")
+            noteQuery = noteQuery.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+            noteQuery = noteQuery.replaceAll("#", "%23");
+            // alert(noteQuery);
+
+            loadScreen.classList.remove("show-loading");
+
+            window.location.assign(`/getResults?input=mic&notes=${noteQuery}`)
             break;
         default:
             alert("[BTN_ASSIGN_ERROR] Sorry, something went wrong. Please try another time or use another input method.")
     }
+
+
 
     // window.location.href = "record.html";    // Redirect for now, until I've created a "results" webpage
 }
@@ -512,12 +529,12 @@ async function uploadFile() {
             identifyFileBtn.addEventListener("click", clickIdentifyFile);
 
             identifyFileBtn.addEventListener("mousedown", () => {
-                identifyFileBtn.classList.add("active");
+                identifyFileBtn.classList.add("btn-down");
             })
 
             "mouseup mouseleave".split(" ").forEach((event) => {
                 identifyFileBtn.addEventListener(event, () => {
-                    identifyFileBtn.classList.remove("active");
+                    identifyFileBtn.classList.remove("btn-down");
                 })
             })
 
@@ -550,7 +567,7 @@ async function getFileNotes() {
     let notes = await requestNotes(prerecFileName);
     console.log("Received notes!");
 
-    fileNotes = notes.toString();
+    return notes.toString();
 }
 
 // Unused WIP, implement later
@@ -558,14 +575,14 @@ async function getMicNotes() {
     let notes = await requestNotes(micFileName);
     console.log("Received notes!");
 
-    micNotes = notes.toString();
+    return notes.toString();
 }
 
 //////// REQUESTS TO BACK-END ////////
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("https://chord-guru.vercel.app/saveAudio", { 
+        fetch("http://localhost:5000/saveAudio", { 
             method: "POST",
             body: formData
         })
@@ -585,7 +602,7 @@ function uploadAudio(formData) {
 
 function convertAudio(fileName) {
     return new Promise((resolve, reject) => {
-        fetch(`https://chord-guru.vercel.app/convertMicAudio?file=${fileName}`) // add query of filename to url
+        fetch(`http://localhost:5000/convertMicAudio?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 let wavFileName = response.text();
@@ -603,7 +620,7 @@ function convertAudio(fileName) {
 }
 
 function clearFiles() {
-    fetch("https://chord-guru.vercel.app/clearFiles", {
+    fetch("http://localhost:5000/clearFiles", {
         method: "POST"
     })
         // .then((response) => {
@@ -621,7 +638,7 @@ function requestNotes(fileName) {
     let notes = "[]";
 
     return new Promise((resolve, reject) => {
-        fetch(`https://chord-guru.vercel.app/prerecordNotes?file=${fileName}`) // add query of filename to url
+        fetch(`http://localhost:5000/getNotes?file=${fileName}`) // add query of filename to url
             .then((response) => {
                 // let output = JSON.parse(response);
                 notes = response.text();
@@ -776,12 +793,8 @@ function main() {
 
                 // alert(getRec)
                 clickRecord(rec, stream);
-
                 getRec = null;
             }
-
-
-
 
         });
 

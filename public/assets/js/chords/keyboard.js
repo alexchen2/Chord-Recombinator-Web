@@ -1,3 +1,4 @@
+//////// CONSTANTS & VARIABLES ////////
 const accSwitch = document.querySelector(".switch");
 const pianoKeys = [...document.querySelectorAll(".piano-keys .key")];
 const playBtn = document.querySelector("#btn-play");
@@ -5,6 +6,11 @@ const fastPlayBtn = document.querySelector("#btn-fast-play");
 const muteBtn = document.querySelector("#btn-mute");
 const identifyBtn = document.querySelector("#btn-identify");
 
+// Loading screen variables and elements
+const loadScreen = document.querySelector(".loading-screen")
+const note1 = document.querySelector("#note-1-inner");
+
+let loadClrSwitched = false;  // Checks if loading screen colours have been switched at end of previous animation iteration
 let keyAudio = [];  // Array of objects containing audio files
 let keyClass;
 let playBtnDown = false;
@@ -32,13 +38,15 @@ for (key of pianoKeys) {
     });
 }
 
+//////// FUNCTIONS ////////
+
 // Function for adding css classes to switch when toggled, changing appearance & accidentals on keys
 function switchToggle(event = null) {
     // Filter all black keys from all piano keys into a separate array
     let blackKeys = pianoKeys.filter((key) => key.classList.contains("black"))
 
-    if (this.classList.contains("active")) {
-        this.classList.remove("active");
+    if (this.classList.contains("btn-down")) {
+        this.classList.remove("btn-down");
         this.querySelector("input[type=checkbox]").checked = false;
 
         // For each black key, change the inner text from sharp to its flat enharmonic equivalent
@@ -49,7 +57,7 @@ function switchToggle(event = null) {
         }
 
     } else {
-        this.classList.add("active");
+        this.classList.add("btn-down");
         this.querySelector("input[type=checkbox]").checked = true;
 
         // For each black key, change the inner text from flat to its sharp enharmonic equivalent
@@ -65,7 +73,7 @@ function clickPlay(event = null) {
     if (!playBtnDown) {
         if (fastPlayBtnDown) {
             fastPlayBtnDown = false;
-            fastPlayBtn.classList.remove("active");
+            fastPlayBtn.classList.remove("btn-down");
         }
         playNotes(playSpeed);
     }
@@ -75,7 +83,7 @@ function clickFastPlay(event = null) {
     if (!fastPlayBtnDown) {
         if (playBtnDown) {
             playBtnDown = false;
-            playBtn.classList.remove("active");
+            playBtn.classList.remove("btn-down");
         }
         playNotes(fastPlaySpeed);
     }
@@ -87,10 +95,10 @@ function playNotes(speed) {
     // Temporarily disable toggling of play / fast-play buttons while sounds are playing 
     if (speed === playSpeed) {
         playBtnDown = true;
-        playBtn.classList.add("active")
+        playBtn.classList.add("btn-down")
     } else if (speed === fastPlaySpeed) {
         fastPlayBtnDown = true;
-        fastPlayBtn.classList.add("active")
+        fastPlayBtn.classList.add("btn-down")
     }
 
     for (key of keyAudio) {
@@ -129,7 +137,7 @@ function playNotesAux(notesIndex, speed) {
             }, speed);
         } else {       // Reenable toggling of play / fast-play buttons
             playBtnDown = false;
-            playBtn.classList.remove("active")
+            playBtn.classList.remove("btn-down")
         }
     } else if (speed == fastPlaySpeed) {
         if (notesIndex.length > 0 && !playBtnDown) {
@@ -139,7 +147,7 @@ function playNotesAux(notesIndex, speed) {
             }, speed);
         } else {       // Reenable toggling of play / fast-play buttons
             fastPlayBtnDown = false;
-            fastPlayBtn.classList.remove("active")
+            fastPlayBtn.classList.remove("btn-down")
         }
     }
 }
@@ -207,29 +215,88 @@ function clickMute(event = null) {
 
         muteBtnDown = true;
         muteBtn.querySelector("img").src = "../assets/vendor/img/btn/speaker-muted-1.png"
-        muteBtn.classList.add("active")
+        muteBtn.classList.add("btn-down")
     } else {    // Unmute everything else otherwise
         for (key of keyAudio) {
             key.audio.muted = false;
         }
         muteBtnDown = false;
         muteBtn.querySelector("img").src = "../assets/vendor/img/btn/speaker-1.png"
-        muteBtn.classList.remove("active")
+        muteBtn.classList.remove("btn-down")
     }
 }
 
 function clickIdentify(event = null) {
+    let noteQuery;
+
+    // Begin showing loading screen
+    loadScreen.classList.add("show-loading");
+
+    // Filter all pressed keys into separate array and get their notes
     let downKeys = keyAudio.filter((key) => key.keyDown);
+    downKeys = downKeys.map((key) => key.note.slice(0, -1));       // Removes pitch number at end of note
+    downKeys = [...new Set(downKeys)];                             // Gets rid of duplicates in array
+
+    // alert(downKeys)
+
+    // If accidentals switch is on, then change all flat notes to sharps
+    if (accSwitch.querySelector("input[type=checkbox]").checked) {
+        // alert("Switch accidentals");
+
+        downKeys = downKeys.map((key) => {
+            let tempKey = key;
+
+            // If note is a black key
+            if (key.slice(-1) === "b") {
+                for (noteSet of ENHARMONICS) {
+                    // Finds corresponding enharmonic and switches to sharp mode (%23 being sharp symbol for url query)
+                    if (noteSet.includes(key.slice(0, -1) + "♭")) {
+                        tempKey = noteSet[1];
+                        break;
+                    }
+                }
+
+                return(tempKey.slice(0, -1) + "%23");
+            } else {
+                return(tempKey);
+            }
+        })
+    }
 
     if (downKeys.length <= 2) {
         alert("Please select three or more notes on the keyboard before attempting to identify your chord.");
     } else {
-        window.location.href = "keyboard.html";    // Redirect for now, until I've created a "results" webpage
+        setTimeout(() => {
+            noteQuery = downKeys.toString().replaceAll(",", "_");
+            loadScreen.classList.remove("show-loading");        // Remove, in case user alt-left arrows and goes back to this page
+            window.location.assign(`/getResults?input=keyboard&notes=${noteQuery}`)
+            // window.location.href = "keyboard.html";    // Redirect for now, until I've created a "results" webpage
+        }, 3500)
     }
     
 }
 
 function main() {
+    // Loading Screen Code
+    note1.addEventListener("animationiteration", () => {
+        console.log("run once");
+        
+        if (!loadClrSwitched) {
+            loadScreen.style.setProperty("--colour-1", "#FFFFFF");
+            loadScreen.style.setProperty("--colour-2", "#55A6FF");
+
+            loadClrSwitched = true;
+            console.log(loadClrSwitched);
+        } else {
+            loadScreen.style.setProperty("--colour-1", "#55A6FF");
+            loadScreen.style.setProperty("--colour-2", "#FFFFFF");
+
+            loadClrSwitched = false;
+            console.log(loadClrSwitched);
+        }
+
+    })
+
     // iOS Switch Code
     accSwitch.addEventListener("click", switchToggle);
 
@@ -237,6 +304,7 @@ function main() {
     playBtn.addEventListener("click", clickPlay);
     fastPlayBtn.addEventListener("click", clickFastPlay);
     muteBtn.addEventListener("click", clickMute);
+
     identifyBtn.addEventListener("click", clickIdentify);
 
     for (key of pianoKeys) {

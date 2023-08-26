@@ -2,9 +2,10 @@
   "name": "chord-recombinator",
   "version": "1.0.0",
   "description": "Web app version of kchenforyou's Chord-Recombinator python project.",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": { 
-    "start": "./start.sh && node server.js" 
+    "start": "./server/start.sh && node server/server.js",
+    "quickStart": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,6 @@
     "fs": "^0.0.1-security",
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7"
-  }
+  },
+  "type": "module"
 }

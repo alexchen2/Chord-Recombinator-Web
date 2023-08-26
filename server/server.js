@@ -1,12 +1,26 @@
 // Backend server test for "test-mediarecorder.js"
-const express = require("express");
-const cors = require("cors");
-const multer = require("multer");
+import express from "express";
+import cors from "cors";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { spawnSync } from "child_process";
+import * as url from 'url';
+
+import { chordAnalyze, generateChords } from "./js/chordAnalyze.js"
+
+// Old CommonJS formatted imports
+// const express = require("express");
+// const cors = require("cors");
+// const multer = require("multer");
 // const execSync = require('child_process').execSync();
-const path = require("path");      // used for path.join
-const fs = require('fs');
-const { spawnSync } = require("child_process");
+// const path = require("path");      // used for path.join
+// const fs = require('fs');
 // const { spawnSync } = require("child_process");
+
+//////// APP-RELATED VAR + MIDDLEWARE ////////
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // Multer middleware config for naming and storing during file creation using its disk storage engine
 const storage = multer.diskStorage({
@@ -14,7 +28,7 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     },
     destination: function (req, file, cb) {
-        cb(null, __dirname + '/assets/vendor/audio/user/')
+        cb(null, __dirname + '/../public/assets/vendor/audio/user/')
     },
 }) 
  
@@ -24,36 +38,46 @@ const upload = multer({ "storage": storage })
 let app = express();
 const port = 5000;
 
-//////// APP-RELATED VARIABLES ////////
 let filename = "";
-const AUDIO_DIR = path.join(__dirname, "assets/vendor/audio/user");
+const AUDIO_DIR = path.join(__dirname, "../public/assets/vendor/audio/user");
 
 // Middleware being used in server
 app.use(cors());
-app.use(express.static(path.join(__dirname, "public")));            // Set main directory to "public" folder...?
-// app.use(express.static(path.join(__dirname, "styles")));         
-// app.use(express.static(path.join(__dirname, "scripts")));
-// app.use(express.static(path.join(__dirname, "images")));
+app.use(express.static(path.join(__dirname, "../public")));            // Set main directory to "public" folder...?
+
+//////// REQUESTS ////////
 
 // For handling get requests to server: redirect to webpage (remove demo ones later)
 app.get("/", (req, res) => {          // redirect to chords main page
-    res.sendFile("/chords/index.html", { root: path.join(__dirname, "public") });
+    res.sendFile("/chords/index.html", { root: path.join(__dirname, "../public") });
 });
 
-app.get("/test-audio", (req, res) => {   // redirect to mediarecorder audio test page
-    res.sendFile("test-html/test-mediarecorder.html", { root: path.join(__dirname, "public") });
-});
+app.get("/analyzeNotes", (req, res) => {
+    let notes = req.query.notes
+    let chords;
 
-app.get("/test-mic", (req, res) => {   // redirect to waveform mic test page
-    res.sendFile("/test-html/webAudioTest.html", { root: path.join(__dirname, "public") });
-});
+    // Replace all unicode sharp symbols (%23) with actual hashtags
+    notes = notes.replaceAll("%23", "#");
+    notes = notes.split("_");          // formatted as "C_D_E_F" (etc...)    
 
-app.get("/test-wave", (req, res) => {   // redirect to waveform mic test page
-    res.sendFile("/test-html/test-wavesurfer.html", { root: path.join(__dirname, "public") });
-});
+    console.log(req.query, typeof req.query)
+    console.log(notes)
 
-app.get("/mic-demo", (req, res) => {    // Redirect to complete mic demo
-    res.sendFile("/test-html/micDemo.html", { root: path.join(__dirname, "public") });
+    try {
+        chords = generateChords(notes);
+    } catch (err) {
+        console.error(err);
+        res.redirect("/chords/index.html");
+    }
+
+    res.send(chords)
+})
+
+app.get("/getResults", (req, res) => {
+    res.redirect(url.format({
+        pathname: "/chords/results.html",
+        query: req.query
+    }))
 });
 
 // For get requests of data (test)
@@ -62,12 +86,12 @@ app.get("/getHello", (req, res) => {
     res.send(test.text + " someufjdsjanklsfrgahhhh ");
 });
 
-app.get("/prerecordNotes", async (req, res) => {
+app.get("/getNotes", async (req, res) => {
     // Get filename from query in request
     const fileName = path.join(AUDIO_DIR, req.query.file)
     console.log(fileName);
 
-    const pyProgram = spawnSync("python3", ["./test-html/audioAnalyze.py", fileName]);
+    const pyProgram = spawnSync("python", [path.join(__dirname, "py/audioAnalyze.py"), fileName]);
     // const output = execSync("python test-html/audioAnalyze.py audio/audioClip-11-18-39-34.webm").toString());
 
     let output = pyProgram.stdout.toString();
@@ -117,7 +141,7 @@ app.get("/convertMicAudio", (req, res) => {
     const fileName = path.join(AUDIO_DIR, req.query.file)
     console.log(fileName);
 
-    const pyProgram = spawnSync("python3", ["./test-html/convertToWav.py", fileName]);
+    const pyProgram = spawnSync("python", [path.join(__dirname, "py/convertToWav.py"), fileName]);
     let output = pyProgram.stdout.toString();
     console.log("convertToWav.py request content: " + output)
     res.send(output);
@@ -141,7 +165,4 @@ app.use((req, res, next) => {
     res.status(404);
     res.redirect("/404.html");
 });
-
-// Export app as serverless function for vercel
-module.exports = app;
 
