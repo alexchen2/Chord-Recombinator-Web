@@ -33,8 +33,8 @@ function main() {
                 arrow.src = "../assets/vendor/img/btn/Nav-Arrow-White.png";
                 arrow.style.cursor = "default";
     
-                if (navMenu.style.height != "0") {
-                    navMenu.style.height = "0";
+                if (navMenu.style.height != "0px") {
+                    navMenu.style.height = "0px";
 
                     navSubMenu.forEach((subMenu) => {
                         subMenu.classList.remove("show-submenu");
@@ -55,10 +55,10 @@ function main() {
     navToggle.addEventListener("click", () => {
         if (window.innerWidth < 1000) {
             console.log(navMenu.style.height)
-            if (navMenu.style.height != navMenu.scrollHeight + "px") {
-                navMenu.style.height = navMenu.scrollHeight + "px";
-            } else {
+            if (navMenu.style.height != "0px" && navMenu.style.height != "") {
                 navMenu.style.height = "0";
+            } else {
+                navMenu.style.height = "173px";
             }
 
             // navMenu.classList.toggle("show-menu");
@@ -85,7 +85,7 @@ function main() {
 
     navSubArrow.forEach((arrow) => {
         arrow.addEventListener("click", () => {
-            if (window.innerWidth < 1000 && navMenu.style.height != "0") { // === navMenu.scrollHeight + "px") {
+            if (window.innerWidth < 1000 && navMenu.style.height != "0px") { // === navMenu.scrollHeight + "px") {
                 let subMenu = arrow.parentElement.parentElement;
 
                 if (subMenu.classList.contains("show-submenu")) {
