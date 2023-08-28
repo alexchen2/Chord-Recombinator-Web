@@ -4,8 +4,10 @@
   "description": "Web app version of kchenforyou's Chord-Recombinator python project.",
   "main": "server/server.js",
   "scripts": { 
-    "start": "./server/start.sh && node server/server.js",
-    "quickStart": "node server/server.js"
+    "setupLocal": "./server/start.sh && node server/serverLocal.js",
+    "startLocal": "node server/serverLocal.js",
+    "start": "./server/start.sh && node server/serverGlitch.js",
+    "quickStart": "node server/serverGlitch.js"
   },
   "repository": {
     "type": "git",

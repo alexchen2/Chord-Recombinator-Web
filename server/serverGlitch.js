@@ -1,4 +1,14 @@
 // Backend server test for "test-mediarecorder.js"
+// import express from "express";
+// import cors from "cors";
+// import multer from "multer";
+// import path from "path";
+// import fs from "fs";
+// import { spawnSync } from "child_process";
+
+// import { chordAnalyze, generateChords } from "./js/chordAnalyze.js"
+
+// Old CommonJS formatted imports
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -6,9 +16,13 @@ const multer = require("multer");
 const path = require("path");      // used for path.join
 const fs = require('fs');
 const { spawnSync } = require("child_process");
-// const { spawnSync } = require("child_process");
+const url = require('url');
+
+const { generateChords } = require("./js/chordAnalyze.js")
 
 //////// APP-RELATED VAR + MIDDLEWARE ////////
+// const __filename = url.fileURLToPath(import.meta.url);
+// const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // Multer middleware config for naming and storing during file creation using its disk storage engine
 const storage = multer.diskStorage({
@@ -40,16 +54,36 @@ app.get("/", (req, res) => {          // redirect to chords main page
     res.sendFile("/chords/index.html", { root: path.join(__dirname, "../public") });
 });
 
-app.get("/getResults", (req, res) => {
-    // Would presumably read JSON/text file here
-})
-
 app.get("/analyzeNotes", (req, res) => {
-    // Get notes and send to another program to analyze
+    let notes = req.query.notes
+    let chords;
 
+    // Replace all unicode sharp symbols (%23) with actual hashtags
+    while (notes.includes("%23")) {
+        notes = notes.replace("%23", "#");
+    }
 
-    res.redirect()
+    notes = notes.split("_");          // formatted as "C_D_E_F" (etc...)    
+
+    console.log(req.query, typeof req.query)
+    console.log(notes)
+
+    try {
+        chords = generateChords(notes);
+    } catch (err) {
+        console.error(err);
+        res.redirect("/chords/index.html");
+    }
+
+    res.send(chords)
 })
+
+app.get("/getResults", (req, res) => {
+    res.redirect(url.format({
+        pathname: "/chords/results.html",
+        query: req.query
+    }))
+});
 
 // For get requests of data (test)
 let test = {title: "Hello Post", text: "Hello World! GET request successful!"}
@@ -62,7 +96,7 @@ app.get("/getNotes", async (req, res) => {
     const fileName = path.join(AUDIO_DIR, req.query.file)
     console.log(fileName);
 
-    const pyProgram = spawnSync("python", [path.join(__dirname, "py/audioAnalyze.py"), fileName]);
+    const pyProgram = spawnSync("python3", ["/app/server/py/audioAnalyze.py", fileName]);
     // const output = execSync("python test-html/audioAnalyze.py audio/audioClip-11-18-39-34.webm").toString());
 
     let output = pyProgram.stdout.toString();
@@ -112,7 +146,7 @@ app.get("/convertMicAudio", (req, res) => {
     const fileName = path.join(AUDIO_DIR, req.query.file)
     console.log(fileName);
 
-    const pyProgram = spawnSync("python", [path.join(__dirname, "py/convertToWav.py"), fileName]);
+    const pyProgram = spawnSync("python3", ["/app/server/py/convertToWav.py", fileName]);
     let output = pyProgram.stdout.toString();
     console.log("convertToWav.py request content: " + output)
     res.send(output);
@@ -136,7 +170,4 @@ app.use((req, res, next) => {
     res.status(404);
     res.redirect("/404.html");
 });
-
-// Export app as serverless function for vercel
-module.exports = app;
 
