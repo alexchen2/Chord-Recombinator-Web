@@ -407,14 +407,23 @@ button:active:focus {
 }
 
 .note-display span {
+    display: flex;
+    vertical-align: middle;
     color: #000000;
     text-align: center;
 
-    font: var(--note-display-font);
+
     margin-top: 24px;
     margin-bottom: 24px;
 }
 
+.note-display span p {
+    font: var(--note-display-font);
+    line-height: 120%;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+}
 /**
  * ========
  * Table Styling

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Text/Staff Line Input – ChordGuru</title>
+    <!-- Favicon Image -->
+    <link rel="icon" type="image/x-icon" href="../assets/vendor/img/favicon.ico">
+
+    <!-- Fonts: Inter, Inria Sans, Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/chords/note-text.css">
+
+    <!-- JQuery (required for bootstrap) -->
+    <script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <!-- <div id="load-header" include-html="header.html"></div> -->
+    <header id="header" class="page fixed-top">
+        <nav class="navbar navbar-expand-sm">
+            <div class="navbar-header row">
+                <div class="col float-left">
+                    <a class="" href="index.html">
+                        <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
+                    </a>
+                </div>
+                
+
+                <button class="float-right navbar-toggle">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
+                </button>
+                
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li class="navbar-dropdown" id="chord-menu">
+                    <button class="navbar-subbtn"><a href="index.html">Chords</a>
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu" id="chord-submenu">
+                        <li><a href="keyboard.html">Keyboard Input</a></li>
+                        <li><a href="record.html">Microphone Input</a></li>
+                        <li><a href="note-text.html">Text / Staff Line Input</a></li>
+                    </ul>
+                </li>
+                <li><a href="scales/index.html">Scales</a></li>
+                <li class="navbar-dropdown" id="more-menu">
+                    <button class="navbar-subbtn">More Tools
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu" id="more-submenu">
+                        <li><a href="404.html">Metronome</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="loading-screen">
+            <div class="load-wrapper">
+                <div id="load-animation">
+                    <div class="note" id="note-1">
+                        <div class="note-inner" id="note-1-inner"></div>
+                    </div>
+                    <div class="note" id="note-2">
+                        <div class="note-inner" id="note-2-inner"></div>
+                    </div>
+                    <div class="note" id="note-3">
+                        <div class="note-inner" id="note-3-inner"></div>
+                    </div>
+                </div>
+
+                <div id="load-text">
+                    <p>Processing Notes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero">
+            <div class="title-content hero-content display-table">
+                <div class="container">
+                    <h1 class="title hero-title">Chord Recombinator</h1>
+                    <p class="subtitle hero-subtitle">Select a group of notes through various input methods and generate
+                        various chords containing them using our chord recombinator tool.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="section" class="container">
+            <h2 id="heading" class="container">Text Input</h2>
+
+            <div class="container" id="content">
+                
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer"> <!--style="visibility: hidden;"-->
+        <div class="footer-socials">
+            <div class="footer-icons">
+                <a href="https://www.linkedin.com/in/alex-chen-a5b12922a/"><img
+                        src="../assets/vendor/img/btn/linkedin.png" alt="Alex Chen's Linkedin"></a>
+                <a href="https://github.com/alexchen2"><img src="../assets/vendor/img/btn/github.png"
+                        alt="Alex Chen's Github"></a>
+            </div>
+            <p id="footer-logo">
+                © ChordGuru | 2023
+            </p>
+        </div>
+
+        <ul class="footer-menu">
+            <li><a href="../privacy.html">Privacy</a></li>
+            <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+
+    </footer>
+
+    <!-- Vendor scripts -->
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local scripts -->
+    <!-- <script src="../assets/js/base.js"></script> -->
+
+    <script src="../assets/js/base.js"></script>
+    <script src="../assets/js/chords/note-text.js"></script>
+
+</body>
+
+</html>

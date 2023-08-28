@@ -21,7 +21,8 @@
     --section-border: 1px solid #C8C8C8;
     --section-border-2: 5px solid #C8C8C8;
     --more-input-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.40);
-    --content-border: 1.33px solid #c4c4c5; /* #D7D7D8; */
+    --content-border: 1.33px solid #c4c4c5;
+    /* #D7D7D8; */
     --content-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
     --btn-shadow: 0rem 0.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
     --btn-border: .0625rem solid #000000;
@@ -53,6 +54,7 @@
     --h2-font-1: normal 500 1.5625rem/125% var(--heading-font-family);
     --h2-font-2: normal 700 1.875rem/75% var(--heading-font-family);
     --btn-font: normal 700 1.4063rem/102.273% var(--heading-font-family);
+    --note-display-font: normal 700 30px/25.2px var(--body-font-family);
 
     /* Transitions */
     --container-shrink: all 1.5s ease;
@@ -62,12 +64,6 @@
     /* Switch-related variables */
     --record-width: 100px;
     --record-height: 36px;
-
-    /* Piano-related variables */
-    --piano-width: 658px;
-    --white-key-width: calc(var(--piano-width) / 14);
-    --black-key-width: calc(var(--white-key-width) * (44 / 70));
-    --keydown-transition: all 0.1s ease-in;
 }
 
 /**
@@ -116,7 +112,7 @@ footer {
     top: 100vh;
     z-index: 10;
 }
- 
+
 button {
     transition: all 0.1s linear, transform 0.04s linear;
 }
@@ -228,8 +224,8 @@ button:active:focus {
 
 #record-circle circle {
     -webkit-transform-origin: center center;
-        -ms-transform-origin: center center;
-            transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
     /* For scaling circle via css */
     fill: rgb(184, 184, 184);
     stroke: #646464;
@@ -245,7 +241,7 @@ button:active:focus {
     -webkit-animation: 1.5s recordBlink ease infinite;
     -moz-animation: 1.5s recordBlink ease infinite;
     -webkit-animation-delay: 0.35s;
-            animation-delay: 0.35s;
+    animation-delay: 0.35s;
 }
 
 #record-circle.recording circle {
@@ -291,8 +287,8 @@ button:active:focus {
 
     #record-circle circle {
         -webkit-transform: scale(0.85, 0.85);
-            -ms-transform: scale(0.85, 0.85);
-                transform: scale(0.85, 0.85);
+        -ms-transform: scale(0.85, 0.85);
+        transform: scale(0.85, 0.85);
     }
 }
 
@@ -308,11 +304,11 @@ button:active:focus {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     vertical-align: middle;
     /* height: 222px; */
     margin-top: 13px;
@@ -349,11 +345,11 @@ button:active:focus {
     .wave-wrapper {
         overflow-x: scroll;
         -webkit-box-align: start;
-            -ms-flex-align: start;
-                align-items: start;
+        -ms-flex-align: start;
+        align-items: start;
         -webkit-box-pack: left;
-            -ms-flex-pack: left;
-                justify-content: left;
+        -ms-flex-pack: left;
+        justify-content: left;
 
         /* border: 1px solid #000; */
         /* border-radius: 8px; */
@@ -390,11 +386,11 @@ button:active:focus {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     vertical-align: middle;
 
     max-width: 663px;
@@ -501,7 +497,7 @@ button:active:focus {
 
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 /* Uploading prompt */
@@ -521,7 +517,7 @@ button:active:focus {
 
 .box-success {
     -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
+    transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
 }
 
@@ -540,12 +536,12 @@ button:active:focus {
 .box-success #success-reupload {
     margin-top: 7px;
     -webkit-transform: scale(0);
-        -ms-transform: scale(0);
-            transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
     -webkit-animation: pop-up-gradual .35s ease .65s;
-            animation: pop-up-gradual .35s ease .65s;
+    animation: pop-up-gradual .35s ease .65s;
     -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
 
 .box-success #success-reupload strong {
@@ -576,17 +572,17 @@ button:active:focus {
 @keyframes pop-up {
     from {
         -webkit-transform: scale(0);
-                transform: scale(0);
+        transform: scale(0);
     }
 
     75% {
         -webkit-transform: scale(1.1);
-                transform: scale(1.1);
+        transform: scale(1.1);
     }
 
     to {
         -webkit-transform: scale(1);
-                transform: scale(1);
+        transform: scale(1);
     }
 }
 
@@ -603,12 +599,12 @@ button:active:focus {
 @keyframes pop-up-gradual {
     from {
         -webkit-transform: scale(0);
-                transform: scale(0);
+        transform: scale(0);
     }
 
     to {
         -webkit-transform: scale(1);
-                transform: scale(1);
+        transform: scale(1);
     }
 }
 
@@ -708,11 +704,11 @@ button:active:focus {
         display: -ms-flexbox;
         display: flex;
         -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
         -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
 
         padding: 0;
         min-height: calc(323px - 55px);
@@ -834,12 +830,12 @@ button:active:focus {
 
     -webkit-box-pack: center;
 
-        -ms-flex-pack: center;
+    -ms-flex-pack: center;
 
-            justify-content: center;
+    justify-content: center;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     vertical-align: middle;
     background: var(--bg-colour-1);
 
@@ -877,11 +873,11 @@ button:active:focus {
 #mic-text,
 #file-text {
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 .text-body {
@@ -901,17 +897,16 @@ button:active:focus {
 
     -ms-flex-item-align: center;
 
-        -ms-grid-row-align: center;
+    -ms-grid-row-align: center;
 
-        align-self: center;
-    margin-top: 1.875rem;
-
+    align-self: center;
+    margin-top: 30px;
 
     border-radius: 4.125rem;
     border: var(--btn-border);
     background: var(--blue-btn);
     -webkit-box-shadow: var(--btn-shadow);
-            box-shadow: var(--btn-shadow);
+    box-shadow: var(--btn-shadow);
 }
 
 .text-btn p {
@@ -929,7 +924,7 @@ button:active:focus {
 #file-btn-identify:disabled {
     background: #9acafd;
     -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     cursor: default;
 
 }
@@ -937,10 +932,10 @@ button:active:focus {
 #mic-btn-identify.btn-down,
 #file-btn-identify.btn-down {
     -webkit-transform: translateY(4px);
-        -ms-transform: translateY(4px);
-            transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    transform: translateY(4px);
     -webkit-box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
-            box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
     /* Basically just shades background color w/out changing it */
 }
 
@@ -951,11 +946,11 @@ button:active:focus {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 
     max-width: 658px;
     padding: auto;
@@ -978,14 +973,14 @@ button:active:focus {
     border: 1px solid #04060D;
     background: var(--blue-btn);
     -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     cursor: pointer;
 }
 
 #media-btn button:disabled {
     background: #9acafd;
     -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     cursor: default;
 }
 
@@ -1036,10 +1031,10 @@ button:active:focus {
 
 #media-btn button.btn-down {
     -webkit-transform: translateY(4px);
-        -ms-transform: translateY(4px);
-            transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    transform: translateY(4px);
     -webkit-box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
-            box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
     /* Basically just shades background color w/out changing it */
 }
 
@@ -1051,13 +1046,190 @@ button:active:focus {
 
 #media-btn button.btn-down {
     transform: translateY(4px);
-    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.5); /* Basically just shades background color w/out changing it */
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.5);
+    /* Basically just shades background color w/out changing it */
 }
 
 #btn-record:disabled {
     -webkit-transform: translateY(4px);
-        -ms-transform: translateY(4px);
-            transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    transform: translateY(4px);
+}
+
+/**
+ * ========
+ * Note Check Popup Styling
+ * ========
+**/
+.check-notes-screen {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    vertical-align: middle;
+
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -2;
+    opacity: 0;
+
+    -webkit-transition: opacity 0.5s ease;
+
+    -o-transition: opacity 0.5s ease;
+
+    transition: opacity 0.5s ease;
+}
+
+.show-check-notes {
+    z-index: 11;
+    opacity: 1;
+
+}
+
+.check-notes-wrapper {
+    max-width: 800px;
+    width: auto;
+    min-height: 400px;
+    max-height: 90vh;
+    height: auto;
+    background: #FFFFFF;
+    border-radius: 5px;
+    border: 2px solid #000;
+
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-top: 10vh; */
+    padding: 40px 30px;
+
+    transform: translateY(25px);
+}
+
+.show-check-notes .check-notes-wrapper {
+    transform: translateY(0);
+    transition: transform 0.5s ease;
+    transition-delay: 0.1s;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+/* Note display styling */
+
+.note-display {
+    max-width: 656px;
+    width: 85%;
+    /* width: 366px; */
+    min-height: 74px;
+    height: auto;
+    margin: 23px auto 35px auto;
+    padding: 20px;
+
+    border-radius: 5px;
+    border: 1.5px solid #000;
+}
+
+.note-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    color: #000000;
+
+    border-radius: 50px;
+    margin: auto;
+    width: fit-content;
+    height: 50px;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease
+}
+
+.note-select:hover {
+    background-color: #b3d8ff;
+}
+
+.note-select.selected {
+    background-color: var(--blue-btn);
+}
+
+.note-select span {
+    text-align: center;
+    font: var(--note-display-font);
+    margin: auto;
+}
+
+#btn-confirm {
+    cursor: pointer;
+}
+
+#btn-confirm:disabled {
+    background: #9acafd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: default;
+}
+
+#btn-confirm.btn-down {
+    -webkit-transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    transform: translateY(4px);
+    -webkit-box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    /* Basically just shades background color w/out changing it */
+}
+
+@media screen and (max-width: 1000px) {
+    .note-select {
+        border: solid 0.5px #E6E6E6;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .check-notes-wrapper {
+        width: auto;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    #btn-confirm {
+        width: 193px;
+        height: 54px;
+    }
+
+    #btn-confirm p {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .check-notes-wrapper {
+        padding: 25px 15px;
+    }
+
+    .check-notes-wrapper p {
+        transform: scale(0.9);
+    }
+
+    .note-display {
+        margin: 13px auto 25px auto;
+    }
+
+    #btn-confirm {
+        margin-top: 20px;
+    }
+
+    .note-display {
+        padding: 10px;
+    }
+
+    .note-select span {
+        font-size: 26px;
+    }
 }
 
 /**
@@ -1076,11 +1248,11 @@ button:active:focus {
 
     display: flex;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     vertical-align: middle;
 
     position: fixed;
@@ -1102,9 +1274,9 @@ button:active:focus {
     opacity: 0.95;
     height: 100%;
     -webkit-animation: change-clr-1-bg 3.5s linear infinite;
-            animation: change-clr-1-bg 3.5s linear infinite;
+    animation: change-clr-1-bg 3.5s linear infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 .load-wrapper {
@@ -1127,7 +1299,7 @@ button:active:focus {
 #load-text p {
     position: relative;
     font-size: 32px;
-    
+
     color: var(--colour-2);
     font-family: var(--body-font-family);
     font-weight: 300;
@@ -1136,9 +1308,9 @@ button:active:focus {
 
 .show-loading #load-text p {
     -webkit-animation: change-clr-2 3.5s linear infinite;
-            animation: change-clr-2 3.5s linear infinite;
+    animation: change-clr-2 3.5s linear infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 #load-text p::after {
@@ -1156,21 +1328,24 @@ button:active:focus {
 
 .show-loading #load-text p::after {
     -webkit-animation: dot-animation 3s linear infinite, change-clr-2 3.5s linear infinite;
-            animation: dot-animation 3s linear infinite, change-clr-2 3.5s linear infinite;
+    animation: dot-animation 3s linear infinite, change-clr-2 3.5s linear infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 @-webkit-keyframes dot-animation {
     from {
         content: "";
-    }   
+    }
+
     25% {
         content: ".";
-    } 
+    }
+
     50% {
         content: "..";
     }
+
     75% {
         content: "...";
     }
@@ -1179,13 +1354,16 @@ button:active:focus {
 @keyframes dot-animation {
     from {
         content: "";
-    }   
+    }
+
     25% {
         content: ".";
-    } 
+    }
+
     50% {
         content: "..";
     }
+
     75% {
         content: "...";
     }
@@ -1213,260 +1391,316 @@ button:active:focus {
     width: 28px;
     height: 15px;
     -webkit-box-shadow: 0 0 0 300vh var(--colour-2);
-            box-shadow: 0 0 0 300vh var(--colour-2);
+    box-shadow: 0 0 0 300vh var(--colour-2);
     border-radius: 28px / 15px;
     left: 11px;
     top: 7.5px;
     -webkit-transform: rotate(50deg);
-        -ms-transform: rotate(50deg);
-            transform: rotate(50deg);
+    -ms-transform: rotate(50deg);
+    transform: rotate(50deg);
 }
 
 .show-loading .note-inner {
-    -webkit-animation: change-clr-2-inner 3.5s cubic-bezier(1,0,.87,1.18) infinite;
-            animation: change-clr-2-inner 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    -webkit-animation: change-clr-2-inner 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
+    animation: change-clr-2-inner 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 #note-1 {
     -webkit-transform: scale(0);
-        -ms-transform: scale(0);
-            transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
 }
 
 .show-loading #note-1 {
-    -webkit-animation: note-1-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
-            animation: note-1-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    -webkit-animation: note-1-drop 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
+    animation: note-1-drop 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 #note-2 {
     -webkit-transform: scale(0);
-        -ms-transform: scale(0);
-            transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
 }
 
 .show-loading #note-2 {
-    -webkit-animation: note-2-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
-            animation: note-2-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    -webkit-animation: note-2-drop 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
+    animation: note-2-drop 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 #note-3 {
     -webkit-transform: scale(0);
-        -ms-transform: scale(0);
-            transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
 }
 
 .show-loading #note-3 {
-    -webkit-animation: note-3-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
-            animation: note-3-drop 3.5s cubic-bezier(1,0,.87,1.18) infinite;
+    -webkit-animation: note-3-drop 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
+    animation: note-3-drop 3.5s cubic-bezier(1, 0, .87, 1.18) infinite;
     -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
+    animation-delay: 0.75s;
 }
 
 @-webkit-keyframes note-1-drop {
     from {
         -webkit-transform: translateY(-100px) translateX(0px) scale(0);
-                transform: translateY(-100px) translateX(0px) scale(0);
+        transform: translateY(-100px) translateX(0px) scale(0);
     }
+
     20% {
         -webkit-transform: translateY(-100px) translateX(0px) scale(0);
-                transform: translateY(-100px) translateX(0px) scale(0);
+        transform: translateY(-100px) translateX(0px) scale(0);
     }
+
     21.25% {
         -webkit-transform: translateY(-75px) translateX(0px) scale(0.5);
-                transform: translateY(-75px) translateX(0px) scale(0.5);
+        transform: translateY(-75px) translateX(0px) scale(0.5);
     }
+
     31.25% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
+
     31.25025% {
         -webkit-transform: translateY(10px) translateX(0px) scale(1.05);
-                transform: translateY(10px) translateX(0px) scale(1.05);
+        transform: translateY(10px) translateX(0px) scale(1.05);
     }
+
     31.5% {
         -webkit-transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)));
-                transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)))
+        transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)))
     }
-    32.5%, 60% {
+
+    32.5%,
+    60% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
-    80%, to {
+
+    80%,
+    to {
         -webkit-transform: translateY(0) translateX(150px) scale(0);
-                transform: translateY(0) translateX(150px) scale(0);
+        transform: translateY(0) translateX(150px) scale(0);
     }
 }
 
 @keyframes note-1-drop {
     from {
         -webkit-transform: translateY(-100px) translateX(0px) scale(0);
-                transform: translateY(-100px) translateX(0px) scale(0);
+        transform: translateY(-100px) translateX(0px) scale(0);
     }
+
     20% {
         -webkit-transform: translateY(-100px) translateX(0px) scale(0);
-                transform: translateY(-100px) translateX(0px) scale(0);
+        transform: translateY(-100px) translateX(0px) scale(0);
     }
+
     21.25% {
         -webkit-transform: translateY(-75px) translateX(0px) scale(0.5);
-                transform: translateY(-75px) translateX(0px) scale(0.5);
+        transform: translateY(-75px) translateX(0px) scale(0.5);
     }
+
     31.25% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
+
     31.25025% {
         -webkit-transform: translateY(10px) translateX(0px) scale(1.05);
-                transform: translateY(10px) translateX(0px) scale(1.05);
+        transform: translateY(10px) translateX(0px) scale(1.05);
     }
+
     31.5% {
         -webkit-transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)));
-                transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)))
+        transform: translateY(7px) translateX(0px) scale(calc(1 + (0.05 * 0.7)))
     }
-    32.5%, 60% {
+
+    32.5%,
+    60% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
-    80%, to {
+
+    80%,
+    to {
         -webkit-transform: translateY(0) translateX(150px) scale(0);
-                transform: translateY(0) translateX(150px) scale(0);
+        transform: translateY(0) translateX(150px) scale(0);
     }
 }
 
 @-webkit-keyframes note-2-drop {
     from {
         -webkit-transform: translateY(-100px) scale(0);
-                transform: translateY(-100px) scale(0);
+        transform: translateY(-100px) scale(0);
     }
+
     10% {
         -webkit-transform: translateY(-100px) scale(0);
-                transform: translateY(-100px) scale(0);
+        transform: translateY(-100px) scale(0);
     }
+
     11.25% {
         -webkit-transform: translateY(-75px) scale(0.5);
-                transform: translateY(-75px) scale(0.5);
+        transform: translateY(-75px) scale(0.5);
     }
+
     21.25% {
         -webkit-transform: translateY(0px) scale(1);
-                transform: translateY(0px) scale(1);
+        transform: translateY(0px) scale(1);
     }
+
     21.25025% {
         -webkit-transform: translateY(10px) scale(1.05);
-                transform: translateY(10px) scale(1.05);
+        transform: translateY(10px) scale(1.05);
     }
+
     21.5% {
         -webkit-transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)));
-                transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
+        transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
     }
-    22.5%, 60% {
+
+    22.5%,
+    60% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
-    80%, 100% {
+
+    80%,
+    100% {
         -webkit-transform: translateY(0) translateX(-150px) scale(0);
-                transform: translateY(0) translateX(-150px) scale(0);
+        transform: translateY(0) translateX(-150px) scale(0);
     }
 }
 
 @keyframes note-2-drop {
     from {
         -webkit-transform: translateY(-100px) scale(0);
-                transform: translateY(-100px) scale(0);
+        transform: translateY(-100px) scale(0);
     }
+
     10% {
         -webkit-transform: translateY(-100px) scale(0);
-                transform: translateY(-100px) scale(0);
+        transform: translateY(-100px) scale(0);
     }
+
     11.25% {
         -webkit-transform: translateY(-75px) scale(0.5);
-                transform: translateY(-75px) scale(0.5);
+        transform: translateY(-75px) scale(0.5);
     }
+
     21.25% {
         -webkit-transform: translateY(0px) scale(1);
-                transform: translateY(0px) scale(1);
+        transform: translateY(0px) scale(1);
     }
+
     21.25025% {
         -webkit-transform: translateY(10px) scale(1.05);
-                transform: translateY(10px) scale(1.05);
+        transform: translateY(10px) scale(1.05);
     }
+
     21.5% {
         -webkit-transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)));
-                transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
+        transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
     }
-    22.5%, 60% {
+
+    22.5%,
+    60% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
-    80%, 100% {
+
+    80%,
+    100% {
         -webkit-transform: translateY(0) translateX(-150px) scale(0);
-                transform: translateY(0) translateX(-150px) scale(0);
+        transform: translateY(0) translateX(-150px) scale(0);
     }
 }
 
 @-webkit-keyframes note-3-drop {
-    from, 0.5% {
+
+    from,
+    0.5% {
         -webkit-transform: translateY(-100px) scale(0);
-                transform: translateY(-100px) scale(0);
+        transform: translateY(-100px) scale(0);
     }
+
     1.25% {
         -webkit-transform: translateY(-75px) scale(0.5);
-                transform: translateY(-75px) scale(0.5);
+        transform: translateY(-75px) scale(0.5);
     }
+
     11.25% {
         -webkit-transform: translateY(0px) scale(1);
-                transform: translateY(0px) scale(1);
+        transform: translateY(0px) scale(1);
     }
+
     11.25025% {
         -webkit-transform: translateY(10px) scale(1.05);
-                transform: translateY(10px) scale(1.05);
+        transform: translateY(10px) scale(1.05);
     }
+
     11.5% {
         -webkit-transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)));
-                transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
+        transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
     }
-    12.5%, 60% {
+
+    12.5%,
+    60% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
-    80%, 100% {
+
+    80%,
+    100% {
         -webkit-transform: translateY(0) translateX(150px) scale(0);
-                transform: translateY(0) translateX(150px) scale(0);
+        transform: translateY(0) translateX(150px) scale(0);
     }
 }
 
 @keyframes note-3-drop {
-    from, 0.5% {
+
+    from,
+    0.5% {
         -webkit-transform: translateY(-100px) scale(0);
-                transform: translateY(-100px) scale(0);
+        transform: translateY(-100px) scale(0);
     }
+
     1.25% {
         -webkit-transform: translateY(-75px) scale(0.5);
-                transform: translateY(-75px) scale(0.5);
+        transform: translateY(-75px) scale(0.5);
     }
+
     11.25% {
         -webkit-transform: translateY(0px) scale(1);
-                transform: translateY(0px) scale(1);
+        transform: translateY(0px) scale(1);
     }
+
     11.25025% {
         -webkit-transform: translateY(10px) scale(1.05);
-                transform: translateY(10px) scale(1.05);
+        transform: translateY(10px) scale(1.05);
     }
+
     11.5% {
         -webkit-transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)));
-                transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
+        transform: translateY(7px) scale(calc(1 + (0.05 * 0.7)))
     }
-    12.5%, 60% {
+
+    12.5%,
+    60% {
         -webkit-transform: translateY(0px) translateX(0px) scale(1);
-                transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(0px) translateX(0px) scale(1);
     }
-    80%, 100% {
+
+    80%,
+    100% {
         -webkit-transform: translateY(0) translateX(150px) scale(0);
-                transform: translateY(0) translateX(150px) scale(0);
+        transform: translateY(0) translateX(150px) scale(0);
     }
 }
 
@@ -1474,12 +1708,15 @@ button:active:focus {
     from {
         background-color: var(--colour-1);
     }
+
     31.24999% {
         background-color: var(--colour-1);
     }
+
     31.25% {
         background-color: var(--colour-2);
     }
+
     100% {
         background-color: var(--colour-2);
     }
@@ -1489,12 +1726,15 @@ button:active:focus {
     from {
         background-color: var(--colour-1);
     }
+
     31.24999% {
         background-color: var(--colour-1);
     }
+
     31.25% {
         background-color: var(--colour-2);
     }
+
     100% {
         background-color: var(--colour-2);
     }
@@ -1504,12 +1744,15 @@ button:active:focus {
     0% {
         color: var(--colour-2);
     }
+
     31.24999% {
         color: var(--colour-2);
     }
+
     31.25% {
         color: var(--colour-1);
     }
+
     100% {
         color: var(--colour-1);
     }
@@ -1519,12 +1762,15 @@ button:active:focus {
     0% {
         color: var(--colour-2);
     }
+
     31.24999% {
         color: var(--colour-2);
     }
+
     31.25% {
         color: var(--colour-1);
     }
+
     100% {
         color: var(--colour-1);
     }
@@ -1538,10 +1784,11 @@ button:active:focus {
         left: 11px;
         top: 7.5px;
         -webkit-animation-timing-function: steps(1, end);
-                animation-timing-function: steps(1, end);
+        animation-timing-function: steps(1, end);
         -webkit-box-shadow: 0 0 0 300vh var(--colour-2);
-                box-shadow: 0 0 0 300vh var(--colour-2);
+        box-shadow: 0 0 0 300vh var(--colour-2);
     }
+
     /* 31.24% {
         box-shadow: 0 0 0 300vh var(--colour-2);
     } */
@@ -1552,8 +1799,9 @@ button:active:focus {
         left: 11px;
         top: 7.5px;
         -webkit-box-shadow: 0 0 0 300vh var(--colour-1);
-                box-shadow: 0 0 0 300vh var(--colour-1);
+        box-shadow: 0 0 0 300vh var(--colour-1);
     }
+
     100% {
         border-radius: 28px / 15px;
         width: 28px;
@@ -1561,7 +1809,7 @@ button:active:focus {
         left: 11px;
         top: 7.5px;
         -webkit-box-shadow: 0 0 0 300vh var(--colour-1);
-                box-shadow: 0 0 0 300vh var(--colour-1);
+        box-shadow: 0 0 0 300vh var(--colour-1);
     }
 }
 
@@ -1573,10 +1821,11 @@ button:active:focus {
         left: 11px;
         top: 7.5px;
         -webkit-animation-timing-function: steps(1, end);
-                animation-timing-function: steps(1, end);
+        animation-timing-function: steps(1, end);
         -webkit-box-shadow: 0 0 0 300vh var(--colour-2);
-                box-shadow: 0 0 0 300vh var(--colour-2);
+        box-shadow: 0 0 0 300vh var(--colour-2);
     }
+
     /* 31.24% {
         box-shadow: 0 0 0 300vh var(--colour-2);
     } */
@@ -1587,8 +1836,9 @@ button:active:focus {
         left: 11px;
         top: 7.5px;
         -webkit-box-shadow: 0 0 0 300vh var(--colour-1);
-                box-shadow: 0 0 0 300vh var(--colour-1);
+        box-shadow: 0 0 0 300vh var(--colour-1);
     }
+
     100% {
         border-radius: 28px / 15px;
         width: 28px;
@@ -1596,24 +1846,28 @@ button:active:focus {
         left: 11px;
         top: 7.5px;
         -webkit-box-shadow: 0 0 0 300vh var(--colour-1);
-                box-shadow: 0 0 0 300vh var(--colour-1);
+        box-shadow: 0 0 0 300vh var(--colour-1);
     }
 }
 
 @media screen and (max-width: 575px) {
-    #load-animation, #load-text {
+
+    #load-animation,
+    #load-text {
         -webkit-transform: scale(0.7);
-            -ms-transform: scale(0.7);
-                transform: scale(0.7);
+        -ms-transform: scale(0.7);
+        transform: scale(0.7);
         /* transform: scale(0.7); */
     }
 }
 
 @media screen and (max-height: 500px) {
-    #load-animation, #load-text {
+
+    #load-animation,
+    #load-text {
         -webkit-transform: scale(0.7);
-            -ms-transform: scale(0.7);
-                transform: scale(0.7);
+        -ms-transform: scale(0.7);
+        transform: scale(0.7);
         /* transform: scale(0.7); */
     }
 }

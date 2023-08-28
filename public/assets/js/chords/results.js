@@ -8,6 +8,14 @@ const btnRetry = document.querySelector("#btn-retry");
 let query, inputType, notes, notesArr;
 let chords, chordsKnown, chordsUnknown;
 
+const ENHARMONICS = [
+    ["D♭", "C♯"],
+    ["E♭", "D♯"],
+    ["G♭", "F♯"],
+    ["A♭", "G♯"],
+    ["B♭", "A♯"]
+]
+
 //////// FUNCTIONS ////////
 
 async function getNotes(event = null) {
@@ -75,9 +83,27 @@ function addNote(note) {
     note = note.replaceAll("b", "♭");
     note = note.replaceAll("%23", "♯");
 
+    for (let group of ENHARMONICS) {
+        if (group.includes(note)) {
+            switch (group.indexOf(note)) {
+                case 0:
+                    note += ` (${group[1]})`
+                    break;
+                case 1:
+                    note += ` (${group[0]})`
+                    break;
+                default:     // Just for error handling
+                    alert("Something went wrong with displaying your notes. Please reach out to us regarding the issue, and we will try to fix it as soon as possible.")
+            }
+
+            break;
+        }
+    }
+
     const newElem = document.createElement("span");
+    newElem.appendChild(document.createElement("p"));
     newElem.classList.add("col");
-    newElem.innerText = note;
+    newElem.querySelector("p").innerText = note;
 
     noteDisplay.appendChild(newElem);
 }
@@ -86,11 +112,31 @@ function addChordKnown(chord) {
     let name, notes, notation, sound;
     let notationText = [];
 
+    for (let note of chord.notes) {
+        for (let group of ENHARMONICS) {
+            if (group.includes(note)) {
+                alert("group.indexOf(note): " + group.indexOf(note))
+                switch (group.indexOf(note)) {
+                    case 0:
+                        note += ` (${group[1]})`
+                        break;
+                    case 1:
+                        note += ` (${group[0]})`
+                        break;
+                    default:     // Just for error handling
+                        alert("Something went wrong with displaying your notes. Please reach out to us regarding the issue, and we will try to fix it as soon as possible.")
+                }
+    
+                break;
+            }
+        }
+    }
+
     // Create new table row element and insert HTML
     const newRow = document.createElement("tr");
     newRow.innerHTML = `<tr>
-        <td class="data-chord">Test</td>
-        <td class="data-notes">Test</td>
+        <td class="data-chord"></td>
+        <td class="data-notes"></td>
         <td class="data-notation"></td>
         <td class="data-sound">
             <button class="btn-sound" title="">
@@ -117,7 +163,6 @@ function addChordKnown(chord) {
             chord.notation[1].replaceAll("_", chord.notes[2]),
             chord.notation[2].replaceAll("_", chord.notes[1]),
         ]
-
 
         // Reorder notes array so that root is the first element
         while (chord.notes[0] != chord.root) {
@@ -172,6 +217,25 @@ function addChordUnknown(chord) {
             </button>
         </td>
     </tr>`
+
+    for (let note of chord.notes) {
+        for (let group of ENHARMONICS) {
+            if (group.includes(note)) {
+                switch (group.indexOf(note)) {
+                    case 0:
+                        note += ` (${group[1]})`
+                        break;
+                    case 1:
+                        note += ` (${group[0]})`
+                        break;
+                    default:     // Just for error handling
+                        alert("Something went wrong with displaying your notes. Please reach out to us regarding the issue, and we will try to fix it as soon as possible.")
+                }
+    
+                break;
+            }
+        }
+    }
 
     // If "data-empty" row exists in table, get rid of it first
     if (tableUnknown.querySelector("tr").classList.contains("data-empty")) {

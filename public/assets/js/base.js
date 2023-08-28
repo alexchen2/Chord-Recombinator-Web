@@ -5,70 +5,128 @@
 
 const navToggle = document.querySelector(".navbar-toggle");
 const navSubToggle = document.querySelector(".navbar-subbtn");
-const navSubArrow = document.getElementById("dropdown-arrow");
+const navSubArrow = document.querySelectorAll(".dropdown-arrow");
 const hamBtn = document.getElementById("hamburger-menu");
 const navMenu = document.querySelector(".navbar-menu");
-const navSubMenu = document.querySelector(".navbar-submenu");
+const navSubMenu = document.querySelectorAll(".navbar-dropdown");
+const chordSubMenu = document.getElementById("chord-menu");
+const moreSubMenu = document.getElementById("more-menu");
 
 let isMenuOpen = false;
+let prevMobMenuHeight = 0;
 
 function main() {
 
     // If on mobile, initially replaces dropdown submenu arrow with mobile +/- icons
     if (window.innerWidth < 1000) {
-        navSubArrow.src = "../assets/vendor/img/btn/Plus-expand.png";
-        navSubArrow.style.cursor = "pointer";
+        navSubArrow.forEach((arrow) => {
+            arrow.src = "../assets/vendor/img/btn/Plus-expand.png";
+            arrow.style.cursor = "pointer";
+        })
+
     }
 
     // In the case of desktop resizing, change header formatting accordingly
     window.addEventListener("resize", () => {
-        if (window.innerWidth >= 1000) {      // Resize to desktop format and remove additional mobile formatting classes (.show-menu)
-            navSubArrow.src = "../assets/vendor/img/btn/Nav-Arrow-White.png";
-            navSubArrow.style.cursor = "default";
+        navSubArrow.forEach((arrow) => {
+            if (window.innerWidth >= 1000) {      // Resize to desktop format and remove additional mobile formatting classes (.show-menu)
+                arrow.src = "../assets/vendor/img/btn/Nav-Arrow-White.png";
+                arrow.style.cursor = "default";
+    
+                if (navMenu.style.height != "0") {
+                    navMenu.style.height = "0";
 
-            if (navMenu.classList.contains("show-menu")) {
-                navMenu.classList.remove("show-menu");
-                navMenu.classList.remove("show-submenu");
-                hamBtn.style.transform = "none";
-                isMenuOpen = false;
+                    navSubMenu.forEach((subMenu) => {
+                        subMenu.classList.remove("show-submenu");
+                    })
+
+                    hamBtn.style.transform = "none";
+                    isMenuOpen = false;
+                }
+    
+            } else if (arrow.getAttribute('src') != "../assets/vendor/img/btn/Minus-expand.png") {
+                arrow.src = "../assets/vendor/img/btn/Plus-expand.png";
+                arrow.style.cursor = "pointer";
             }
-
-        } else if (navSubArrow.getAttribute('src') != "../assets/vendor/img/btn/Minus-expand.png") {
-            navSubArrow.src = "../assets/vendor/img/btn/Plus-expand.png";
-            navSubArrow.style.cursor = "pointer";
-        }
+        })
     });
 
     // When clicking hamburger icon in mobile view, opens slide-down menu and plays icon animation
     navToggle.addEventListener("click", () => {
         if (window.innerWidth < 1000) {
-            navMenu.classList.toggle("show-menu");
+            console.log(navMenu.style.height)
+            if (navMenu.style.height != navMenu.scrollHeight + "px") {
+                navMenu.style.height = navMenu.scrollHeight + "px";
+            } else {
+                navMenu.style.height = "0";
+            }
+
+            // navMenu.classList.toggle("show-menu");
         }
 
         if (isMenuOpen) {
             hamBtn.style.transform = "none";
             isMenuOpen = false;
 
-            navMenu.classList.remove("show-submenu");
-            navSubArrow.src = "../assets/vendor/img/btn/Plus-expand.png";
+            navSubMenu.forEach((subMenu) => {
+                subMenu.classList.remove("show-submenu");
+            })
+
+            navSubArrow.forEach((arrow) => {
+                arrow.src = "../assets/vendor/img/btn/Plus-expand.png";
+            })
+
+
         } else {
             hamBtn.style.transform = "rotate(-90deg)";
             isMenuOpen = true;
         }
     });
 
-    navSubArrow.addEventListener("click", () => {
-        if (window.innerWidth < 1000 && navMenu.classList.contains("show-menu")) {
+    navSubArrow.forEach((arrow) => {
+        arrow.addEventListener("click", () => {
+            if (window.innerWidth < 1000 && navMenu.style.height != "0") { // === navMenu.scrollHeight + "px") {
+                let subMenu = arrow.parentElement.parentElement;
 
-            navMenu.classList.toggle("show-submenu");
+                if (subMenu.classList.contains("show-submenu")) {
+                    subMenu.classList.remove("show-submenu"); 
+                } else {
+                    subMenu.classList.add("show-submenu"); 
+                }
 
-            if (navSubArrow.getAttribute('src') == "../assets/vendor/img/btn/Minus-expand.png") {
-                navSubArrow.src = "../assets/vendor/img/btn/Plus-expand.png";
-            } else if (navSubArrow.getAttribute('src') == "../assets/vendor/img/btn/Plus-expand.png") {
-                navSubArrow.src = "../assets/vendor/img/btn/Minus-expand.png";
+                let chordSubOpen = chordSubMenu.classList.contains("show-submenu");
+                let moreSubOpen = moreSubMenu.classList.contains("show-submenu");
+                let calcHeight = 173;
+
+                if (chordSubOpen) {
+                    calcHeight += 74;
+                } 
+
+                if (moreSubOpen) {
+                    calcHeight += 46;
+                }
+
+                navMenu.style.height = calcHeight + "px";
+
+                // switch (subMenu.id) {
+                    // case "chord-menu":
+                    //     // alert("test")
+                    //     chordSubMenu.classList.toggle("show-submenu");
+                    //     break;
+                    // case "more-menu":
+                    //     moreSubMenu.classList.toggle("show-submenu");
+                    //     break;
+                // }
+    
+                if (arrow.getAttribute('src') == "../assets/vendor/img/btn/Minus-expand.png") {
+                    arrow.src = "../assets/vendor/img/btn/Plus-expand.png";
+                } else if (arrow.getAttribute('src') == "../assets/vendor/img/btn/Plus-expand.png") {
+                    arrow.src = "../assets/vendor/img/btn/Minus-expand.png";
+                }
             }
-        }
-    });
+        });
+    })
+
 }
 
 main();

@@ -34,7 +34,7 @@
         <nav class="navbar navbar-expand-sm">
             <div class="navbar-header row">
                 <div class="col float-left">
-                    <a class="" href="">
+                    <a class="" href="index.html">
                         <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
                     </a>
                 </div>
@@ -47,26 +47,70 @@
             </div>
 
             <ul class="navbar-menu">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about.html">About</a></li>
-                <li class="navbar-dropdown">
+                <li><a href="index.html">Home</a></li>
+                <li class="navbar-dropdown" id="chord-menu">
                     <button class="navbar-subbtn"><a href="index.html">Chords</a>
-                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
                     </button>    
 
-                    <ul class="navbar-submenu">
+                    <ul class="navbar-submenu" id="chord-submenu">
                         <li><a href="keyboard.html">Keyboard Input</a></li>
                         <li><a href="record.html">Microphone Input</a></li>
-                        <li><a href="404">Text / Staff Line Input</a></li>
+                        <li><a href="note-text.html">Text / Staff Line Input</a></li>
                     </ul>
                 </li>
-                <li><a href="../scales/index.html">Scales</a></li>
+                <li><a href="scales/index.html">Scales</a></li>
+                <li class="navbar-dropdown" id="more-menu">
+                    <button class="navbar-subbtn">More Tools
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu" id="more-submenu">
+                        <li><a href="404.html">Metronome</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </nav>
     </header>
 
     <main>
+        <div class="check-notes-screen text-center">
+            <div class="check-notes-wrapper">
+                <div class="check-notes-text-1">
+                    <p class="text-body">
+                        We thought you played these notes from your recording,
+                        but we would like to double-check with you. Please click on
+                        the notes that you had intended to play:
+                    </p>
+                </div>
+
+                <div class="note-display row">
+                    <!-- Insert p or span into here dynamically -->
+                    <!-- <div class="note-select selected">
+                        <span id="A" class="col">A</span>
+                    </div>
+
+                    <div class="note-select">
+                        <span class="col">C</span>
+                    </div>
+
+                    <div class="note-select">
+                        <span class="col">Eb</span>
+                    </div> -->
+                </div>
+
+                <div class="check-notes-text-2">
+                    <p class="text-body" style="margin-top: 20px">
+                        Once you have finished, click the button below to continue with the chord analysis.
+                    </p>
+                    <button id="btn-confirm" class="text-btn" title="Continue analysing notes!" disabled>
+                        <p>SELECT NOTES</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="loading-screen">
             <div class="load-wrapper">
                 <div id="load-animation">
@@ -139,14 +183,16 @@
 
                     <div id="mic-text" class="text-center">
                         <p class="text-body">
-                            Press the microphone button to start, then play a couple of notes using your instrument of choice. Once finished, press the button again to stop recording.
-                        </p>   
+                            Press the microphone button to start, then play a couple of notes using your instrument of
+                            choice. Once finished, press the button again to stop recording.
+                        </p>
                         <p class="text-body" style="margin-top: 20px">
                             After reviewing your recording, press the button below to
                             look up the related chords.
                         </p>
 
-                        <button id="mic-btn-identify" class="text-btn" title="Record using your microphone first." disabled>
+                        <button id="mic-btn-identify" class="text-btn" title="Record using your microphone first."
+                            disabled>
                             <p>IDENTIFY CHORDS</p>
                         </button>
 
@@ -193,14 +239,14 @@
 
                     <div id="file-text" class="text-center">
                         <p class="text-body">
-                            Drag and drop an audio file (.ogg, .wav, .webm, .mp3) or manually 
-                            choose one from your videos / file manager. Afterwards, press the button below to 
+                            Drag and drop an audio file (.ogg, .wav, .webm, .mp3) or manually
+                            choose one from your videos / file manager. Afterwards, press the button below to
                             analyze the notes in the file and find the related chords.
                         </p>
-                        
+
                         <p class="text-body" style="margin-top: 20px">
-                            Ensure that the audio file only consists of separated single notes, 
-                            or the chord recombinator will fail. 
+                            Ensure that the audio file only consists of separated single notes,
+                            or the chord recombinator will fail.
                         </p>
 
                         <button id="file-btn-identify" class="text-btn" title="Upload an audio file first." disabled>
@@ -229,7 +275,7 @@
         </div>
 
         <ul class="footer-menu">
-            <li><a href="../about.html">About</a></li>
+
             <li><a href="../privacy.html">Privacy</a></li>
             <li><a href="../contact.html">Contact Us</a></li>
         </ul>

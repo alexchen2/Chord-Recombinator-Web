@@ -13,7 +13,7 @@ let prerecFileName = ""; // filename for pre-recorded files
 // When pressing record button, keeps track of the audio file duration to be used in fix-webm-duration.js;
 // this is part of an 6-year old issue with chrome not generating metadata from MediaRecorder audio and video files 
 // Refer to: https://bugs.chromium.org/p/chromium/issues/detail?id=642012
-let startTime; 
+let startTime;
 let duration;
 
 // General area/wrappers
@@ -27,6 +27,7 @@ const playBtn = document.querySelector("#btn-play");
 const muteBtn = document.querySelector("#btn-mute");        // Note to self: use ws.setMuted(true or false)
 const identifyMicBtn = document.querySelector("#mic-btn-identify");
 const identifyFileBtn = document.querySelector("#file-btn-identify");
+const confirmBtn = document.querySelector("#btn-confirm");
 
 // Drag and drop area HTML elements
 const dropArea = document.querySelector(".drop-box");
@@ -46,16 +47,21 @@ const recTimer = document.getElementById("record-timer");
 let recInterval = null;
 
 // Loading screen variables and elements
-const loadScreen = document.querySelector(".loading-screen")
+const loadScreen = document.querySelector(".loading-screen");
 const note1 = document.querySelector("#note-1-inner");
+
+// Note check screen variables and elements
+const checkScreen = document.querySelector(".check-notes-screen");
+const checkWrapper = document.querySelector(".check-notes-wrapper");
+const noteDisplay = document.querySelector(".note-display");
 
 // Various booleans
 let loadClrSwitched = false;  // Checks if loading screen colours have been switched at end of previous animation iteration
 let hasRecorded = false;      // Checks if a recording has been made with the mic functionality
 
 // Will be implemented later...
-let micNotes = "";
-let fileNotes = "";
+let notes = [];
+let noteQuery = "";
 
 // Recorded file media player waveform settings (using wavesurfer.js library)
 let ws;
@@ -151,7 +157,7 @@ async function uploadRecording(fixedBlob) {
     let statusUpload = await uploadAudio(data);
     console.log("Awaited upload file status: " + statusUpload);
     // testGet();
-  
+
     let outputConvert = await convertAudio(micFileName);
     // alert("Awaited conversion new file name: " + outputConvert + " " + (typeof outputConvert));
     micFileName = outputConvert.replaceAll("\\", "/").split("/").slice(-1).toString();
@@ -169,7 +175,7 @@ async function uploadRecording(fixedBlob) {
     // ws.on("ready", () => {
     //     alert("Test ready")
     // })
-  
+
     // Add play btn listeners
     playBtn.addEventListener("click", clickPlay);
 
@@ -395,7 +401,7 @@ function clickMute(event = null) {
 function updateTimer(startTime) {
     const newTime = Date.now();
     const diffTime = Math.abs(newTime - startTime);
-    const diffSec = Math.floor((diffTime / 1000) % 60); 
+    const diffSec = Math.floor((diffTime / 1000) % 60);
     const diffMin = Math.floor(diffTime / (1000 * 60));
     // console.log(diffTime + " milliseconds");
     // console.log(diffDays + " days");
@@ -414,39 +420,147 @@ function clickIdentifyFile(event = null) {
 }
 
 async function identifyNotes(buttonType) {   // buttonType = string
-    let notes, noteQuery;
+    let serverOutput;
+
     switch (buttonType) {
         case "mic":
-            notes = await requestNotes(micFileName);
-            console.log("Received notes!");
-        
-            micNotes = notes.toString();
-            alert(micNotes);
+            serverOutput = await requestNotes(micFileName);
+
+            serverOutput = serverOutput.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+            notes = serverOutput.split(", ")
+
+            console.log("Received mic notes!");
+            // alert(notes);
+            // console.log(typeof notes);
+
+            if (notes.length < 3) {
+                alert("Our program detected that the recording or file contained less than 3 notes; either something went wrong, or the audio was not loud enough. Please try recording again/uploading another file or using another input feature.")
+                loadScreen.classList.remove("show-loading");
+                notes = [];
+            } else {
+                setTimeout(() => {
+                    setUpConfirmScreen();
+                }, 2000)
+            }
+
             break;
         case "file":
-            notes = await requestNotes(prerecFileName);
-            console.log("Received notes!");
-        
-            fileNotes = notes.toString();
-            noteQuery = fileNotes.replaceAll(", ", "_")
-            noteQuery = noteQuery.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
-            noteQuery = noteQuery.replaceAll("#", "%23");
-            // alert(noteQuery);
+            serverOutput = await requestNotes(prerecFileName);
 
-            loadScreen.classList.remove("show-loading");
+            serverOutput = serverOutput.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+            notes = serverOutput.split(", ")
 
-            window.location.assign(`/getResults?input=mic&notes=${noteQuery}`)
+            console.log("Received prerecorded file notes!");
+            // alert(notes);
+
+            if (notes.length < 3) {
+                alert("Our program detected that the recording or file contained less than 3 notes; either something went wrong, or the audio was not loud enough. Please try recording again/uploading another file or using another input feature.")
+                loadScreen.classList.remove("show-loading");
+                notes = [];
+            } else {
+                setTimeout(() => {
+                    setUpConfirmScreen();
+                }, 2000)
+            }
+
             break;
         default:
             alert("[BTN_ASSIGN_ERROR] Sorry, something went wrong. Please try another time or use another input method.")
     }
-
-
-
     // window.location.href = "record.html";    // Redirect for now, until I've created a "results" webpage
 }
 
-//////// UPLOAD / DRAG AND DROP ////////
+// Reveals the "confirm notes" popup screen and enables click functionality on buttons and notes
+function setUpConfirmScreen() {
+    let noteSelectHTML;
+
+    // Debug...
+    console.log(notes)
+    console.log(typeof notes)
+    
+    for (let note of notes) {
+        // Span HTML inside each note display div element
+        noteSelectHTML = `<span class="col">${note}</span>`
+
+        // Create a single note element and add appropriate initial classes and ids
+        let noteDiv = document.createElement("div");
+        noteDiv.innerHTML = noteSelectHTML;
+        noteDiv.classList.add("note-select");
+        noteDiv.id = note;
+
+        noteDiv.addEventListener("click", function(event) {
+            // Adds selected appearance + status to recently clicked note
+            this.classList.toggle("selected");
+            console.log(this.classList);
+
+            // Contains all displayed notes in popup
+            let noteElemClicked = noteDisplay.querySelectorAll("div.selected");
+
+            // Makes a quick check for if three or more notes are selected; if so, enables confirm button, and if not, disables it
+            // let noteElemClicked = noteElem.filter((elem) => elem.classList.contains("selected"))
+            if (noteElemClicked.length > 2) {
+                confirmBtn.disabled = false;
+            } else {
+                confirmBtn.disabled = true;
+            }
+        })
+
+        noteDisplay.appendChild(noteDiv);
+
+        // alert("Inserted note")
+    }
+
+    // Reveal "check notes" popup
+    checkScreen.classList.add("show-check-notes");
+
+    // Add visual clicking and submit functionality to confirm button
+    confirmBtn.addEventListener("click", clickConfirm);
+
+    confirmBtn.addEventListener("mousedown", () => {
+        confirmBtn.classList.add("btn-down");
+    })
+
+    "mouseup mouseleave".split(" ").forEach((event) => {
+        confirmBtn.addEventListener(event, () => {
+            confirmBtn.classList.remove("btn-down");
+        })
+    })
+}
+
+// When confirm button on popup is clicked, then redirects to results page with note data
+function clickConfirm(event = null) {
+    let noteElem = noteDisplay.querySelectorAll("div");    // Contains all displayed notes in popup
+    notes = []                                             // Reset list of notes to store specifically selected notes
+
+    // Hide the "check notes" popup
+    checkScreen.classList.remove("show-check-notes");
+
+    // Collect all selected notes into the recently-cleared notes array
+    for (let note of noteElem) {
+        if (note.classList.contains("selected")) {
+            notes.push(note.id);
+        }
+    }
+
+    // Debug...
+    console.log("Definitive choice of notes: " + notes);
+    console.log("Submitting definitive choice of notes...")
+
+    // Convert notes to a string and format properly for sending as query parameter
+    noteQuery = notes.toString();
+    noteQuery = noteQuery.replaceAll(",", "_")
+    noteQuery = noteQuery.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+    noteQuery = noteQuery.replaceAll("#", "%23");
+
+    // Debug...
+    console.log(noteQuery);
+
+    // Remove loading screen and redirect to results with note query
+    loadScreen.classList.remove("show-loading");
+    window.location.assign(`/getResults?input=mic&notes=${noteQuery}`);
+}
+
+//////// UPLOAD & DRAG AND DROP ////////
 
 // Prevents default action from taking place when dragging & dropping file over browser (open file in new tab)
 function preventDefaults(e) {
@@ -544,7 +658,7 @@ async function uploadFile() {
 
         } else {
             if (status != -1) {
-                alert("HTTP " + status + ": There was an error uploading your files. Please try again later or use other input methods." );
+                alert("HTTP " + status + ": There was an error uploading your files. Please try again later or use other input methods.");
             }
 
             // No matter the reason/error, show error msg if not successful
@@ -563,26 +677,11 @@ async function uploadFile() {
     }
 }
 
-async function getFileNotes() {
-    let notes = await requestNotes(prerecFileName);
-    console.log("Received notes!");
-
-    return notes.toString();
-}
-
-// Unused WIP, implement later
-async function getMicNotes() {
-    let notes = await requestNotes(micFileName);
-    console.log("Received notes!");
-
-    return notes.toString();
-}
-
 //////// REQUESTS TO BACK-END ////////
 function uploadAudio(formData) {
     return new Promise((resolve, reject) => {
         console.log("Uploading audio...");
-        fetch("http://localhost:5000/saveAudio", { 
+        fetch("http://localhost:5000/saveAudio", {
             method: "POST",
             body: formData
         })
@@ -660,9 +759,22 @@ function requestNotes(fileName) {
 }
 
 function main() {
+    // Check notes screen dynamic resizing
+    window.addEventListener("DOMContentLoaded", () => {
+        checkWrapper.style.marginTop = ((window.screen.height - checkWrapper.offsetHeight) / 4) + "px"
+        checkWrapper.style.marginBottom = ((window.screen.height - checkWrapper.offsetHeight) / 4) + "px";
+    })
+
+    window.addEventListener("resize", () => {
+        checkWrapper.style.marginTop = ((window.screen.height - checkWrapper.offsetHeight) / 4) + "px"
+        checkWrapper.style.marginBottom = ((window.screen.height - checkWrapper.offsetHeight) / 4) + "px";
+
+    })
+
+    // Loading screen changing colour animation
     note1.addEventListener("animationiteration", () => {
         console.log("run once");
-        
+
         if (!loadClrSwitched) {
             loadScreen.style.setProperty("--colour-1", "#FFFFFF");
             loadScreen.style.setProperty("--colour-2", "#55A6FF");
@@ -772,7 +884,7 @@ function main() {
                 if (getRec != [-1, -1]) {
                     const rec = getRec[0];
                     const stream = getRec[1];
-    
+
                     clickRecord(rec, stream);
                     record(rec);
 
@@ -798,8 +910,6 @@ function main() {
 
         });
 
-
-
         // navigator.mediaDevices.getUserMedia({
         //     // constraints - only audio needed for this app
         //     audio: true
@@ -820,11 +930,11 @@ function main() {
             alert("Sorry, your device does not support recording with a microphone. Try inputting a file or using our other input options.")
             // alert(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
             // alert(true && navigator.mediaDevices.getUserMedia);
-            
-//             let test = navigator.mediaDevices && navigator.mediaDevices.getUserMedia
-//             let test2 = true
-          
-//             alert(test2);
+
+            //             let test = navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+            //             let test2 = true
+
+            //             alert(test2);
         })
     }
 }

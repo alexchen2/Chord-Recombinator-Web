@@ -31,7 +31,7 @@
         <nav class="navbar navbar-expand-sm">
             <div class="navbar-header row">
                 <div class="col float-left">
-                    <a class="" href="">
+                    <a class="" href="index.html">
                         <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
                     </a>
                 </div>
@@ -45,19 +45,27 @@
 
             <ul class="navbar-menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li class="navbar-dropdown">
+                <li class="navbar-dropdown" id="chord-menu">
                     <button class="navbar-subbtn"><a href="chords/index.html">Chords</a>
-                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" id="dropdown-arrow" alt="dropdown-arrow">
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
                     </button>    
 
-                    <ul class="navbar-submenu">
+                    <ul class="navbar-submenu" id="chord-submenu">
                         <li><a href="chords/keyboard.html">Keyboard Input</a></li>
                         <li><a href="chords/record.html">Microphone Input</a></li>
-                        <li><a href="chords/404">Text / Staff Line Input</a></li>
+                        <li><a href="chords/note-text.html">Text / Staff Line Input</a></li>
                     </ul>
                 </li>
                 <li><a href="scales/index.html">Scales</a></li>
+                <li class="navbar-dropdown" id="more-menu">
+                    <button class="navbar-subbtn">More Tools
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
+                    </button>    
+
+                    <ul class="navbar-submenu" id="more-submenu">
+                        <li><a href="404.html">Metronome</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </nav>

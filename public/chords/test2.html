@@ -1,19 +1,103 @@
 <!doctype html>
 <html lang="en">
-  <title>Wavesurfer.js Test in iOS Safari and Chromw</title>
-  <meta content="width=device-width" />
-  <style>
+<title>Wavesurfer.js Test in iOS Safari and Chromw</title>
+<meta content="width=device-width" />
+
+<!-- Fonts: Inter, Inria Sans, Space Grotesk -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400;700&family=Space+Grotesk:wght@500;700&family=Spline+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/reset.css">
+
+<!-- Vendor Stylesheets -->
+<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+<!-- JQuery (required for bootstrap) -->
+<script src="../assets/vendor/jQuery/code.jquery.com_jquery-3.7.0.min.js"></script>
+
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    :root {
+        /* Colours */
+        --blue-1: #3E8DE3;
+        --blue-2: #0C2D87;
+        --blue-h: #3F6ADE;
+        --blue-btn: #4FA3FF;
+        --blue-link: #3366CC;
+        --bg-colour-1: #FFFFFF;
+        --bg-colour-2: #F3F3F3;
+        --bg-colour-3: #B3B3B3;
+        --bg-colour-4: #55A6FF;
+        --body-colour: #04060D;
+
+        /* Borders & Shadows */
+        --section-border: 1px solid #C8C8C8;
+        --section-border-2: 5px solid #C8C8C8;
+        --more-input-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.40);
+        --content-border: 1.33px solid #c4c4c5;
+        /* #D7D7D8; */
+        --content-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
+        --btn-shadow: 0rem 0.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
+        --btn-border: .0625rem solid #000000;
+        --media-btn-border: 1px solid #04060D;
+        --media-btn-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        --record-wrapper-border: 1px solid #04060D;
+        --box-img-border: 1.5px solid #B2B2B2;
+        /* --menu-border: .125rem solid #B2B2B2;
+    --submenu-mobile-border: .0625rem solid #B2B2B2;
+    --footer-border-top: .125rem solid #04060D;
+    --menu-shadow: 0rem .5rem 1rem 0rem rgba(0, 0, 0, 0.25); */
+
+        /* Fonts & Font Families */
+        --body-font-family: Inter, "Inria Sans", sans-serif;
+        --nav-font-family: "Inria Sans", sans-serif;
+        --heading-font-family: "Space Grotesk", sans-serif;
+        --record-font-family: "Spline Sans", sans-serif;
+
+        --body-font: normal 300 18px/140% var(--body-font-family);
+        --box-body-font: normal 400 .9375rem/150% var(--body-font-family);
+        --box-a-font: normal 400 15px/22.5px var(--body-font-family);
+        --record-font: normal 600 20px/24px var(--record-font-family);
+        --submenu-font: normal 300 1rem/normal var(--nav-font-family);
+        --submenu-mobile-font: normal 400 1rem/normal var(--nav-font-family);
+        --header-font: normal 300 1.125rem/normal var(--nav-font-family);
+        --footer-font: normal 700 1.25rem/normal var(--nav-font-family);
+        --footer-logo-font: normal 300 1.0625rem/normal var(--heading-font-family);
+        --h1-font: normal 700 2.25rem/normal var(--heading-font-family);
+        --h2-font-1: normal 500 1.5625rem/125% var(--heading-font-family);
+        --h2-font-2: normal 700 1.875rem/75% var(--heading-font-family);
+        --btn-font: normal 700 1.4063rem/102.273% var(--heading-font-family);
+
+        /* Transitions */
+        --container-shrink: all 1.5s ease;
+        --section-remove: height 1.5s ease, padding 1.5s ease, margin 1.5s ease;
+        /* --box-a-transition: all 0.5s ease; */
+
+        /* Switch-related variables */
+        --record-width: 100px;
+        --record-height: 36px;
+    }
+
     #waveform {
-      width: 658px;
-      height: 10rem;
-      border: 2px solid black;
-      border-radius: 5px;
+        width: 658px;
+        height: 10rem;
+        border: 2px solid black;
+        border-radius: 5px;
     }
-    
+
     #waveform ::part(hover-label):before {
-      content: '⏱️ ';
+        content: '⏱️ ';
     }
-    
+
     #recorded-wave {
         /* Change to display when recording button is pressed */
         position: relative;
@@ -24,164 +108,321 @@
         -o-transition: all 1s ease 1s;
         transition: all 1s ease 1s;
     }
-    
 
-  </style>
+    .check-notes-screen {
+        /* -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        vertical-align: middle; */
 
-  <body>
-      <div id="waveform">
-          <div id="recorded-wave"></div>
-      </div>
+        /* position: fixed; */
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        /* z-index: -1; */
+        /* opacity: 0; */
+
+        -webkit-transition: opacity 0.5s ease;
+
+        -o-transition: opacity 0.5s ease;
+
+        transition: opacity 0.5s ease;
+    }
+
+    .check-notes-wrapper {
+        /* Variables copied over from results.html root */
+        --note-display-font: normal 700 30px/25.2px var(--body-font-family);
+        --body-font-family: Inter, "Inria Sans", sans-serif;
+
+        max-width: 800px;
+        width: auto;
+        min-height: 400px;
+        height: auto;
+        background: #FFFFFF;
+        border-radius: 5px;
+        border: 2px solid #000;
+
+        margin: auto;
+        margin-top: 10%;
+    }
+
+    /**
+    * ========
+    * Note Display Styling
+    * ========
+    **/
+
+    .note-display {
+        max-width: 656px;
+        width: 85%;
+        /* width: 366px; */
+        min-height: 74px;
+        height: auto;
+        margin: 23px auto 35px auto;
+
+        border-radius: 5px;
+        border: 1.5px solid #000;
+    }
+
+    .note-display span {
+        color: #000000;
+        text-align: center;
+
+        font: var(--note-display-font);
+        margin-top: 24px;
+        margin-bottom: 24px;
+    }
+
+    /* Preexisting styles */
+
+    .text-body {
+        max-width: 530px;
+        width: auto;
+        margin-left: auto;
+        /*10%*/
+        margin-right: auto;
+        color: #000000;
+        text-align: center;
+        /* font: var(--box-body-font); */
+    }
+
+    .text-btn {
+        width: 243px;
+        height: 59px;
+
+        -ms-flex-item-align: center;
+
+        -ms-grid-row-align: center;
+
+        align-self: center;
+        margin-top: 1.875rem;
 
 
-      <p>
-          📖 <a href="https://wavesurfer-js.org/docs/classes/plugins_hover.HoverPlugin">Hover plugin docs</a>
-      </p>
-    
-      <button id="play-btn">
+        border-radius: 4.125rem;
+        border: var(--btn-border);
+        background: var(--blue-btn);
+        -webkit-box-shadow: var(--btn-shadow);
+        box-shadow: var(--btn-shadow);
+    }
+
+    .text-btn p {
+        font: var(--btn-font);
+        color: var(--bg-colour-1);
+        text-align: center;
+    }
+
+    #btn-confirm {
+        cursor: pointer;
+    }
+
+    #btn-confirm:disabled {
+        background: #9acafd;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        cursor: default;
+
+    }
+
+    #btn-confirm.btn-down {
+        -webkit-transform: translateY(4px);
+        -ms-transform: translateY(4px);
+        transform: translateY(4px);
+        -webkit-box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+        box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+        /* Basically just shades background color w/out changing it */
+    }
+</style>
+
+<body>
+
+    <div class="check-notes-screen">
+        <div class="check-notes-wrapper">
+            <!-- <div class="check-notes-text-1 text-center">
+                <p class="text-body">
+                    We thought you played these notes from your recording,
+                    but we would like to double-check with you. Please select
+                    the notes that you had intended to play:
+                </p>
+            </div> -->
+
+            <!-- <div class="note-display row"> -->
+                <!-- Insert p or span into here dynamically -->
+                <!-- <span class="col">A</span> -->
+                <!-- <span class="col">C</span> -->
+                <!-- <span class="col">Eb</span> -->
+            <!-- </div> -->
+
+            <!-- <div class="check-notes-text-2 text-center">
+                <p class="text-body" style="margin-top: 20px">
+                    Once you have finished, click the button below to continue with the chord analysis.
+                </p>
+                <button id="btn-confirm" class="text-btn" title="Continue analysing notes!" disabled>
+                    <p>SELECT NOTES</p>
+                </button>
+            </div> -->
+        </div>
+    </div>
+
+
+    <!-- <div id="waveform">
+        <div id="recorded-wave"></div>
+    </div>
+
+    <p>
+        📖 <a href="https://wavesurfer-js.org/docs/classes/plugins_hover.HoverPlugin">Hover plugin docs</a>
+    </p>
+
+    <button id="play-btn">
         Play
-      </button>
-      <button id="pause-btn">
+    </button>
+    <button id="pause-btn">
         Pause
-      </button>
-  </body>
-  
-  <script type="module">
-      // Hover plugin
+    </button> -->
+</body>
 
-      import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
-      import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js'
+<!-- Vendor scripts -->
 
-      // Create an instance of WaveSurfer
-      const ws = WaveSurfer.create({
+<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script type="module">
+    // Hover plugin
+
+    import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
+    import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js'
+
+    // Create an instance of WaveSurfer
+    const ws = WaveSurfer.create({
         container: '#recorded-wave',
         waveColor: 'rgb(200, 0, 200)',
         progressColor: 'rgb(100, 0, 100)',
         url: 'https://cdn.glitch.global/30118b0b-5eae-468c-b502-59f11c800310/audioClip-18-01-00-16.wav?v=1692342208639',
         plugins: [
-          Hover.create({
-            lineColor: '#ff0000',
-            lineWidth: 2,
-            labelBackground: '#555',
-            labelColor: '#fff',
-            labelSize: '11px',
-          }),
+            Hover.create({
+                lineColor: '#ff0000',
+                lineWidth: 2,
+                labelBackground: '#555',
+                labelColor: '#fff',
+                labelSize: '11px',
+            }),
         ],
-      })
+    })
 
-      ws.on('interaction', () => {
+    ws.on('interaction', () => {
         ws.play()
-      })
-    
-      document.querySelector("#play-btn").addEventListener("click", clickPlay)
-    
-      document.querySelector("#pause-btn").addEventListener("click", () => {
+    })
+
+    document.querySelector("#play-btn").addEventListener("click", clickPlay)
+
+    document.querySelector("#pause-btn").addEventListener("click", () => {
         ws.pause();
-      })
-    
-      function clickPlay(event = null) {
+    })
+
+    function clickPlay(event = null) {
         if (ws instanceof WaveSurfer) {
             if (ws.isPlaying()) {
-        
+
                 document.querySelector("#play-btn").title = "Play recording";
 
                 ws.pause();
             } else {
-          
+
                 document.querySelector("#play-btn").title = "Pause recording";
 
                 ws.play();
             }
         }
-      }
-    
-  </script>
+    }
+
+</script>
 
 </html>
 <!-- 
 <!doctype html>
 <html lang="en">
-  <title>Wavesurfer.js Test in iOS Safari and Chromw</title>
-  <meta content="width=device-width" />
-  <style>
-    #waveform {
-      width: 658px;
-      height: 10rem;
-      border: 2px solid black;
-      border-radius: 5px;
-    }
-    
-    #waveform ::part(hover-label):before {
-      content: '⏱️ ';
-    }
-    
-    #recorded-wave {
-        /* Change to display when recording button is pressed */
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: scroll;
-        -webkit-transition: all 1s ease 1s;
-        -o-transition: all 1s ease 1s;
-        transition: all 1s ease 1s;
-    }
-    
+    <title>Wavesurfer.js Test in iOS Safari and Chromw</title>
+    <meta content="width=device-width" />
+    <style>
+        #waveform {
+            width: 658px;
+            height: 10rem;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+        
+        #waveform ::part(hover-label):before {
+            content: '⏱️ ';
+        }
+        
+        #recorded-wave {
+                /* Change to display when recording button is pressed */
+                position: relative;
+                width: 100%;
+                height: 100%;
+                overflow: scroll;
+                -webkit-transition: all 1s ease 1s;
+                -o-transition: all 1s ease 1s;
+                transition: all 1s ease 1s;
+        }
+        
 
-  </style>
+    </style>
 
-  <body>
-      <div id="waveform">
-          <div id="recorded-wave"></div>
-      </div>
+    <body>
+            <div id="waveform">
+                    <div id="recorded-wave"></div>
+            </div>
 
 
-      <p>
-          📖 <a href="https://wavesurfer-js.org/docs/classes/plugins_hover.HoverPlugin">Hover plugin docs</a>
-      </p>
+            <p>
+                    📖 <a href="https://wavesurfer-js.org/docs/classes/plugins_hover.HoverPlugin">Hover plugin docs</a>
+            </p>
+        
+            <button id="play-btn">
+                Play
+            </button>
+            <button id="pause-btn">
+                Play
+            </button>
+    </body>
     
-      <button id="play-btn">
-        Play
-      </button>
-      <button id="pause-btn">
-        Play
-      </button>
-  </body>
-  
-  <script type="module">
-      // Hover plugin
+    <script type="module">
+            // Hover plugin
 
-      import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
-      import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js'
+            import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
+            import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js'
 
-      // Create an instance of WaveSurfer
-      const ws = WaveSurfer.create({
-        container: '#recorded-wave',
-        waveColor: 'rgb(200, 0, 200)',
-        progressColor: 'rgb(100, 0, 100)',
-        url: '../assets/vendor/audio/user/file_example_MP3_700KB.mp3',
-        plugins: [
-          Hover.create({
-            lineColor: '#ff0000',
-            lineWidth: 2,
-            labelBackground: '#555',
-            labelColor: '#fff',
-            labelSize: '11px',
-          }),
-        ],
-      })
+            // Create an instance of WaveSurfer
+            const ws = WaveSurfer.create({
+                container: '#recorded-wave',
+                waveColor: 'rgb(200, 0, 200)',
+                progressColor: 'rgb(100, 0, 100)',
+                url: '../assets/vendor/audio/user/file_example_MP3_700KB.mp3',
+                plugins: [
+                    Hover.create({
+                        lineColor: '#ff0000',
+                        lineWidth: 2,
+                        labelBackground: '#555',
+                        labelColor: '#fff',
+                        labelSize: '11px',
+                    }),
+                ],
+            })
 
-      ws.on('interaction', () => {
-        ws.play()
-      })
-    
-      document.querySelector("#play-btn").addEventListener("click", () => {
-        ws.play();
-      })
-    
-      document.querySelector("#pause-btn").addEventListener("click", () => {
-        ws.pause();
-      })
-    
-  </script>
+            ws.on('interaction', () => {
+                ws.play()
+            })
+        
+            document.querySelector("#play-btn").addEventListener("click", () => {
+                ws.play();
+            })
+        
+            document.querySelector("#pause-btn").addEventListener("click", () => {
+                ws.pause();
+            })
+        
+    </script>
 
 </html> -->
