@@ -100,6 +100,11 @@ function addNote(note) {
         }
     }
 
+    if (window.innerWidth < 1000) {
+        note = note.replaceAll("♭", "b");
+        note = note.replaceAll("♯", "#");
+    }
+
     const newElem = document.createElement("span");
     newElem.appendChild(document.createElement("p"));
     newElem.classList.add("col");
@@ -126,7 +131,7 @@ function addChordKnown(chord) {
                     default:     // Just for error handling
                         alert("Something went wrong with displaying your notes. Please reach out to us regarding the issue, and we will try to fix it as soon as possible.")
                 }
-    
+
                 break;
             }
         }
@@ -231,7 +236,7 @@ function addChordUnknown(chord) {
                     default:     // Just for error handling
                         alert("Something went wrong with displaying your notes. Please reach out to us regarding the issue, and we will try to fix it as soon as possible.")
                 }
-    
+
                 break;
             }
         }

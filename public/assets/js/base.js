@@ -99,7 +99,7 @@ function main() {
                 let calcHeight = 173;
 
                 if (chordSubOpen) {
-                    calcHeight += 74;
+                    calcHeight += 74 + 43;
                 } 
 
                 if (moreSubOpen) {

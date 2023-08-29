@@ -189,11 +189,6 @@ Navbar
     transition: var(--transition-1);
 }
 
-#chord-menu {
-
-    /* height: 116.67px; */
-}
-
 /* Dropdown button */
 .navbar-subbtn {
     display: flex;
@@ -576,7 +571,7 @@ JS Changing Classes
 }
 
 #chord-menu.show-submenu {
-    height: 116.67px;
+    height: 160px; /* 116.67px;*/
 }
 
 #more-menu.show-submenu {
