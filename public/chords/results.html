@@ -92,7 +92,8 @@
                 <div id="note-text" class="text text-center">
                     <p class="text-body">
                         The following table contains a list of chords
-                        that can be constructed from these notes:
+                        that can be constructed from the notes below. Click on a row to get a visual
+                        and aural representation of each chord.
                     </p>
 
                     <div class="note-display row">
@@ -108,15 +109,16 @@
                         <!-- table-responsive -->
                         <thead id="data-header-known" class="data-header">
                             <tr class="align-top">
+                                <th style="width: 45px"></th>
                                 <th>Chord Name</th>
                                 <th>Notes</th>
                                 <th>Alt. Notation</th>
-                                <th>Play Chord</th>
+                                <th>Normal Form</th>
                             </tr>
                         </thead>
                         <tbody id="data-insert-known" class="data-insert">
                             <tr id="data-empty-known" class="data-empty">
-                                <td colspan="4">
+                                <td colspan="5">
                                     There are no chords to display!
                                 </td>
                             </tr>
@@ -125,7 +127,7 @@
                                 <td class="data-chord"><span class="bold">A</span> Half Diminished 7th</td>
                                 <td class="data-notes">a</td>
                                 <td class="data-notation">d</td>
-                                <td class="data-sound">
+                                <td class="staff-sound">
                                     <button class="btn-sound" title="">
                                         <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png"
                                             alt="">
@@ -147,31 +149,84 @@
                     <table id="data-table-unknown" class="data-table table container table-striped align-middle">
                         <thead id="data-header-unknown" class="data-header">
                             <tr class="align-top">
+                                <th style="width: 45px"></th>
                                 <th>Note Composition</th>
                                 <th>Normal Form</th>
-                                <th>Play Chord</th>
+                                <!-- <th>Play Chord</th> -->
                             </tr>
                         </thead>
                         <tbody id="data-insert-unknown" class="data-insert">
                             <tr id="data-empty-unknown" class="data-empty">
-                                <td colspan="4">
+                                <td colspan="3">
                                     There are no chords to display!
                                 </td>
                             </tr>
                             <!-- General structure of inserted unknown chords rows (via JS): -->
-                            <!-- <tr>
+                            <!-- <tr data-toggle="collapse" data-target="#accordion-1" class="clickable">
                                 <td class="data-notes">A Half Diminished 7th</td>
                                 <td class="data-normal">a</td>
-                                <td class="data-sound">
+                                <tr class="color-spacing"></tr>
+                            </tr>
+                            <tr class="data-expand">
+                                <td colspan="3">
+                                    <div id="accordion-1" class="collapse container">
+                                        <div class="staff-header">
+                                            <span>Staff Representation:</span>
+                                            <div class="staff-sound">
+                                                <button class="btn-sound" title="">
+                                                    <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png"
+                                                        alt="">
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="staff-wrapper">
+                                            <div id="staff-1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td class="data-notes">A Half Diminished 7th</td>
+                                <td class="data-normal">a</td>
+                                <td class="staff-sound">
                                     <button class="btn-sound" title="">
                                         <img class="mx-auto d-block" src="../assets/vendor/img/btn/speaker-1.png"
                                             alt="">
                                     </button>
-                                </td>
-                            </tr> -->
+                                </td> -->
+                                <!-- <tr class="color-spacing" style="visibility: hidden"></tr>
+                                <tr class="data-expand" style="border: none;">
+                                    <td colspan="3">
+
+                                    </td>
+                                </tr> -->
+                            <!-- </tr>  -->
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Accordion table example online -->
+                <!-- <table class="table table-hover">
+                    <thead>
+                        <th></th><th></th><th></th>
+                    </thead>
+                    
+                    <tbody>
+                        <tr data-toggle="collapse" data-target="#accordion" class="clickable">
+                            <td>Some Stuff</td>
+                            <td>Some more stuff</td>
+                            <td>And some more</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div id="accordion" class="collapse">Hidden by default</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+
 
                 <div id="text" class="text-center">
                     <button id="btn-retry" class="text-btn">
@@ -245,7 +300,7 @@
     <!-- Vendor scripts -->
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.3/build/cjs/vexflow.js"></script> -->
     <!-- Local scripts -->
     <!-- <script src="../assets/js/base.js"></script> -->
     <!-- <script src="../assets/js/includeHTML.js"></script> -->

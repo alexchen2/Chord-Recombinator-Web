@@ -317,11 +317,11 @@ button:active:focus {
     /* Basically just shades background color w/out changing it */
 }
 
-.data-sound {
+.staff-sound {
     position: relative;
 }
 
-.data-sound button {
+.staff-sound button {
     margin-top: 4px;
     margin-bottom: 4px;
     width: 49px;
@@ -336,7 +336,7 @@ button:active:focus {
     cursor: pointer;
 }
 
-.data-sound button:disabled {
+.staff-sound button:disabled {
     background: #9acafd;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -348,7 +348,7 @@ button:active:focus {
     margin-right: 19px;
 }
 
-.data-sound img {
+.staff-sound img {
     height: 25px;
     width: auto;
 }
@@ -373,7 +373,7 @@ button:active:focus {
     }
 }
 
-.data-sound button.active {
+.staff-sound button.active {
     -webkit-transform: translateY(4px);
     -ms-transform: translateY(4px);
     transform: translateY(4px);
@@ -497,7 +497,7 @@ table {
     line-height: 150%;
 }
 
-.data-sound {
+.staff-sound {
     position: relative;
     display: flex;
     height: 100%;
@@ -505,7 +505,7 @@ table {
     justify-self: center;
 }
 
-.data-sound button {
+.staff-sound button {
     margin-top: auto;
     margin-bottom: auto;
     width: 29px;
@@ -520,20 +520,20 @@ table {
     cursor: pointer;
 }
 
-.data-sound button:disabled {
+.staff-sound button:disabled {
     background: #9acafd;
     -webkit-box-shadow: none;
     box-shadow: none;
     cursor: default;
 }
 
-.data-sound img {
+.staff-sound img {
     height: 15px;
     width: auto;
     /* 26.041px */
 }
 
-.data-sound button.active {
+.staff-sound button.active {
     -webkit-transform: translateY(4px);
     -ms-transform: translateY(4px);
     transform: translateY(4px);
@@ -585,6 +585,72 @@ table {
     .note-display {
         max-width: 565px;
     }
+}
+
+/**
+ * ========
+ * Table Dropdown
+ * ========
+**/
+
+.color-spacing {
+    visibility: hidden;
+}
+
+.data-expand td {
+    padding: 0; 
+    border: none;
+}
+
+.staff-header {
+    display: flex; 
+    justify-content: space-between; 
+    padding: 10px 40px 0 40px;
+}
+
+.staff-header span {
+    font-weight: bold; 
+    font-style: italic;
+    margin-top: auto; 
+    margin-bottom: auto;
+}
+
+.staff-wrapper {
+    width: 100%;
+}
+
+.table-striped tbody tr.clickable {
+    cursor: pointer;
+    transition: all 0.2s linear;
+}
+
+.table-striped tbody tr.clickable:hover {
+    background-color: #D0D0D0;
+}
+
+.table-striped tbody tr.clickable.active {
+    background-color: #D0D0D0;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.table-striped tbody tr.clickable.active:hover {
+    background-color: #E0E0E0;
+}
+
+.data-arrow {
+    width: 20px; /* 30px; */
+    height: 19.17px; /* 28.75px; */
+
+    /* Vertical centering trick for absolute positioned elements below*/
+    margin: auto;
+
+    transition: transform 0.5s ease-out;
+}
+
+.table-striped tbody tr.clickable.active .data-arrow {
+    transform: scaleY(-1);
 }
 
 /**
