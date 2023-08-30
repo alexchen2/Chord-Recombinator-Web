@@ -74,7 +74,7 @@ async function getNotes(event = null) {
     chordsKnown = chords.filter((chord) => (chord.name != "Unnamed chord") && (chord.root != null));
     chordsUnknown = chords.filter((chord) => (chord.name === "Unnamed chord") || (chord.root === null));
     notesArr = notes.split("_");  // notes.replaceAll("%23", "#")
-    alert(notesArr)
+    // alert(notesArr)
 
     for (let note of notesArr) {
         addNote(note);
@@ -260,13 +260,13 @@ function addChordKnown(chord, idIndex) {
         normalForm.innerText = `(${chord.pitchClass.join(", ")})`
     }
 
-    alert(chord.notes)
+    // alert(chord.notes)
     // Reorganize for actual chord notes
     while (chord.notes[0] != chord.root) {
         let temp2 = chord.notes[0]
         chord.notes = chord.notes.slice(1)
         chord.notes.push(temp2)
-        alert(chord.notes)
+        // alert(chord.notes)
     }
 
     sound.addEventListener("click", () => {
