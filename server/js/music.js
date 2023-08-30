@@ -48,12 +48,12 @@ const CHORD_LIST = {
     'Dominant Eleventh Chord': { '[0,2,4,6,7,9]': 1 },
     'Dominant Thirteenth Chord': {
         '[0,1,3,5,7,8,10]': 2,
-        '[0,1,3,5,6,8,10]': -2,
-        '[0,2,3,5,7,8,10]': -1
+        '[0,1,3,5,6,8,10]': 5,
+        '[0,2,3,5,7,8,10]': 6
     },
     'Lydian Dominant/Acoustic Scale': {
-        '[0,2,3,5,6,8,10]': -2,
-        '[0,2,4,5,7,8,10]': -1,
+        '[0,2,3,5,6,8,10]': 5,
+        '[0,2,4,5,7,8,10]': 6,
         '[0,1,3,4,6,8,10]': 4
     },
     'Diminished Seventh Chord': { '[0,3,6,9]': 0 },
@@ -69,7 +69,7 @@ const CHORD_NOTATION = {
     'Minor Seventh Chord': ['_m7', '_min7'],
     'Half Diminished Seventh': ['_ø7', '_m7(b5)', '_min7(b5)'],
     'Augmented Chord': ['_+', '_aug'],
-    'Diminished Chord': ['_o', '_dim'],
+    'Diminished Chord': ['_°', '_dim'],
     'Dominant Seventh Chord': ['_7', '_dom7'],
     'Dominant Ninth Chord': ['_9', '_dom9'],
     'Dominant Eleventh Chord': ['_11', '_dom11'],
@@ -80,7 +80,7 @@ const CHORD_NOTATION = {
         '_ Mixolydian #4 Scale',
         '_ Lydian b7 Scale'
     ],
-    'Diminished Seventh Chord': ['_o7', '_dim7'],
+    'Diminished Seventh Chord': ['_°7', '_dim7'],
     'Quartal Chord': [],
     'Sus or Quartal Chord': ['_Sus2', '_Sus4', '_ Quartal Chord']
 };
@@ -244,10 +244,14 @@ class Chord {
 
         for (let grouping of Object.values(CHORD_LIST)) {
             for (let code of Object.keys(grouping)) {
+                
+                // console.log(getKeyFromValue(CHORD_LIST, grouping) + ": " + code)
                 if (code === "[" + transPitchClass.toString() + "]") {
                     this.root = this.notes[grouping[code]];
                     this.name = getKeyFromValue(CHORD_LIST, grouping);
                     this.notation = CHORD_NOTATION[this.name];
+                    
+                    // console.log(this.root, this.name, this.notation)
                     chordFound = true;
                     break;
                 }                
