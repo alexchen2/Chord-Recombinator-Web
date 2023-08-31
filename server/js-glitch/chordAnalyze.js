@@ -1,7 +1,7 @@
 //////// LIBRARY IMPORTS ////////
-import fs from "fs";
+const fs = require("fs");
 
-import {Chord, combination} from "./music.js"
+const {Chord, combination} = require("./music.js");
 
 //////// GLOBAL VARIABLES & CONSTANTS ////////
 
@@ -116,4 +116,4 @@ async function main() {
 // main();
 
 //////// EXPORT STATEMENT ////////
-export { chordAnalyze, generateChords };
+module.exports = { chordAnalyze, generateChords };

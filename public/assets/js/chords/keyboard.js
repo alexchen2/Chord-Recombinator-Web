@@ -229,9 +229,6 @@ function clickMute(event = null) {
 function clickIdentify(event = null) {
     let noteQuery;
 
-    // Begin showing loading screen
-    loadScreen.classList.add("show-loading");
-
     // Filter all pressed keys into separate array and get their notes
     let downKeys = keyAudio.filter((key) => key.keyDown);
     downKeys = downKeys.map((key) => key.note.slice(0, -1));       // Removes pitch number at end of note
@@ -256,9 +253,9 @@ function clickIdentify(event = null) {
                     }
                 }
 
-                return(tempKey.slice(0, -1) + "%23");
+                return (tempKey.slice(0, -1) + "%23");
             } else {
-                return(tempKey);
+                return (tempKey);
             }
         })
     }
@@ -266,6 +263,9 @@ function clickIdentify(event = null) {
     if (downKeys.length <= 2) {
         alert("Please select three or more notes on the keyboard before attempting to identify your chord.");
     } else {
+        // Begin showing loading screen
+        loadScreen.classList.add("show-loading");
+
         setTimeout(() => {
             noteQuery = downKeys.toString().replaceAll(",", "_");
             loadScreen.classList.remove("show-loading");        // Remove, in case user alt-left arrows and goes back to this page
@@ -273,14 +273,14 @@ function clickIdentify(event = null) {
             // window.location.href = "keyboard.html";    // Redirect for now, until I've created a "results" webpage
         }, 3500)
     }
-    
+
 }
 
 function main() {
     // Loading Screen Code
     note1.addEventListener("animationiteration", () => {
         console.log("run once");
-        
+
         if (!loadClrSwitched) {
             loadScreen.style.setProperty("--colour-1", "#FFFFFF");
             loadScreen.style.setProperty("--colour-2", "#55A6FF");

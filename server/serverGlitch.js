@@ -6,7 +6,7 @@
 // import fs from "fs";
 // import { spawnSync } from "child_process";
 
-// import { chordAnalyze, generateChords } from "./js/chordAnalyze.js"
+// import { chordAnalyze, generateChords } from "./js-glitch/chordAnalyze.js"
 
 // Old CommonJS formatted imports
 const express = require("express");
@@ -18,7 +18,7 @@ const fs = require('fs');
 const { spawnSync } = require("child_process");
 const url = require('url');
 
-const { generateChords } = require("./js/chordAnalyze.js")
+const { generateChords } = require("./js-glitch/chordAnalyze.js")
 
 //////// APP-RELATED VAR + MIDDLEWARE ////////
 // const __filename = url.fileURLToPath(import.meta.url);
