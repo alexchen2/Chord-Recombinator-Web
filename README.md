@@ -8,4 +8,5 @@ A prototype of website can be found [here](https://chordguru.glitch.me) (may be 
 - Finish design and implementation of interactive staff/text field input
 - Add proper home page (instead of redirecting to chord subpage) -- unlikely to accomplish
 
-[Original project](https://github.com/Kchenforyou/Chord-Recominbinator) created by [Kevin Chen](https://github.com/Kchenforyou).
+## Credits:
+[Original project](https://github.com/Kchenforyou/Chord-Recominbinator) created by [Kevin Chen](https://github.com/Kchenforyou) in Python.
