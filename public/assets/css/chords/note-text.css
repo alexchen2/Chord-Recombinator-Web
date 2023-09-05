@@ -441,6 +441,7 @@ button:active:focus {
     width: 85%;
     padding: auto;
     margin: auto;
+    max-height: 114px;
     /* margin-top: 39px; */
 }
 
@@ -485,12 +486,26 @@ button:active:focus {
     /* box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4); */
 }
 
-#media-btn-right {
+#media-btn-left {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    align-items: end;
+    align-items: start;
 }
+
+#media-btn-right {
+/*     display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; */
+    max-height: 114px;
+    width: auto;
+}
+
+#media-btn-right button {
+/*     width: 44.1px;
+    min-height: 44.1px; */
+}
+
 
 #btn-add,
 #btn-raise,
@@ -507,12 +522,13 @@ button:active:focus {
 @media screen and (max-width: 510px) {
     #media-btn-left {
         flex-direction: column;
-        max-height: 114px;
-        max-width: 114px;
     }
 
     #media-btn-right {
         flex-direction: column;
+        max-height: 114px;
+        max-width: 104px;
+      
     }
 
     #media-btn-right button {
@@ -552,7 +568,7 @@ button:active:focus {
     }
 }
 
-.media-btn button.active {
+.media-btn button.btn-down {
     -webkit-transform: translateY(4px);
     -ms-transform: translateY(4px);
     transform: translateY(4px);
@@ -605,7 +621,7 @@ button:active:focus {
     border-radius: 8px;
     border: 1.5px solid #000;
     box-shadow: 0px 4px 10px 0px rgba(44, 44, 44, 0.4);
-    transition: background-color 0.3s linear;
+    transition: background-color 0.7s ease;
 }
 
 .panel-c {
@@ -722,13 +738,14 @@ button:active:focus {
 }
 
 .text-note {
-    width: 46px;
+    max-width: 46px;
+    min-width: 46px;
     height: 43px;
     border-radius: 7px;
     border: 0.5px solid #000;
     background: #FFF;
-
-    display: inline-flex;
+  
+    display: flex;
     justify-content: center;
     align-items: center;
 
@@ -1443,7 +1460,6 @@ button.raise-note {
 }
 
 @media screen and (max-height: 500px) {
-
     #load-animation,
     #load-text {
         -webkit-transform: scale(0.7);

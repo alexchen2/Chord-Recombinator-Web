@@ -348,6 +348,24 @@ function btnEvents() {
     btnIdentifyStaff.addEventListener("click", () => {
         clickIdentify(notesStaff);
     })
+  
+    btnIdentifyStaff.addEventListener("pointerdown", () => {
+        btnIdentifyStaff.classList.add("btn-down");
+    })
+  
+    for (let event of ["pointerup", "pointerleave", "pointerout"]) {
+        btnIdentifyStaff.addEventListener(event, () => {
+            btnIdentifyStaff.classList.remove("btn-down");
+        })
+      
+        btnIdentifyText.addEventListener(event, () => {
+            btnIdentifyText.classList.remove("btn-down");
+        })      
+    }
+  
+    btnIdentifyText.addEventListener("pointerdown", () => {
+        btnIdentifyText.classList.add("btn-down");
+    })  
 
     btnIdentifyText.addEventListener("click", () => {
         let panelElem = textDisplay.querySelectorAll(".text-panel .text-note");
@@ -708,6 +726,13 @@ function main() {
         // Note to self, indexOf returns -1 if not found, so no hover or selected notes will be rendered if none are registered in variables
         setStaff(notesStaff, notesStaff.indexOf(noteHovered), notesStaff.indexOf(noteSelected))
 
+    })
+  
+    screen.orientation.addEventListener("change", () => {
+        staffSVG.innerHTML = "";
+
+        // Note to self, indexOf returns -1 if not found, so no hover or selected notes will be rendered if none are registered in variables
+        setStaff(notesStaff, notesStaff.indexOf(noteHovered), notesStaff.indexOf(noteSelected))
     })
 }
 
