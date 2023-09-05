@@ -1,7 +1,7 @@
 # Chord-Recombinator-Web
 A WIP port of kchenforyou's Music Chord Recombinator project as a web application.
 
-A prototype of our website can be found [here](https://chordguru.glitch.me) (~~may be outdated with current version in this repo~~ updated as of 09/05/2023).
+A prototype of our website can be found [here](https://chordguru.glitch.me) (updated as of 09/05/2023).
 
 ## To-do:
 - ~~Create design and add implementation of interactive staff/text field input~~
