@@ -2,8 +2,33 @@
  * Base.css - styling for header navbar and footer.
 */ 
 
+/* 
+=========
+Default Formatting Tweaks
+=========
+*/
+
 * {
     text-size-adjust: none;
+}
+
+/* Make unlinked navbar links not revert to default #000000 text colour */
+.navbar-menu a:not([href]):not([tabindex]),
+.navbar-submenu a:not([href]):not([tabindex]) {
+    color: var(--body-colour);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 62.5rem) {
+    .navbar-menu a:not([href]):not([tabindex]) {
+        color: var(--bg-colour-1);
+        text-decoration: none;
+    }
+
+    .navbar-submenu a:not([href]):not([tabindex]) {
+        color: var(--body-colour);
+    }
 }
 
 /* 

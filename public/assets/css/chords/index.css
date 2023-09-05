@@ -241,6 +241,7 @@ button:active:focus {
     border: var(--btn-border);
     background: var(--blue-btn);
     box-shadow: var(--btn-shadow);
+    cursor: pointer;
 }
 
 .section-btn p {
@@ -249,12 +250,24 @@ button:active:focus {
     text-align: center;
 }
 
-.section-text a:hover {
-    text-decoration: none;
+.section-btn:disabled {
+    background: #9acafd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: default;
 }
 
-.section-btn:hover {
-    cursor: pointer;
+.section-btn:active {
+    -webkit-transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    transform: translateY(4px);
+    -webkit-box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
+    /* Basically just shades background color w/out changing it */
+}
+
+.section-text a:hover {
+    text-decoration: none;
 }
 
 /* main .row:nth-child(2) {

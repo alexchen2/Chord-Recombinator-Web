@@ -17,13 +17,17 @@ let chords, chordsKnown, chordsUnknown;
 const ENHARMONICS = [
     ["D♭", "C♯"],
     ["E♭", "D♯"],
+    ["F♭", "E"],
+    ["F", "E♯"],
     ["G♭", "F♯"],
     ["A♭", "G♯"],
-    ["B♭", "A♯"]
+    ["B♭", "A♯"],
+    ["C♭", "B"],
+    ["C", "B♯"]
 ]
 
 // Used to determine whether if a chord spans more than one octave, and what octave to place it in on a generated SVG Vexflow staff
-const NOTE_ORDER = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
+const NOTE_ORDER = ["C♭", "C", "D♭", "D", "E♭", "E", "F♭", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
 
 //////// FUNCTIONS ////////
 

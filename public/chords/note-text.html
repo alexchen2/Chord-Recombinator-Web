@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400&family=Space+Grotesk:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&family=Inter:wght@300;400;700&family=Space+Grotesk:wght@500;700&display=swap"
         rel="stylesheet">
 
     <!-- Vendor Stylesheets -->
@@ -35,23 +35,26 @@
             <div class="navbar-header row">
                 <div class="col float-left">
                     <a class="" href="index.html">
-                        <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo" alt="ChordWizard logo">
+                        <img src="../assets/vendor/img/logo/logo2B.png" class="navbar-brand navbar-logo"
+                            alt="ChordWizard logo">
                     </a>
                 </div>
-                
+
 
                 <button class="float-right navbar-toggle">
-                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu" alt="hamburger-menu">
+                    <img src="../assets/vendor/img/btn/hamburger-icon-png-11.jpg" id="hamburger-menu"
+                        alt="hamburger-menu">
                 </button>
-                
+
             </div>
 
             <ul class="navbar-menu">
                 <li><a href="index.html">Home</a></li>
                 <li class="navbar-dropdown" id="chord-menu">
                     <button class="navbar-subbtn"><a href="index.html">Chords</a>
-                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
-                    </button>    
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow"
+                            alt="dropdown-arrow">
+                    </button>
 
                     <ul class="navbar-submenu" id="chord-submenu">
                         <li><a href="keyboard.html">Keyboard Input</a></li>
@@ -59,14 +62,15 @@
                         <li><a href="note-text.html">Text / Staff Line Input</a></li>
                     </ul>
                 </li>
-                <li><a href="scales/index.html">Scales</a></li>
+                <li><a onclick="alert('This page will be implemented in the future!')">Scales</a></li>
                 <li class="navbar-dropdown" id="more-menu">
                     <button class="navbar-subbtn">More Tools
-                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow" alt="dropdown-arrow">
-                    </button>    
+                        <img src="../assets/vendor/img/btn/Nav-Arrow-White.png" class="dropdown-arrow"
+                            alt="dropdown-arrow">
+                    </button>
 
                     <ul class="navbar-submenu" id="more-submenu">
-                        <li><a href="404.html">Metronome</a></li>
+                        <li><a onclick="alert('This page will be implemented in the future!')">Metronome</a></li>
                     </ul>
                 </li>
 
@@ -94,7 +98,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="hero">
             <div class="title-content hero-content display-table">
                 <div class="container">
@@ -106,10 +110,138 @@
         </div>
 
         <div id="section" class="container">
-            <h2 id="staff-heading" class="heading container">Text Input</h2>
+            <h2 id="heading" class="container">Text / Staff Line Input</h2>
 
-            <div id="staff-content" class="content container">
-                
+            <div id="content" class="content container">
+                <div class="text-wrapper">
+                    <div class="text-display row">
+                        <!-- <div class="text-panel panel-c">
+                            <button class="lower-note">
+                                <img src="../assets/vendor/img/btn/Minus-expand-2.png" alt="">
+                            </button>
+                            <span class="text-note">C</span>
+                            <button class="raise-note">
+                                <img src="../assets/vendor/img/btn/Plus-expand-2.png" alt="">
+                            </button>
+                            <div class="text-panel-delete">
+                                <img src="../assets/vendor/img/btn/garbage-panel.png" alt="">
+                                <span>Delete note...</span>
+                            </div>
+                        </div>
+
+                        <div class="text-panel panel-e">
+                            <button class="lower-note">
+                                <img src="../assets/vendor/img/btn/Minus-expand-2.png" alt="">
+                            </button>
+                            <span class="text-note">E</span>
+                            <button class="raise-note">
+                                <img src="../assets/vendor/img/btn/Plus-expand-2.png" alt="">
+                            </button>
+                            <div class="text-panel-delete">
+                                <img src="../assets/vendor/img/btn/garbage-panel.png" alt="">
+                                <span>Delete note...</span>
+                            </div>
+                        </div>
+
+                        <div class="text-panel panel-g">
+                            <button class="lower-note">
+                                <img src="../assets/vendor/img/btn/Minus-expand-2.png" alt="">
+                            </button>
+                            <span class="text-note">G</span>
+                            <button class="raise-note">
+                                <img src="../assets/vendor/img/btn/Plus-expand-2.png" alt="">
+                            </button>
+                            <div class="text-panel-delete">
+                                <img src="../assets/vendor/img/btn/garbage-panel.png" alt="">
+                                <span>Delete note...</span>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div id="text-panel-add" class="text-center">
+                        <a>+ Add an extra note...</a>
+                    </div>
+
+                    <div id="text-text" class="text-center"> <!-- This id tag is so stupid -->
+                        <p class="text-body">
+                            Select three or more notes from the panels above,
+                            then press the identify button to find the chords. 
+                            To delete a note, hover over or tap on the panel to bring up a clickable popup.
+                        </p>
+
+                        <button id="text-btn-identify" class="text-btn" title="" disabled>
+                            <p>IDENTIFY CHORDS</p>
+                        </button>
+                    </div>
+
+                    <div class="wrapper-divider">
+                        <h2>OR</h2>
+                    </div>
+                </div>
+
+                <div class="staff-wrapper">
+                    <div id="row-btn">
+                        <div id="media-btn-left" class="media-btn">
+                            <button id="btn-add" title="Toggle 'add notes' mode">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/add-note-2.png" alt="">
+                            </button>
+                            <button id="btn-delete" title="Toggle 'remove notes' mode">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/garbage.png" alt="">
+                            </button>
+                        </div>
+
+                        <div id="media-btn-right" class="media-btn">
+                            <button id="btn-raise" title="Raise pitch of selected note">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/raise-note.png" alt="">
+                            </button>
+                            <button id="btn-lower" title="Lower pitch of selected note">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/lower-note.png" alt="">
+                            </button>
+                            <button id="btn-sharp" title="Sharpen selected note">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/sharp-2.png" alt="">
+                            </button>
+                            <button id="btn-flat" title="Flatten selected note">
+                                <img class="mx-auto d-block" src="../assets/vendor/img/btn/flat-2.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="staff-display">
+                        <div id="staff-svg"></div>
+                        <div class="staff-area" data-note="b/5"></div>
+                        <div class="staff-area" data-note="a/5"></div>
+                        <div class="staff-area" data-note="g/5"></div>
+                        <div class="staff-area" data-note="f/5"></div>
+                        <div class="staff-area" data-note="e/5"></div>
+                        <div class="staff-area" data-note="d/5"></div>
+                        <div class="staff-area" data-note="c/5"></div>
+                        <div class="staff-area" data-note="b/4"></div>
+                        <div class="staff-area" data-note="a/4"></div>
+                        <div class="staff-area" data-note="g/4"></div>
+                        <div class="staff-area" data-note="f/4"></div>
+                        <div class="staff-area" data-note="e/4"></div>
+                        <div class="staff-area" data-note="d/4"></div>
+                        <div class="staff-area" data-note="c/4"></div>
+                        <!-- <div class="staff-area" id="staff-area-C6"></div> -->
+                    </div>
+
+                    <div id="staff-text" class="text-center">
+                        <p class="text-body">
+                            After clicking the "Add Note" button on the left side, click/tap & drag on the staff to add notes.
+                            To remove notes from the staff, click on the trashbin button and click/tap & drag on the note in question.
+                        </p>
+
+                        <p class="text-body" style="margin-top: 20px;">
+                            When neither the add or remove notes button are pressed down, click on a note to select it, then use the pitch and accidental
+                            modification buttons on the right to alter the note.
+                        </p>
+
+                        <button id="staff-btn-identify" class="text-btn" title="Select at least three notes on the staff first." disabled>
+                            <p>IDENTIFY CHORDS</p>
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -143,7 +275,7 @@
     <!-- <script src="../assets/js/base.js"></script> -->
 
     <script src="../assets/js/base.js"></script>
-    <script src="../assets/js/chords/note-text.js"></script>
+    <script src="../assets/js/chords/note-text.js" type="module"></script>
 
 </body>
 

@@ -864,9 +864,7 @@ button:active:focus {
     margin-right: 30px;
 
     -webkit-transition: var(--section-remove);
-
     -o-transition: var(--section-remove);
-
     transition: var(--section-remove);
 }
 
@@ -938,7 +936,6 @@ button:active:focus {
     box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4);
     /* Basically just shades background color w/out changing it */
 }
-
 
 /* Top row of buttons and switch */
 #row-btn {
@@ -1042,12 +1039,6 @@ button:active:focus {
     transform: translateY(4px);
     box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.5);
     /* box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.4); */
-}
-
-#media-btn button.btn-down {
-    transform: translateY(4px);
-    box-shadow: inset 0px 0px 49px rgb(0, 0, 0, 0.5);
-    /* Basically just shades background color w/out changing it */
 }
 
 #btn-record:disabled {
@@ -1852,7 +1843,7 @@ input[type=checkbox] {
 
 @media screen and (max-width: 575px) {
 
-    #load-animation,
+    #load-animation, 
     #load-text {
         -webkit-transform: scale(0.7);
         -ms-transform: scale(0.7);
