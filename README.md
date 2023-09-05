@@ -8,6 +8,7 @@ The website, which is currently hosted on [glitch.com](https://glitch.com), can 
 ## To-do:
 - ~~Create design and add implementation of interactive staff/text field input~~
 - Hook up sound to results page in chord info row dropdown
+- Optimize Text/Staff Line input page for mobile devices (specifically the interactive staff line, when changing device orientation from portrait to landscape)
 - Add proper home page (instead of redirecting to chord subpage) -- unlikely to accomplish
 
 ## Credits:
