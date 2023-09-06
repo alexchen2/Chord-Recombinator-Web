@@ -13,7 +13,7 @@ The website, which is currently hosted on [glitch.com](https://glitch.com), can 
 ## How It Works
 This is a WIP section for when I've got enough time to sit down and write a description. 
 
-...BUT if you're interested, I would recommend you check the `schematics/` folder in the project root for a rough explanation of the logic behind the chord analysis (Scheme_1.png to Scheme_3.png). Further reading of music set theory can be pursued here: 
+...BUT if you're interested, I would recommend you check the `schematics/` folder in the project root folder for a rough explanation of the logic behind the chord analysis (Scheme_1.png to Scheme_3.png). Further reading of music set theory can be pursued here: 
 - [Music Set Theory Basics](https://musictheory.pugetsound.edu/mt21c/SetTheorySection.html)
 - [Pitch Class Sets & Normal Form](https://viva.pressbooks.pub/openmusictheory/chapter/pc-sets-normal-order-and-transformations/)
   
