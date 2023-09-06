@@ -25,6 +25,8 @@ Note that basic to moderate music theory knowledge is recommended (so at least R
 - [ ] Hook up sound to results page in chord info row dropdown
 - [ ] Optimize Text/Staff Line input page for mobile devices (specifically the interactive staff line, when changing device orientation from portrait to landscape)
 - [ ] Add proper home page, instead of redirecting to chords main page (unlikely to accomplish)
+- [ ] Add support for analyzing scales
+- [ ] Add extra tools, such as a metronome
 
 ## Run Locally:
 Navigate to the root folder of the project and run:
