@@ -8,7 +8,7 @@ Other technologies of note include:
 - *Vexflow* to generate chord results on music staves and to create an interactive staff builder
 - *aubio* and *pydub* python libraries for audio pitch detection and file conversion, respectively
 
-The website, which is currently hosted on [glitch.com](https://glitch.com), can be accessed [here](https://chordguru.glitch.me) (updated as of 09/05/2023). Note that it might take a bit of time for the website to load at first, if no one has visited it within the past five minutes (one of Glitch's free account limitations for hosting sites with back-end servers).
+The website, which is currently hosted on [glitch.com](https://glitch.com), can be accessed [here](https://chordguru.glitch.me) (updated as of 09/05/2023). Just keep in mind that it might take a bit of time for the page to load at first, if no one has visited it within the past five minutes (one of Glitch's free account limitations for hosting sites with back-end servers).
 
 ## How It Works
 This is a WIP section for when I've got enough time to sit down and write a description. 
