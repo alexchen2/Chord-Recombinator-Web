@@ -21,7 +21,7 @@ Note that basic to moderate music theory knowledge is recommended (so at least R
 
 ## To-do:
 - [x] ~~Create design and add implementation of interactive staff/text field input~~
-- [ ] Reorganize/restructure code for certain CSS/JS files
+- [ ] Clean up and restructure code for certain CSS/JS files
 - [ ] Hook up sound to results page in chord info row dropdown
 - [ ] Optimize Text/Staff Line input page for mobile devices (specifically the interactive staff line, when changing device orientation from portrait to landscape)
 - [ ] Add proper home page, instead of redirecting to chords main page (unlikely to accomplish)
