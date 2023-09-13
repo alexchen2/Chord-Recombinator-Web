@@ -37,4 +37,4 @@ npm run startLocal
 ```  
 
 ## Credits:
-[Original Python script](https://github.com/Kchenforyou/Chord-Recominbinator) and project schematics created by [Kevin Chen](https://github.com/Kchenforyou).
+[Original Python script](https://github.com/Kchenforyou/Chord-Recominbinator) and [project schematics](https://github.com/alexchen2/Chord-Recombinator-Web/tree/main/schematics) created by [Kevin Chen](https://github.com/Kchenforyou).
