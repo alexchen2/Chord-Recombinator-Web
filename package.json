@@ -6,6 +6,7 @@
   "scripts": {
     "setupLocal": "./server/start.sh && node server/serverLocal.js",
     "startLocal": "node server/serverLocal.js",
+    "startConsole": "node server/js/console.js",
     "start": "./server/start.sh && node server/serverGlitch.js",
     "quickStart": "node server/serverGlitch.js"
   },
